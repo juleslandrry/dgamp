@@ -1,0 +1,241 @@
+@extends('template')
+@section('layout')
+
+<section class="documents-section">
+    {{-- Couche d'opacité ajoutée pour la lisibilité --}}
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <h1 class="title-doc"> DECRETS & ARRETÉS OFFICIELS</h1>
+
+        <div class="search-wrapper-center">
+            <div class="search-container-doc">
+                <input type="text" id="decreeSearch" placeholder="Rechercher un décret, un arrêté ou un mot-clé...">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Titre du Document</th>
+                        <th>Description</th>
+                        <th>Téléchargement</th>
+                    </tr>
+                </thead>
+
+                <tbody id="decreeBody">
+                    <tr class="doc-row" data-search="decret 2021-804 organisation semtam">
+                        <td><strong>Décret n°2021-804</strong></td>
+                        <td>Portant organisation du SEMTAM.</td>
+                        <td>
+                            <a href="assets/images/PDF4.pdf" download class="btn-download" target="_blank">
+                                📥 Télécharger
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="doc-row" data-search="arrete 334 activite recrutement maritime">
+                        <td><strong>Arrêté n°334</strong></td>
+                        <td>Relatif à l'activité de recrutement maritime.</td>
+                        <td>
+                            <a href="assets/images/PDF5.pdf" download class="btn-download">
+                                📥 Télécharger
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="doc-row" data-search="arrete 335 retrait suspension brevets">
+                        <td><strong>Arrêté n°335</strong></td>
+                        <td>Relatif au retrait ou à la suspension des brevets.</td>
+                        <td>
+                            <a href="assets/images/PDF6.pdf" download class="btn-download">
+                                📥 Télécharger
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="doc-row" data-search="decret 2019-243 domaine public maritime fluvio-lagunaire">
+                        <td><strong>Décret n°2019-243</strong></td>
+                        <td>Gestion du domaine public maritime et fluvio-lagunaire.</td>
+                        <td>
+                            <a href="assets/images/PDF7.pdf" download class="btn-download">
+                                📥 Télécharger
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="doc-row" data-search="arrete 336 prevention abus alcool">
+                        <td><strong>Arrêté n°336</strong></td>
+                        <td>Relatif à la prévention de l'abus d'alcool.</td>
+                        <td>
+                            <a href="assets/images/PDF8.pdf" download class="btn-download">
+                                📥 Télécharger
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {{-- Message si recherche vide --}}
+            <div id="noResults" style="display: none; padding: 30px; text-align: center; background: white; color: #666;">
+                Aucun document trouvé.
+            </div>
+        </div>
+
+        <div class="pagination-container" id="paginationWrapper">
+            <div class="page-item" id="prevBtn">&laquo;</div>
+            <div id="pageNumbers" style="display: flex; gap: 8px;"></div>
+            <div class="page-item" id="nextBtn">&raquo;</div>
+        </div>
+    </div>
+</section>
+
+<style>
+.documents-section {
+    position: relative;
+    padding: 90px 0;
+    background: url("assets/images/image34.jpeg") center/cover no-repeat fixed;
+    min-height: 90vh;
+}
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.65); z-index: 1; }
+.container { position: relative; width: 90%; max-width: 1100px; margin: auto; z-index: 2; }
+.title-doc { text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 30px; color: white; }
+
+/* Centrage de la recherche */
+.search-wrapper-center { display: flex; justify-content: center; width: 100%; margin-bottom: 40px; }
+.search-container-doc { width: 100%; max-width: 550px; }
+
+#decreeSearch {
+    width: 100%;
+    padding: 15px 25px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+    text-align: center;
+}
+#decreeSearch:focus { background: rgba(255, 255, 255, 0.25); border-color: #3b82c4; box-shadow: 0 0 15px rgba(59, 130, 196, 0.3); }
+#decreeSearch::placeholder { color: rgba(255, 255, 255, 0.7); }
+
+/* Table */
+.table-responsive { border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+.doc-table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.98); }
+.doc-table thead { background: #3b82c4; color: white; }
+.doc-table th, .doc-table td { padding: 20px; text-align: left; }
+.doc-table td { border-bottom: 1px solid #eee; color: #333; }
+.doc-row:hover { background: #f3f7fd; transform: scale(1.005); transition: 0.3s; }
+
+.btn-download {
+    background: #0b3c6d;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    font-weight: 600;
+    display: inline-block;
+}
+.btn-download:hover,
+.btn-download:focus,
+.btn-download:active {
+    background: #0b3c6d;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    transform: none;
+}
+
+/* PAGINATION STYLE */
+.pagination-container { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
+.page-item {
+    width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; background: white; color: #333; font-weight: 700; cursor: pointer; transition: 0.3s;
+}
+.page-item.active { background: #007bff; color: white; }
+.page-item.disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const tableBody = document.getElementById("decreeBody");
+    const allRows = Array.from(tableBody.querySelectorAll(".doc-row"));
+    const searchInput = document.getElementById("decreeSearch");
+    const pageNumbers = document.getElementById("pageNumbers");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const noResults = document.getElementById("noResults");
+
+    let rowsPerPage = 5;
+    let currentPage = 1;
+    let filteredRows = allRows;
+
+    function displayRows() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        allRows.forEach(row => row.style.display = "none");
+
+        const rowsToDisplay = filteredRows.slice(start, end);
+        
+        rowsToDisplay.forEach((row, i) => {
+            row.style.display = "table-row";
+            // On garde ton animation d'entrée progressive
+            row.style.opacity = "0";
+            row.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                row.style.transition = "0.6s ease-out";
+                row.style.opacity = "1";
+                row.style.transform = "translateY(0)";
+            }, 50 * i);
+        });
+
+        noResults.style.display = filteredRows.length === 0 ? "block" : "none";
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+        pageNumbers.innerHTML = "";
+
+        for (let i = 1; i <= pageCount; i++) {
+            const btn = document.createElement("div");
+            btn.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            btn.innerText = i;
+            btn.onclick = () => {
+                currentPage = i;
+                displayRows();
+            };
+            pageNumbers.appendChild(btn);
+        }
+
+        prevBtn.classList.toggle("disabled", currentPage === 1 || pageCount === 0);
+        nextBtn.classList.toggle("disabled", currentPage === pageCount || pageCount === 0);
+    }
+
+    searchInput.addEventListener("input", function() {
+        const query = this.value.toLowerCase();
+        
+        filteredRows = allRows.filter(row => {
+            const searchData = row.getAttribute("data-search").toLowerCase();
+            const visibleText = row.innerText.toLowerCase();
+            return searchData.includes(query) || visibleText.includes(query);
+        });
+
+        currentPage = 1;
+        displayRows();
+    });
+
+    prevBtn.onclick = () => { if(currentPage > 1) { currentPage--; displayRows(); } };
+    nextBtn.onclick = () => { 
+        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+        if(currentPage < pageCount) { currentPage++; displayRows(); } 
+    };
+
+    displayRows();
+});
+</script>
+
+@endsection
