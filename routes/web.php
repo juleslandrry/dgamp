@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DgampController;
+use App\Http\Controllers\OrganisationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +24,7 @@ Route::get('/', [DgampController::class, 'home'])->name('accueildgamp');
 Route::get('/mot_du_dg', [DgampController::class, 'mot_du_dg'])->name('motdudg');
 Route::get('/biographie_du_dg', [DgampController::class, 'biographie_du_dg'])->name('biographiedudg');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
-Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
-Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif'])->name('missionetobjectif');
-Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
+
 Route::get('/lois_dgam', [DgampController::class, 'lois_dgam'])->name('loisdgam');
 Route::get('/decret_dgam', [DgampController::class, 'decret_dgam'])->name('decretdgam');
 Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decision'])->name('arrêtédedecision');
@@ -72,24 +71,33 @@ Route::get('/opérateur', [DgampController::class, 'opérateur'])->name('opérat
 Route::get('/partenaire', [DgampController::class, 'partenaire'])->name('partenaire');
 
 
+
+
+//ROUTES ADOU
+
+//Site principale
+Route::get('/historique', [OrganisationController::class, 'historiqueSite'])->name('historiquedgam');
+// Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
+Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif'])->name('missionetobjectif');
+// Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
+Route::get('/organigramme_dgam', [OrganisationController::class, 'organigrammeSite'])->name('organigramedgam');
+
 // Espace admin
-
-
 Route::get('/admin', [AdminController::class, 'home'])->name('accueiladmin');
-Route::get('/admin/mot_dg', [AdminController::class, 'mot_dg'])->name('motdg');
-Route::post('/admin/mot_dg', [AdminController::class, 'mot_dg_update'])->name('motdg.update');
+// Route::get('/admin/mot_dg', [AdminController::class, 'mot_dg'])->name('motdg');
+// Route::post('/admin/mot_dg', [AdminController::class, 'mot_dg_update'])->name('motdg.update');
 
 Route::get('/admin/biographie_dg', [AdminController::class, 'bio_dg'])->name('biodg');
 Route::post('/admin/biographie_dg', [AdminController::class, 'bio_dg_update'])->name('biodg.update');
 
-Route::get('/admin/historique', [AdminController::class, 'historique'])->name('historique');
-Route::post('/admin/historique', [AdminController::class, 'historique_update'])->name('historique.update');
+Route::get('/admin/historique',[OrganisationController::class, 'historique'])->name('admin.historique');
+Route::post('/admin/historique',[OrganisationController::class, 'updateHistorique'])->name('admin.historique.update');
 
-Route::get('/admin/missions', [AdminController::class, 'missions'])->name('missions');
-Route::post('/admin/missions', [AdminController::class, 'missions_update'])->name('missions.update');
+Route::get('/admin/missions',[OrganisationController::class, 'missions'])->name('admin.missions');
+Route::post('/admin/missions',[OrganisationController::class, 'updateMissions'])->name('admin.missions.update');
 
-Route::get('/admin/organigramme', [AdminController::class, 'organigramme'])->name('organigramme');
-Route::post('/admin/organigramme', [AdminController::class, 'organigramme_update'])->name('organigramme.update');
+Route::get('/admin/organigramme',[OrganisationController::class, 'organigramme'])->name('admin.organigramme');
+Route::post('/admin/organigramme',[OrganisationController::class, 'updateOrganigramme'])->name('admin.organigramme.update');
 
 Route::get('/admin/lois', [AdminController::class, 'lois'])->name('lois');
 Route::post('/admin/lois', [AdminController::class, 'lois_update'])->name('lois.update');
@@ -139,3 +147,5 @@ Route::post('/admin/visa', [AdminController::class, 'visa_update'])->name('visa.
 
 Route::get('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne'])->name('services-en-ligne');
 Route::post('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne_update'])->name('services-en-ligne.update');
+
+
