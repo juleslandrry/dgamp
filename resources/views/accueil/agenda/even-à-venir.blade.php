@@ -6,61 +6,78 @@
     
     <div class="container relative-content">
         <h1 class="title-events">ÉVÉNEMENTS À VENIR</h1>
-
         <div class="filter-controls">
             <button class="filter-btn active" data-filter="all">Tous</button>
-            <button class="filter-btn" data-filter="conference">Conférences</button>
-            <button class="filter-btn" data-filter="formation">Formations</button>
-            <button class="filter-btn" data-filter="ceremonie">Cérémonies</button>
+            @foreach($categories as $cat)
+                <button class="filter-btn" data-filter="{{ $cat['categorie'] }}">{{ $cat['tag'] }}</button>
+            @endforeach
         </div>
 
-        <div class="events-grid" id="eventsGrid">
-            <div class="event-card" data-category="conference">
-                <div class="event-date">
-                    <span class="day">15</span>
-                    <span class="month">Avril</span>
+                <div class="events-grid" id="eventsGrid">
+            @foreach($evenements as $ev)
+                <div class="event-card" data-category="{{ $ev->categorie }}">
+                    <div class="event-date">
+                        <span class="day">{{ $ev->jour_affiche }}</span>
+                        <span class="month">{{ $ev->mois_affiche }}</span>
+                    </div>
+                    <div class="event-body">
+                        <span class="category-tag">{{ $ev->tag }}</span>
+                        <h3>{{ $ev->titre }}</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> {{ $ev->lieu }}</p>
+                        <p><i class="far fa-clock"></i> {{ $ev->horaire_affiche }}</p>
+                        <a href="#" class="btn-more btn-details-trigger" data-titre="{{ $ev->titre }}" data-details="{{ $ev->details }}">Détails</a>
+                    </div>
                 </div>
-                <div class="event-body">
-                    <span class="category-tag">Conférence</span>
-                    <h3>Sécurité Maritime 2026</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Port Autonome d'Abidjan</p>
-                    <p><i class="far fa-clock"></i> 09h00 - 17h00</p>
-                    <a href="#" class="btn-more">Détails</a>
-                </div>
-            </div>
+            @endforeach
+        </div>
 
-            <div class="event-card" data-category="formation">
-                <div class="event-date">
-                    <span class="day">22</span>
-                    <span class="month">Avril</span>
-                </div>
-                <div class="event-body">
-                    <span class="category-tag">Formation</span>
-                    <h3>Séminaire Code ISPS</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Salle de conférence DGAM</p>
-                    <p><i class="far fa-clock"></i> 08h30 - 13h00</p>
-                    <a href="#" class="btn-more">Détails</a>
-                </div>
-            </div>
-
-            <div class="event-card" data-category="ceremonie">
-                <div class="event-date">
-                    <span class="day">05</span>
-                    <span class="month">Mai</span>
-                </div>
-                <div class="event-body">
-                    <span class="category-tag">Cérémonie</span>
-                    <h3>Remise de Galons</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> École Maritime</p>
-                    <p><i class="far fa-clock"></i> 10h00</p>
-                    <a href="#" class="btn-more">Détails</a>
-                </div>
+        <div id="eventDetailsModal" class="event-details-modal">
+            <div class="event-details-box">
+                <button class="event-details-close" onclick="fermerDetailsEvenement()">&times;</button>
+                <h3 id="eventDetailsTitle"></h3>
+                <div id="eventDetailsBody"></div>
             </div>
         </div>
+        
     </div>
 </section>
 
 <style>
+    .event-details-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.event-details-modal.is-open { display: flex; }
+.event-details-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+.event-details-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: #eef3fa;
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    color: #0b3c6d;
+}
+.event-details-close:hover { background: #dce6f3; }
+#eventDetailsTitle { color: #0a1f44; margin-bottom: 15px; }
+#eventDetailsBody { color: #444; line-height: 1.7; white-space: pre-line; }
 /* ==========================================================================
    CORRECTION POUR LE BOUTON TÉLÉCHARGER (PROVENANT DU TEMPLATE)
    ========================================================================== */
@@ -236,6 +253,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('.btn-details-trigger');
+    if (trigger) {
+        e.preventDefault();
+        document.getElementById('eventDetailsTitle').textContent = trigger.dataset.titre;
+        document.getElementById('eventDetailsBody').textContent = trigger.dataset.details || "Aucun détail supplémentaire pour cet événement.";
+        document.getElementById('eventDetailsModal').classList.add('is-open');
+    }
+    if (e.target.id === 'eventDetailsModal') {
+        fermerDetailsEvenement();
+    }
+});
+function fermerDetailsEvenement() {
+    document.getElementById('eventDetailsModal').classList.remove('is-open');
+}
 </script>
 
 <style>

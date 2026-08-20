@@ -97,13 +97,31 @@
         <div class="mdg-layout">
             <div>
                 <div class="mdg-field">
-                    <div class="mdg-label">
-                        <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
-                        Nom et grade du DG
-                    </div>
-                    <input type="text" name="nom_dg" value="{{ old('nom_dg', $nom_dg) }}">
-                    @error('nom_dg') <div class="mdg-error">{{ $message }}</div> @enderror
-                </div>
+    <div class="mdg-label">
+        <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
+        Grade 
+    </div>
+    <input type="text" name="grade_dg" value="{{ old('grade_dg', $grade_dg) }}" placeholder="Ex: Colonel-Major">
+    @error('grade_dg') <div class="mdg-error">{{ $message }}</div> @enderror
+</div>
+
+<div class="mdg-field">
+    <div class="mdg-label">
+        <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
+        Nom 
+    </div>
+    <input type="text" name="nom_dg" value="{{ old('nom_dg', $nom_dg) }}" placeholder="Ex: KOUASSI">
+    @error('nom_dg') <div class="mdg-error">{{ $message }}</div> @enderror
+</div>
+
+<div class="mdg-field">
+    <div class="mdg-label">
+        <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
+        Prénom
+    </div>
+    <input type="text" name="prenom_dg" value="{{ old('prenom_dg', $prenom_dg) }}" placeholder="Ex: Yao Julien">
+    @error('prenom_dg') <div class="mdg-error">{{ $message }}</div> @enderror
+</div>
 
                 <div class="mdg-field">
                     <div class="mdg-label">
@@ -146,5 +164,39 @@
         </div>
     </form>
 </div>
+<script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+<script>
+    tinymce.init({
+        selector: '#texte_dg',
+        license_key: 'gpl',
+        height: 500,
+        menubar: false,
+        plugins: 'lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat | code fullscreen',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.7; }',
+        branding: false,
+        images_upload_handler: function (blobInfo, progress) {
+            return new Promise(function (resolve, reject) {
+                var formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+                formData.append('_token', '{{ csrf_token() }}');
+
+                fetch('{{ route('motdg.upload-image') }}', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.location) {
+                        resolve(result.location);
+                    } else {
+                        reject('Échec de l\'upload de l\'image');
+                    }
+                })
+                .catch(() => reject('Erreur réseau lors de l\'upload'));
+            });
+        }
+    });
+</script>
 
 @endsection

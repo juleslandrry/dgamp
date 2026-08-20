@@ -130,7 +130,7 @@
                             <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Retirer</button>
                         @endif
 
-                        <div class="mdg-row2">
+                         <div class="mdg-row2">
                             <div class="mdg-field">
                                 <div class="mdg-label">
                                     <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg></span>
@@ -141,11 +141,22 @@
                             <div class="mdg-field">
                                 <div class="mdg-label">
                                     <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>
-                                    Date affichée
+                                    Date de l'événement
                                 </div>
-                                <input type="text" name="date[]" value="{{ $ev['date'] }}" placeholder="Ex: 06 MARS 2026">
+                                <input type="date" name="date_evenement[]" value="{{ $ev['date_evenement'] }}">
                             </div>
                         </div>
+
+                
+
+                        <div class="mdg-field">
+                            <div class="mdg-label">
+                                <span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v10H2z"/><path d="M2 6.5h12"/></svg></span>
+                                Détails (texte complet affiché au clic sur "Voir plus")
+                            </div>
+                            <textarea name="details[]" style="min-height:110px;">{{ $ev['details'] }}</textarea>
+                        </div>
+                          
 
                         <div class="mdg-field">
                             <div class="mdg-label">
@@ -212,7 +223,7 @@
                             <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Retirer</button>
                         @endif
 
-                        <div class="mdg-field">
+                                                <div class="mdg-field">
                             <div class="mdg-label">
                                 <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg></span>
                                 Titre de l'événement
@@ -220,27 +231,20 @@
                             <input type="text" name="titre[]" value="{{ $ev['titre'] }}" placeholder="Ex: Sécurité Maritime 2026">
                         </div>
 
-                        <div class="mdg-row3">
+                        <div class="mdg-row2">
                             <div class="mdg-field">
                                 <div class="mdg-label">
                                     <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>
-                                    Jour
+                                    Date de l'événement
                                 </div>
-                                <input type="text" name="jour[]" value="{{ $ev['jour'] }}" placeholder="15">
-                            </div>
-                            <div class="mdg-field">
-                                <div class="mdg-label">
-                                    <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>
-                                    Mois
-                                </div>
-                                <input type="text" name="mois[]" value="{{ $ev['mois'] }}" placeholder="Avril">
+                                <input type="date" name="date_evenement[]" value="{{ $ev['date_evenement'] }}">
                             </div>
                             <div class="mdg-field">
                                 <div class="mdg-label">
                                     <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg></span>
-                                    Horaire
+                                    Heure
                                 </div>
-                                <input type="text" name="horaire[]" value="{{ $ev['horaire'] }}" placeholder="09h00 - 17h00">
+                                <input type="time" name="heure_evenement[]" value="{{ $ev['heure_evenement'] }}">
                             </div>
                         </div>
 
@@ -269,13 +273,21 @@
                                 </div>
                                 <input type="text" name="tag[]" value="{{ $ev['tag'] }}" placeholder="Ex: Conférence">
                             </div>
-                            <div class="mdg-field">
+                                                        <div class="mdg-field">
                                 <div class="mdg-label">
                                     <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
-                                    Lien "Détails" (optionnel)
+                                    Lien externe (optionnel, laisser # sinon)
                                 </div>
                                 <input type="text" name="lien[]" value="{{ $ev['lien'] }}" placeholder="#">
                             </div>
+                        </div>
+
+                        <div class="mdg-field">
+                            <div class="mdg-label">
+                                <span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v10H2z"/><path d="M2 6.5h12"/></svg></span>
+                                Détails (texte affiché au clic sur "Détails")
+                            </div>
+                            <textarea name="details[]" style="min-height:110px;">{{ $ev['details'] }}</textarea>
                         </div>
                     </div>
                 @endforeach
@@ -306,20 +318,25 @@ function addPasse() {
         <div class="card-block-label"><span class="card-num">${num}</span><span class="txt">Événement ${num} (nouveau)</span></div>
         <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Annuler l'ajout</button>
 
-        <div class="mdg-row2">
+                <div class="mdg-row2">
             <div class="mdg-field">
                 <div class="mdg-label"><span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg></span>Titre</div>
                 <input type="text" name="titre[]" placeholder="Titre de l'événement">
             </div>
             <div class="mdg-field">
-                <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Date affichée</div>
-                <input type="text" name="date[]" placeholder="Ex: 12 JUIL 2026">
+                <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Date de l'événement</div>
+                <input type="date" name="date_evenement[]">
             </div>
         </div>
 
         <div class="mdg-field">
             <div class="mdg-label"><span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>Description</div>
             <textarea name="description[]"></textarea>
+        </div>
+
+        <div class="mdg-field">
+            <div class="mdg-label"><span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v10H2z"/><path d="M2 6.5h12"/></svg></span>Détails</div>
+            <textarea name="details[]" style="min-height:110px;"></textarea>
         </div>
 
         <div class="mdg-row2">
@@ -356,18 +373,14 @@ function addAvenir() {
             <input type="text" name="titre[]" placeholder="Titre de l'événement">
         </div>
 
-        <div class="mdg-row3">
+            <div class="mdg-row2">
             <div class="mdg-field">
-                <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Jour</div>
-                <input type="text" name="jour[]" placeholder="15">
+                <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Date de l'événement</div>
+                <input type="date" name="date_evenement[]">
             </div>
             <div class="mdg-field">
-                <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Mois</div>
-                <input type="text" name="mois[]" placeholder="Avril">
-            </div>
-            <div class="mdg-field">
-                <div class="mdg-label"><span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg></span>Horaire</div>
-                <input type="text" name="horaire[]" placeholder="09h00 - 17h00">
+                <div class="mdg-label"><span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg></span>Heure</div>
+                <input type="time" name="heure_evenement[]">
             </div>
         </div>
 
@@ -387,10 +400,15 @@ function addAvenir() {
                 <div class="mdg-label"><span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M8 3v10"/></svg></span>Étiquette affichée</div>
                 <input type="text" name="tag[]" placeholder="Ex: Conférence">
             </div>
-            <div class="mdg-field">
-                <div class="mdg-label"><span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>Lien "Détails" (optionnel)</div>
+                        <div class="mdg-field">
+                <div class="mdg-label"><span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>Lien externe (optionnel)</div>
                 <input type="text" name="lien[]" placeholder="#">
             </div>
+        </div>
+
+        <div class="mdg-field">
+            <div class="mdg-label"><span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v10H2z"/><path d="M2 6.5h12"/></svg></span>Détails</div>
+            <textarea name="details[]" style="min-height:110px;"></textarea>
         </div>
     `;
     list.appendChild(wrap);
