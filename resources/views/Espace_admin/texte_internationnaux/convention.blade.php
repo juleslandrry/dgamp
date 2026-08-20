@@ -112,56 +112,20 @@
 
                     <div class="mdg-row2">
                         <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
-                                Titre du document
-                            </div>
-                            <input type="text" name="titre[]" value="{{ $conv['titre'] }}" placeholder="Ex: MARPOL 78">
+                            <div class="mdg-label">Titre du document</div>
+                            <input type="text" name="titre[]" value="{{ $conv->titre }}" placeholder="Ex: MARPOL 78">
                         </div>
-                        <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h6M5 9h4"/></svg></span>
-                                Format
-                            </div>
-                            <input type="text" name="format[]" value="{{ $conv['format'] }}" placeholder="PDF">
-                        </div>
+                        
                     </div>
 
                     <div class="mdg-field">
-                        <div class="mdg-label">
-                            <span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
-                            Description
-                        </div>
-                        <input type="text" name="description[]" value="{{ $conv['description'] }}" placeholder="Description du document">
-                    </div>
-
-                    <div class="mdg-row2b">
-                        <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                                Mots-clés de recherche
-                            </div>
-                            <input type="text" name="mots_cles[]" value="{{ $conv['mots_cles'] }}" placeholder="Ex: marpol pollution">
-                        </div>
-                        <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
-                                Nom du fichier téléchargé
-                            </div>
-                            <input type="text" name="nom_fichier[]" value="{{ $conv['nom_fichier'] }}" placeholder="Ex: MARPOL_78.pdf">
-                        </div>
+                        <div class="mdg-label">Description</div>
+                        <input type="text" name="description[]" value="{{ $conv->description }}" placeholder="Description">
                     </div>
 
                     <div class="mdg-field">
-                        <div class="mdg-label">
-                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
-                            Fichier PDF
-                        </div>
+                        <div class="mdg-label">Fichier PDF</div>
                         <input type="file" name="fichier[]" accept="application/pdf">
-                        <input type="hidden" name="lien[]" value="{{ $conv['lien'] }}">
-                        @if($conv['lien'])
-                            {{-- <div class="mdg-hint">Fichier actuel disponible</div> --}}
-                        @endif
                         <div class="mdg-hint">Laisse vide pour garder le fichier actuel</div>
                     </div>
                 </div>
@@ -198,13 +162,7 @@ function addConvention() {
                 </div>
                 <input type="text" name="titre[]" placeholder="Ex: Nouvelle convention">
             </div>
-            <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h6M5 9h4"/></svg></span>
-                    Format
-                </div>
-                <input type="text" name="format[]" value="PDF">
-            </div>
+           
         </div>
 
         <div class="mdg-field">
@@ -213,23 +171,6 @@ function addConvention() {
                 Description
             </div>
             <input type="text" name="description[]" placeholder="Description du document">
-        </div>
-
-        <div class="mdg-row2b">
-            <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                    Mots-clés de recherche
-                </div>
-                <input type="text" name="mots_cles[]" placeholder="Ex: mots clés">
-            </div>
-            <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
-                    Nom du fichier téléchargé
-                </div>
-                <input type="text" name="nom_fichier[]" placeholder="Ex: document.pdf">
-            </div>
         </div>
 
         <div class="mdg-field">

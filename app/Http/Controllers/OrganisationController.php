@@ -37,6 +37,16 @@ class OrganisationController extends Controller
         return view('accueil.apropos.organisation.organigrame-dgam', compact('organigramme'));
     }
 
+    public function missionsObjectifs()
+    {
+        $contenu = MissionsObjectifs::with([
+            'missions',
+            'objectifs'
+        ])->first();
+
+        return view('accueil.apropos.organisation.mission-et-objectif', compact('contenu'));
+    }
+
     public function historique()
     {
         $historique = Historique::with('etapes')->first();

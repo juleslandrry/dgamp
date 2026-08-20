@@ -118,11 +118,7 @@
                             <input type="text" name="reference[]" value="{{ $accord['reference'] }}" placeholder="Ex: Accord N°1">
                         </div>
                         <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                                Mots-clés de recherche
-                            </div>
-                            <input type="text" name="mots_cles[]" value="{{ $accord['mots_cles'] }}" placeholder="Ex: accord n1">
+                            
                         </div>
                     </div>
 
@@ -177,11 +173,7 @@ function addAccord() {
                 <input type="text" name="reference[]" placeholder="Ex: Accord N°${num}">
             </div>
             <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                    Mots-clés de recherche
-                </div>
-                <input type="text" name="mots_cles[]" placeholder="Ex: accord n${num}">
+                
             </div>
         </div>
 

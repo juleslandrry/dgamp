@@ -115,7 +115,7 @@
                                                     <ul class="submenu-custom">
                                                         <li><a href="{{ route('loisdgam') }}">Lois</a></li>
                                                         <li><a href="{{ route('decretdgam') }}">Décrets</a></li>
-                                                        <li><a href="{{ route('arrêtédedecision') }}">Arrêtés et Décisions</a></li>
+                                                        <li><a href="{{ route('arretededecision') }}">Arrêtés et Décisions</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown-item-container">

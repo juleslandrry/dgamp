@@ -90,61 +90,57 @@
         <div class="mdg-alert">{{ session('success') }}</div>
     @endif
 
-    @if(!$detection_ok)
-        <div class="mdg-alert warn">⚠️ Les lois n'ont pas pu être détectées automatiquement. Vérifie le contenu avant d'enregistrer.</div>
-    @endif
-
     <form method="POST" action="{{ route('lois.update') }}" enctype="multipart/form-data">
         @csrf
 
         <div id="lois-list">
-            @foreach($lois as $i => $loi)
+            @forelse($lois as $i => $loi)
                 <div class="card-block">
+                    <input type="hidden" name="id[]" value="{{ $loi->id }}">
                     <div class="card-block-label">
                         <span class="card-num">{{ $i + 1 }}</span>
                         <span class="txt">Loi {{ $i + 1 }}</span>
                     </div>
-                    @if($i > 0)
-                        <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Retirer</button>
-                    @endif
+                    
+                    <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Retirer</button>
 
                     <div class="mdg-row2">
                         <div class="mdg-field">
                             <div class="mdg-label">
-                                <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
+                                <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
                                 Référence
                             </div>
-                            <input type="text" name="reference[]" value="{{ $loi['reference'] }}" placeholder="Ex: Loi N° 2017-442">
+                            <input type="text" name="reference[]" value="{{ $loi->reference }}" placeholder="Ex: Loi N° 2017-442" required>
                         </div>
                         <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                                Mots-clés de recherche
-                            </div>
-                            <input type="text" name="mots_cles[]" value="{{ $loi['mots_cles'] }}" placeholder="Ex: code maritime 2017">
+                            
                         </div>
                     </div>
 
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
+                            <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
                             Intitulé complet de la loi
                         </div>
-                        <input type="text" name="intitule[]" value="{{ $loi['intitule'] }}" placeholder="Ex: Portant Code maritime ivoirien">
+                        <input type="text" name="intitule[]" value="{{ $loi->intitule }}" placeholder="Ex: Portant Code maritime ivoirien" required>
                     </div>
 
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
+                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
                             Remplacer le fichier PDF (optionnel)
                         </div>
                         <input type="file" name="fichier[]" accept="application/pdf">
-                        <input type="hidden" name="lien[]" value="{{ $loi['lien'] }}">
-                        <div class="mdg-hint">Laisse vide pour garder le fichier actuel</div>
+                        @if($loi->fichier_path)
+                            <div class="mdg-hint">Fichier actuel : <a href="{{ Storage::url($loi->fichier_path) }}" target="_blank">Consulter le PDF</a></div>
+                        @endif
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <!-- Template par défaut s'il n'y a encore aucune loi dans la BDD -->
+            @endforelse
         </div>
+
         <button type="button" class="btn-add-card" onclick="addLoi()">+ Ajouter une loi</button>
 
         <div class="mdg-actions">
@@ -161,6 +157,7 @@ function addLoi() {
     const wrap = document.createElement('div');
     wrap.className = 'card-block';
     wrap.innerHTML = `
+        <input type="hidden" name="id[]" value="">
         <div class="card-block-label">
             <span class="card-num">${num}</span>
             <span class="txt">Loi ${num} (nouvelle)</span>
@@ -170,35 +167,30 @@ function addLoi() {
         <div class="mdg-row2">
             <div class="mdg-field">
                 <div class="mdg-label">
-                    <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
+                    <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
                     Référence
                 </div>
-                <input type="text" name="reference[]" placeholder="Ex: Loi N° 2017-442">
+                <input type="text" name="reference[]" placeholder="Ex: Loi N° 2017-442" required>
             </div>
             <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                    Mots-clés de recherche
-                </div>
-                <input type="text" name="mots_cles[]" placeholder="Ex: code maritime 2017">
+                
             </div>
         </div>
 
         <div class="mdg-field">
             <div class="mdg-label">
-                <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
+                <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
                 Intitulé complet de la loi
             </div>
-            <input type="text" name="intitule[]" placeholder="Ex: Portant Code maritime ivoirien">
+            <input type="text" name="intitule[]" placeholder="Ex: Portant Code maritime ivoirien" required>
         </div>
 
         <div class="mdg-field">
             <div class="mdg-label">
-                <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
+                <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
                 Fichier PDF
             </div>
-            <input type="file" name="fichier[]" accept="application/pdf">
-            <input type="hidden" name="lien[]" value="">
+            <input type="file" name="fichier[]" accept="application/pdf" required>
             <div class="mdg-hint">Un fichier PDF est requis pour une nouvelle loi</div>
         </div>
     `;

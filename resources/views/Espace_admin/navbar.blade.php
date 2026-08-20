@@ -22,17 +22,17 @@
           <li>
             <div class="node" data-toggle="textesnat"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2v12M2 3h10l-2 2 2 2H2"/></svg>Textes nationaux<svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg></div>
             <ul class="sub" id="textesnat">
-              <li><a href="{{ route('lois') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Lois</a></li>
-              <li><a href="{{ route('decrets') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Décrets</a></li>
-              <li><a href="{{ route('arretes') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Arrêtés et Décisions</a></li>
+              <li><a href="{{ route('lois.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Lois</a></li>
+              <li><a href="{{ route('decrets.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Décrets</a></li>
+              <li><a href="{{ route('arretes.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Arrêtés et Décisions</a></li>
             </ul>
           </li>
           <li>
             <div class="node" data-toggle="textesint"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c1.8 2 1.8 10 0 12M8 2c-1.8 2-1.8 10 0 12"/></svg>Textes Internationaux<svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg></div>
             <ul class="sub" id="textesint">
-              <li><a href="{{ route('conventions') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Conventions</a></li>
-              <li><a href="{{ route('accords') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Accords</a></li>
-              <li><a href="{{ route('protocoles') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Protocoles</a></li>
+              <li><a href="{{ route('conventions.edit') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Conventions</a></li>
+              <li><a href="{{ route('accords.edit') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Accords</a></li>
+              <li><a href="{{ route('protocoles.edit') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Protocoles</a></li>
             </ul>
           </li>
 

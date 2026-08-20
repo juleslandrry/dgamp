@@ -25,55 +25,27 @@
                 </thead>
 
                 <tbody id="decreeBody">
-                    <tr class="doc-row" data-search="decret 2021-804 organisation semtam">
-                        <td><strong>Décret n°2021-804</strong></td>
-                        <td>Portant organisation du SEMTAM.</td>
-                        <td>
-                            <a href="assets/images/PDF4.pdf" download class="btn-download" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="doc-row" data-search="arrete 334 activite recrutement maritime">
-                        <td><strong>Arrêté n°334</strong></td>
-                        <td>Relatif à l'activité de recrutement maritime.</td>
-                        <td>
-                            <a href="assets/images/PDF5.pdf" download class="btn-download">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="doc-row" data-search="arrete 335 retrait suspension brevets">
-                        <td><strong>Arrêté n°335</strong></td>
-                        <td>Relatif au retrait ou à la suspension des brevets.</td>
-                        <td>
-                            <a href="assets/images/PDF6.pdf" download class="btn-download">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="doc-row" data-search="decret 2019-243 domaine public maritime fluvio-lagunaire">
-                        <td><strong>Décret n°2019-243</strong></td>
-                        <td>Gestion du domaine public maritime et fluvio-lagunaire.</td>
-                        <td>
-                            <a href="assets/images/PDF7.pdf" download class="btn-download">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="doc-row" data-search="arrete 336 prevention abus alcool">
-                        <td><strong>Arrêté n°336</strong></td>
-                        <td>Relatif à la prévention de l'abus d'alcool.</td>
-                        <td>
-                            <a href="assets/images/PDF8.pdf" download class="btn-download">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse($decrets as $decret)
+                        <tr class="doc-row" data-search="{{ strtolower($decret->titre . ' ' . $decret->description) }}">
+                            <td><strong>{{ $decret->titre }}</strong></td>
+                            <td>{{ $decret->description }}</td>
+                            <td>
+                                @if($decret->fichier_path)
+                                    <a href="{{ asset('storage/' . $decret->fichier_path) }}" download class="btn-download" target="_blank">
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #888; font-size: 13px;">Aucun fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucun document disponible pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{-- Message si recherche vide --}}
@@ -182,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         rowsToDisplay.forEach((row, i) => {
             row.style.display = "table-row";
-            // On garde ton animation d'entrée progressive
             row.style.opacity = "0";
             row.style.transform = "translateY(20px)";
             setTimeout(() => {
@@ -192,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 50 * i);
         });
 
-        noResults.style.display = filteredRows.length === 0 ? "block" : "none";
+        noResults.style.display = (filteredRows.length === 0 && allRows.length > 0) ? "block" : "none";
         renderPagination();
     }
 
@@ -219,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const query = this.value.toLowerCase();
         
         filteredRows = allRows.filter(row => {
-            const searchData = row.getAttribute("data-search").toLowerCase();
+            const searchData = (row.getAttribute("data-search") || "").toLowerCase();
             const visibleText = row.innerText.toLowerCase();
             return searchData.includes(query) || visibleText.includes(query);
         });

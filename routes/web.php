@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DgampController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\OrganisationController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,12 +26,6 @@ Route::get('/mot_du_dg', [DgampController::class, 'mot_du_dg'])->name('motdudg')
 Route::get('/biographie_du_dg', [DgampController::class, 'biographie_du_dg'])->name('biographiedudg');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
 
-Route::get('/lois_dgam', [DgampController::class, 'lois_dgam'])->name('loisdgam');
-Route::get('/decret_dgam', [DgampController::class, 'decret_dgam'])->name('decretdgam');
-Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decision'])->name('arrêtédedecision');
-Route::get('/convention_dgam', [DgampController::class, 'convention_dgam'])->name('conventiondgam');
-Route::get('/accord_dgam', [DgampController::class, 'accord_dgam'])->name('accorddgam');
-Route::get('/protocole_dgam', [DgampController::class, 'protocole_dgam'])->name('protocoledgam');
 Route::get('/even_à_venir', [DgampController::class, 'even_à_venir'])->name('evenàvenir');
 Route::get('/even_passé', [DgampController::class, 'even_passé'])->name('evenpassé');
 Route::get('/ena', [DgampController::class, 'ena'])->name('ena');
@@ -82,6 +77,16 @@ Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif
 // Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
 Route::get('/organigramme_dgam', [OrganisationController::class, 'organigrammeSite'])->name('organigramedgam');
 
+Route::get('/missions-objectifs', [OrganisationController::class, 'missionsObjectifs'])->name('missions.objectifs');
+
+Route::get('/lois_dgam', [DocumentationController::class, 'showLois'])->name('loisdgam');
+Route::get('/decret_dgam', [DocumentationController::class, 'showDecrets'])->name('decretdgam');
+Route::get('/arrêté_de_decision', [DocumentationController::class, 'showArrete'])->name('arretededecision');
+Route::get('/convention_dgam', [DocumentationController::class, 'showConventions'])->name('conventiondgam');
+Route::get('/accord_dgam', [DocumentationController::class, 'showAccords'])->name('accorddgam');
+Route::get('/protocole_dgam', [DocumentationController::class, 'showProtocoles'])->name('protocoledgam');
+
+
 // Espace admin
 Route::get('/admin', [AdminController::class, 'home'])->name('accueiladmin');
 // Route::get('/admin/mot_dg', [AdminController::class, 'mot_dg'])->name('motdg');
@@ -99,29 +104,34 @@ Route::post('/admin/missions',[OrganisationController::class, 'updateMissions'])
 Route::get('/admin/organigramme',[OrganisationController::class, 'organigramme'])->name('admin.organigramme');
 Route::post('/admin/organigramme',[OrganisationController::class, 'updateOrganigramme'])->name('admin.organigramme.update');
 
-Route::get('/admin/lois', [AdminController::class, 'lois'])->name('lois');
-Route::post('/admin/lois', [AdminController::class, 'lois_update'])->name('lois.update');
 
-Route::get('/admin/decrets', [AdminController::class, 'decrets'])->name('decrets');
-Route::post('/admin/decrets', [AdminController::class, 'decrets_update'])->name('decrets.update');
+Route::prefix('admin')->group(function () {
+    Route::get('/lois-et-reglements',[DocumentationController::class, 'indexLois'])->name('lois.index');
+    Route::post('/lois-et-reglements',[DocumentationController::class, 'updateLois'])->name('lois.update');
 
-Route::get('/admin/arretes', [AdminController::class, 'arretes'])->name('arretes');
-Route::post('/admin/arretes', [AdminController::class, 'arretes_update'])->name('arretes.update');
+    Route::get('/decrets-et-arretes', [DocumentationController::class, 'indexDecrets'])->name('decrets.index');
+    Route::post('/decrets-et-arretes', [DocumentationController::class, 'updateDecrets'])->name('decrets.update');
+    
+    Route::get('/arretes', [DocumentationController::class, 'indexArrete'])->name('arretes.index');
+    Route::post('/arretes/update', [DocumentationController::class, 'updateArretes'])->name('arretes.update');
 
-Route::get('/admin/accords', [AdminController::class, 'accords'])->name('accords');
-Route::post('/admin/accords', [AdminController::class, 'accords_update'])->name('accords.update');
+    Route::get('/conventions', [DocumentationController::class, 'editConventions'])->name('conventions.edit');
+    Route::post('/conventions', [DocumentationController::class, 'updateConventions'])->name('conventions.update');
 
-Route::get('/admin/conventions', [AdminController::class, 'conventions'])->name('conventions');
-Route::post('/admin/conventions', [AdminController::class, 'conventions_update'])->name('conventions.update');
+    Route::get('/accords', [DocumentationController::class, 'editAccords'])->name('accords.edit');
+    Route::post('/accords', [DocumentationController::class, 'updateAccords'])->name('accords.update');
 
-Route::get('/admin/protocoles', [AdminController::class, 'protocoles'])->name('protocoles');
-Route::post('/admin/protocoles', [AdminController::class, 'protocoles_update'])->name('protocoles.update');
+    Route::get('/protocoles', [DocumentationController::class, 'editProtocoles'])->name('protocoles.edit');
+    Route::post('/protocoles', [DocumentationController::class, 'updateProtocoles'])->name('protocoles.update');
+
+});
+
 
 Route::get('/admin/evenements', [AdminController::class, 'evenements'])->name('evenements');
 Route::post('/admin/evenements/passes', [AdminController::class, 'evenements_passes_update'])->name('evenements.passes.update');
 Route::post('/admin/evenements/avenir', [AdminController::class, 'evenements_avenir_update'])->name('evenements.avenir.update');
 
-Route::get('/admin/ena', [AdminController::class, 'ena'])->name('ena');
+Route::get('/admin/ena', [AdminController::class, 'ena'])->name('admin.ena');
 Route::post('/admin/ena', [AdminController::class, 'ena_update'])->name('ena.update');
 
 Route::get('/admin/fonction-publique', [AdminController::class, 'fonctionPublique'])->name('fonction-publique');

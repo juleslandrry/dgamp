@@ -24,43 +24,28 @@
                         <th class="text-right">Action</th>
                     </tr>
                 </thead>
-                <tbody id="docBody">
-                    <tr class="doc-row" data-title="uemoa reglement">
-                        <td><strong>Règlement n° 003/2019/COM/UEMOA</strong></td>
-                        <td>Conditions d'accès aux professions maritimes...</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF11.pdf" class="btn-download" download="Reglement_UEMOA.pdf">📥 Télécharger</a></td>
-                    </tr>
-                    <tr class="doc-row" data-title="marpol pollution">
-                        <td><strong>MARPOL 78</strong></td>
-                        <td>Conclu à Londres le 17 févri....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF12.pdf" class="btn-download" download="MARPOL_78.pdf">📥 Télécharger</a></td>
-                    </tr>
-                    <tr class="doc-row" data-title="stcw">
-                        <td><strong>convention STCW</strong></td>
-                        <td>convention STCW...</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF13.pdf" class="btn-download" download="STCW.pdf">📥 Télécharger</a></td>
-                    </tr>
-                    <tr class="doc-row" data-title="travail maritime">
-                        <td><strong>CONVENTION DU TRAVAIL MARITIME</strong></td>
-                        <td>Un instrument unique et cohér....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF14.pdf" class="btn-download" download="Travail_Maritime.pdf">📥 Télécharger</a></td>
-                    </tr>
-                    <tr class="doc-row" data-title="droit mer">
-                        <td><strong>Convention Droit de la Mer</strong></td>
-                        <td>Conclue à New York le 10 déc.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF15.pdf" class="btn-download" download="Droit_de_la_Mer.pdf">📥 Télécharger</a></td>
-                    </tr>
-                    <tr class="doc-row" data-title="convention 1">
-                        <td><strong>Convention 1</strong></td>
-                        <td>Convention 1.</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right"><a href="assets/images/PDF16.pdf" class="btn-download" download="Convention_1.pdf">📥 Télécharger</a></td>
-                    </tr>
+                <tbody id="decreeBody">
+                    @forelse($conventions as $conv)
+                        <tr class="doc-row" data-search="{{ strtolower($conv->titre . ' ' . $conv->description . ' ' . $conv->mots_cles) }}">
+                            <td><strong>{{ $conv->titre }}</strong></td>
+                            <td>{{ $conv->description }}</td>
+                            <td>
+                                @if($conv->fichier_path)
+                                    <a href="{{ asset('storage/' . $conv->fichier_path) }}" download class="btn-download" target="_blank">
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #888; font-size: 13px;">Aucun fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucune convention disponible pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{-- Message si recherche vide --}}
