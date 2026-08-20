@@ -6,42 +6,31 @@
         <h1 class="section-title">ARCHIVES DES ÉVENEMENTS PASSÉS</h1>
         <p class="section-subtitle">Retrouvez les moments forts et les activités marquantes de la DGAMP.</p>
 
-        <div class="events-grid" id="eventsGrid">
-            <div class="event-card" data-category="ceremonie">
-                <div class="event-image">
-                    <img src="assets/images/image46.jpeg" alt="Séminaire Maritime">
-                    <div class="event-date">06 MARS 2026</div>
+                        <div class="events-grid" id="eventsGrid">
+            @foreach($evenements as $ev)
+                <div class="event-card" data-category="{{ $ev->categorie }}">
+                    <div class="event-image">
+                        <img src="{{ asset($ev->image) }}" alt="{{ $ev->titre }}">
+                        <div class="event-date">{{ $ev->date_affichee }}</div>
+                    </div>
+                    <div class="event-content">
+                        <h3>{{ $ev->titre }}</h3>
+                        <p>{{ $ev->description }}</p>
+                        <span class="event-tag">{{ $ev->tag }}</span>
+                        @if($ev->details)
+                            <br>
+                            <a href="#" class="btn-more-passe btn-details-trigger" data-titre="{{ $ev->titre }}" data-details="{{ $ev->details }}">Voir plus</a>
+                        @endif
+                    </div>
                 </div>
-                <div class="event-content">
-                    <h3>Célébration de la journéé des femmes
-                    </h3>
-                    <p>Une rencontre stratégique réunissant les femmes du dommaine pour célébrer la journée marquante.</p>
-                    <span class="event-tag">Ceremonie</span>
-                </div>
-            </div>
+            @endforeach
+        </div>
 
-            <div class="event-card" data-category="visite">
-                <div class="event-image">
-                    <img src="assets/images/image42.jpeg" alt="Visite Officielle">
-                    <div class="event-date">02 Sept 2025</div>
-                </div>
-                <div class="event-content">
-                    <h3>Visite à la mairie de bassam</h3>
-                    <p>Inspection des nouvelles infrastructures et échanges sur l'expansion du terminal à conteneurs.</p>
-                    <span class="event-tag">Visite</span>
-                </div>
-            </div>
-
-            <div class="event-card" data-category="formation">
-                <div class="event-image">
-                    <img src="assets/images/image45.jpeg" alt="Formation">
-                    <div class="event-date">12 Juil 2025</div>
-                </div>
-                <div class="event-content">
-                    <h3>Formation des Agents de Sûreté</h3>
-                    <p>Clôture de la session de formation intensive sur la lutte contre la pollution maritime.</p>
-                    <span class="event-tag">Formation</span>
-                </div>
+        <div id="eventDetailsModal" class="event-details-modal">
+            <div class="event-details-box">
+                <button class="event-details-close" onclick="fermerDetailsEvenement()">&times;</button>
+                <h3 id="eventDetailsTitle"></h3>
+                <div id="eventDetailsBody"></div>
             </div>
         </div>
     </div>
@@ -159,6 +148,51 @@
 @media (max-width: 768px) {
     .events-grid { grid-template-columns: 1fr; }
 }
+.btn-more-passe {
+    display: inline-block;
+    margin-top: 10px;
+    color: #0b1c39;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+}
+.btn-more-passe:hover { color: #64748b; }
+
+.event-details-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.event-details-modal.is-open { display: flex; }
+.event-details-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+.event-details-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: #eef3fa;
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    color: #0b1c39;
+}
+.event-details-close:hover { background: #dce6f3; }
+#eventDetailsTitle { color: #0b1c39; margin-bottom: 15px; }
+#eventDetailsBody { color: #444; line-height: 1.7; white-space: pre-line; }
 </style>
 
 <script>
@@ -193,5 +227,22 @@ document.addEventListener("DOMContentLoaded", () => {
         eventObserver.observe(card);
     });
 });
+</script>
+<script>
+document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('.btn-details-trigger');
+    if (trigger) {
+        e.preventDefault();
+        document.getElementById('eventDetailsTitle').textContent = trigger.dataset.titre;
+        document.getElementById('eventDetailsBody').textContent = trigger.dataset.details || "Aucun détail supplémentaire pour cet événement.";
+        document.getElementById('eventDetailsModal').classList.add('is-open');
+    }
+    if (e.target.id === 'eventDetailsModal') {
+        fermerDetailsEvenement();
+    }
+});
+function fermerDetailsEvenement() {
+    document.getElementById('eventDetailsModal').classList.remove('is-open');
+}
 </script>
 @endsection

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
-    protected string $motDgViewPath;
-    protected string $bioDgViewPath;
+    // protected string $motDgViewPath; // 
+    // protected string $bioDgViewPath;
     protected string $historiqueViewPath;
     protected string $missionsViewPath;
     protected string $organigrammeViewPath;
@@ -83,7 +83,7 @@ class AdminController extends Controller
 
     public function __construct()
     {
-        $this->motDgViewPath = resource_path('views/accueil/apropos/direction-general/mot-du-dg.blade.php');
+        // $this->motDgViewPath = resource_path('views/accueil/apropos/direction-general/mot-du-dg.blade.php'); // 🔴 déplacé vers MotDgController
         $this->bioDgViewPath = resource_path('views/accueil/apropos/direction-general/biographie-du-dg.blade.php');
         // $this->historiqueViewPath = resource_path('views/accueil/apropos/organisation/historique-dgam.blade.php');
         $this->missionsViewPath   = resource_path('views/accueil/apropos/organisation/mission-et-objectif.blade.php');
@@ -115,9 +115,10 @@ class AdminController extends Controller
     }
 
     // ===================================================================
-    //  MOT DU DG
+    //  MOT DU DG — déplacé vers MotDgController (base de données)
     // ===================================================================
 
+    /*
     public function mot_dg()
     {
         if (!File::exists($this->motDgViewPath)) {
@@ -188,141 +189,142 @@ class AdminController extends Controller
             ->route('motdg')
             ->with('success', 'Le Mot du Directeur Général a été mis à jour avec succès.');
     }
+    */
 
     // ===================================================================
     //  BIOGRAPHIE DU DG
     // ===================================================================
 
-    public function bio_dg()
-    {
-        if (!File::exists($this->bioDgViewPath)) {
-            abort(404, 'Fichier Biographie DG introuvable : ' . $this->bioDgViewPath);
-        }
+    // public function bio_dg()
+    // {
+    //     if (!File::exists($this->bioDgViewPath)) {
+    //         abort(404, 'Fichier Biographie DG introuvable : ' . $this->bioDgViewPath);
+    //     }
 
-        $content = File::get($this->bioDgViewPath);
+    //     $content = File::get($this->bioDgViewPath);
 
-        preg_match('/<p><span>Nom\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mNom);
-        preg_match('/<p><span>Prénoms\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mPrenoms);
-        preg_match('/<p><span>Naissance\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mNaissance);
-        preg_match('/<p><span>Corps\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mCorps);
-        preg_match('/<p><span>Grade \/ Classe\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mGrade);
-        preg_match('/<strong>Fonction actuelle\s*:<\/strong><br>\s*(.*?)\s*<\/div>/su', $content, $mFonction);
-        preg_match('/<img src="([^"]*)" alt="Portrait DG"/', $content, $mImg);
+    //     preg_match('/<p><span>Nom\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mNom);
+    //     preg_match('/<p><span>Prénoms\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mPrenoms);
+    //     preg_match('/<p><span>Naissance\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mNaissance);
+    //     preg_match('/<p><span>Corps\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mCorps);
+    //     preg_match('/<p><span>Grade \/ Classe\s*:<\/span>\s*(.*?)<\/p>/su', $content, $mGrade);
+    //     preg_match('/<strong>Fonction actuelle\s*:<\/strong><br>\s*(.*?)\s*<\/div>/su', $content, $mFonction);
+    //     preg_match('/<img src="([^"]*)" alt="Portrait DG"/', $content, $mImg);
 
-        preg_match_all('/<div class="timeline-box">\s*<span class="date-badge">(.*?)<\/span>\s*<p>(.*?)<\/p>\s*<\/div>/su', $content, $mTimeline, PREG_SET_ORDER);
-        preg_match_all('/<div class="edu-item">\s*<h5>(.*?)<\/h5>\s*<p>(.*?)<\/p>\s*<\/div>/su', $content, $mEdu, PREG_SET_ORDER);
+    //     preg_match_all('/<div class="timeline-box">\s*<span class="date-badge">(.*?)<\/span>\s*<p>(.*?)<\/p>\s*<\/div>/su', $content, $mTimeline, PREG_SET_ORDER);
+    //     preg_match_all('/<div class="edu-item">\s*<h5>(.*?)<\/h5>\s*<p>(.*?)<\/p>\s*<\/div>/su', $content, $mEdu, PREG_SET_ORDER);
 
-        $timeline = array_map(fn($m) => ['date' => trim($m[1]), 'texte' => trim($m[2])], $mTimeline);
-        $formation = array_map(fn($m) => ['annee' => trim($m[1]), 'texte' => trim($m[2])], $mEdu);
+    //     $timeline = array_map(fn($m) => ['date' => trim($m[1]), 'texte' => trim($m[2])], $mTimeline);
+    //     $formation = array_map(fn($m) => ['annee' => trim($m[1]), 'texte' => trim($m[2])], $mEdu);
 
-        $data = [
-            'nom'       => trim($mNom[1] ?? ''),
-            'prenoms'   => trim($mPrenoms[1] ?? ''),
-            'naissance' => trim($mNaissance[1] ?? ''),
-            'corps'     => trim($mCorps[1] ?? ''),
-            'grade'     => trim($mGrade[1] ?? ''),
-            'fonction'  => trim($mFonction[1] ?? ''),
-            'photo'     => trim($mImg[1] ?? ''),
-            'timeline'  => $timeline,
-            'formation' => $formation,
-        ];
+    //     $data = [
+    //         'nom'       => trim($mNom[1] ?? ''),
+    //         'prenoms'   => trim($mPrenoms[1] ?? ''),
+    //         'naissance' => trim($mNaissance[1] ?? ''),
+    //         'corps'     => trim($mCorps[1] ?? ''),
+    //         'grade'     => trim($mGrade[1] ?? ''),
+    //         'fonction'  => trim($mFonction[1] ?? ''),
+    //         'photo'     => trim($mImg[1] ?? ''),
+    //         'timeline'  => $timeline,
+    //         'formation' => $formation,
+    //     ];
 
-        return view('Espace_admin.accueil.directeurgene.biographie', $data);
-    }
+    //     return view('Espace_admin.accueil.directeurgene.biographie', $data);
+    // }
 
-    public function bio_dg_update(Request $request)
-    {
-        $request->validate([
-            'nom'                 => 'required|string|max:255',
-            'prenoms'             => 'required|string|max:255',
-            'naissance'           => 'required|string|max:255',
-            'corps'               => 'required|string|max:255',
-            'grade'               => 'required|string|max:255',
-            'fonction'            => 'required|string',
-            'photo'               => 'nullable|image|mimes:jpeg,jpg,png,webp|max:4096',
-            'timeline_date'       => 'required|array',
-            'timeline_date.*'     => 'required|string|max:100',
-            'timeline_texte'      => 'required|array',
-            'timeline_texte.*'    => 'required|string',
-            'formation_annee'     => 'required|array',
-            'formation_annee.*'   => 'required|string|max:20',
-            'formation_texte'     => 'required|array',
-            'formation_texte.*'   => 'required|string',
-        ]);
+    // public function bio_dg_update(Request $request)
+    // {
+    //     $request->validate([
+    //         'nom'                 => 'required|string|max:255',
+    //         'prenoms'             => 'required|string|max:255',
+    //         'naissance'           => 'required|string|max:255',
+    //         'corps'               => 'required|string|max:255',
+    //         'grade'               => 'required|string|max:255',
+    //         'fonction'            => 'required|string',
+    //         'photo'               => 'nullable|image|mimes:jpeg,jpg,png,webp|max:4096',
+    //         'timeline_date'       => 'required|array',
+    //         'timeline_date.*'     => 'required|string|max:100',
+    //         'timeline_texte'      => 'required|array',
+    //         'timeline_texte.*'    => 'required|string',
+    //         'formation_annee'     => 'required|array',
+    //         'formation_annee.*'   => 'required|string|max:20',
+    //         'formation_texte'     => 'required|array',
+    //         'formation_texte.*'   => 'required|string',
+    //     ]);
 
-        $content = File::get($this->bioDgViewPath);
+    //     $content = File::get($this->bioDgViewPath);
 
-        $simpleFields = [
-            'Nom'       => $request->nom,
-            'Prénoms'   => $request->prenoms,
-            'Naissance' => $request->naissance,
-            'Corps'     => $request->corps,
-        ];
-        foreach ($simpleFields as $label => $value) {
-            $content = preg_replace_callback(
-                '/(<p><span>' . preg_quote($label, '/') . '\s*:<\/span>\s*).*?(<\/p>)/su',
-                fn($m) => $m[1] . e($value) . $m[2],
-                $content
-            );
-        }
+    //     $simpleFields = [
+    //         'Nom'       => $request->nom,
+    //         'Prénoms'   => $request->prenoms,
+    //         'Naissance' => $request->naissance,
+    //         'Corps'     => $request->corps,
+    //     ];
+    //     foreach ($simpleFields as $label => $value) {
+    //         $content = preg_replace_callback(
+    //             '/(<p><span>' . preg_quote($label, '/') . '\s*:<\/span>\s*).*?(<\/p>)/su',
+    //             fn($m) => $m[1] . e($value) . $m[2],
+    //             $content
+    //         );
+    //     }
 
-        $content = preg_replace_callback(
-            '/(<p><span>Grade \/ Classe\s*:<\/span>\s*).*?(<\/p>)/su',
-            fn($m) => $m[1] . e($request->grade) . $m[2],
-            $content
-        );
+    //     $content = preg_replace_callback(
+    //         '/(<p><span>Grade \/ Classe\s*:<\/span>\s*).*?(<\/p>)/su',
+    //         fn($m) => $m[1] . e($request->grade) . $m[2],
+    //         $content
+    //     );
 
-        $content = preg_replace_callback(
-            '/(<strong>Fonction actuelle\s*:<\/strong><br>\s*).*?(\s*<\/div>)/su',
-            fn($m) => $m[1] . e($request->fonction) . $m[2],
-            $content
-        );
+    //     $content = preg_replace_callback(
+    //         '/(<strong>Fonction actuelle\s*:<\/strong><br>\s*).*?(\s*<\/div>)/su',
+    //         fn($m) => $m[1] . e($request->fonction) . $m[2],
+    //         $content
+    //     );
 
-        if ($request->hasFile('photo')) {
-            $filename = 'dg_bio_' . time() . '.' . $request->file('photo')->extension();
-            $request->file('photo')->move(public_path('assets/images'), $filename);
+    //     if ($request->hasFile('photo')) {
+    //         $filename = 'dg_bio_' . time() . '.' . $request->file('photo')->extension();
+    //         $request->file('photo')->move(public_path('assets/images'), $filename);
 
-            $content = preg_replace_callback(
-                '/(<img src=")[^"]*(" alt="Portrait DG")/',
-                fn($m) => $m[1] . 'assets/images/' . $filename . $m[2],
-                $content
-            );
-        }
+    //         $content = preg_replace_callback(
+    //             '/(<img src=")[^"]*(" alt="Portrait DG")/',
+    //             fn($m) => $m[1] . 'assets/images/' . $filename . $m[2],
+    //             $content
+    //         );
+    //     }
 
-        $timelineHtml = '';
-        foreach ($request->timeline_date as $i => $date) {
-            $texte = $request->timeline_texte[$i] ?? '';
-            $timelineHtml .= "                    <div class=\"timeline-box\">\n";
-            $timelineHtml .= "                        <span class=\"date-badge\">" . e($date) . "</span>\n";
-            $timelineHtml .= "                        <p>" . e($texte) . "</p>\n";
-            $timelineHtml .= "                    </div>\n";
-        }
-        $content = preg_replace_callback(
-            '/(<div class="custom-timeline">\s*).*?(\s*<\/div>\s*<\/div>\s*<div class="col-md-5">)/su',
-            fn($m) => $m[1] . "\n" . $timelineHtml . $m[2],
-            $content
-        );
+    //     $timelineHtml = '';
+    //     foreach ($request->timeline_date as $i => $date) {
+    //         $texte = $request->timeline_texte[$i] ?? '';
+    //         $timelineHtml .= "                    <div class=\"timeline-box\">\n";
+    //         $timelineHtml .= "                        <span class=\"date-badge\">" . e($date) . "</span>\n";
+    //         $timelineHtml .= "                        <p>" . e($texte) . "</p>\n";
+    //         $timelineHtml .= "                    </div>\n";
+    //     }
+    //     $content = preg_replace_callback(
+    //         '/(<div class="custom-timeline">\s*).*?(\s*<\/div>\s*<\/div>\s*<div class="col-md-5">)/su',
+    //         fn($m) => $m[1] . "\n" . $timelineHtml . $m[2],
+    //         $content
+    //     );
 
-        $formationHtml = '';
-        foreach ($request->formation_annee as $i => $annee) {
-            $texte = $request->formation_texte[$i] ?? '';
-            $formationHtml .= "                    <div class=\"edu-item\">\n";
-            $formationHtml .= "                        <h5>" . e($annee) . "</h5>\n";
-            $formationHtml .= "                        <p>" . e($texte) . "</p>\n";
-            $formationHtml .= "                    </div>\n";
-        }
-        $content = preg_replace_callback(
-            '/(<div class="edu-card">\s*).*?(\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/section>)/su',
-            fn($m) => $m[1] . "\n" . $formationHtml . $m[2],
-            $content
-        );
+    //     $formationHtml = '';
+    //     foreach ($request->formation_annee as $i => $annee) {
+    //         $texte = $request->formation_texte[$i] ?? '';
+    //         $formationHtml .= "                    <div class=\"edu-item\">\n";
+    //         $formationHtml .= "                        <h5>" . e($annee) . "</h5>\n";
+    //         $formationHtml .= "                        <p>" . e($texte) . "</p>\n";
+    //         $formationHtml .= "                    </div>\n";
+    //     }
+    //     $content = preg_replace_callback(
+    //         '/(<div class="edu-card">\s*).*?(\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/section>)/su',
+    //         fn($m) => $m[1] . "\n" . $formationHtml . $m[2],
+    //         $content
+    //     );
 
-        File::put($this->bioDgViewPath, $content);
+    //     File::put($this->bioDgViewPath, $content);
 
-        return redirect()
-            ->route('biodg')
-            ->with('success', 'La biographie du Directeur Général a été mise à jour avec succès.');
-    }
+    //     return redirect()
+    //         ->route('biodg')
+    //         ->with('success', 'La biographie du Directeur Général a été mise à jour avec succès.');
+    // }
 
     // ===================================================================
     //  HISTORIQUE

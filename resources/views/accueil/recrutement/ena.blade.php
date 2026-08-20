@@ -25,16 +25,22 @@
                 </thead>
 
                 <tbody id="lawBody">
-                    <tr class="law-row" data-search="ouverture concours entree ena">
-                        <td><strong>Ouverture des concours d'entrée à l'ENA</strong></td>
-                        <td>Il est ouvert au titre de l'an.....</td>
-                        <td>
-                            <a href="assets/images/PDF18.pdf" class="btn-download-law" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
+    @forelse($documents as $doc)
+        <tr class="law-row" data-search="{{ $doc->mots_cles }}">
+            <td><strong>{{ $doc->reference }}</strong></td>
+            <td>{{ $doc->intitule }}</td>
+            <td>
+                @if($doc->lien)
+                    <a href="{{ asset($doc->lien) }}" class="btn-download-law" target="_blank">
+                        📥 Télécharger
+                    </a>
+                @endif
+            </td>
+        </tr>
+    @empty
+        <tr><td colspan="3">Aucun document disponible pour le moment.</td></tr>
+    @endforelse
+</tbody>
             </table>
             {{-- Message si recherche vide --}}
             <div id="noResults" style="display: none; padding: 30px; text-align: center; background: white; color: #666; border-radius: 0 0 10px 10px;">

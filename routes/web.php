@@ -4,6 +4,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DgampController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\OrganisationController;
+use App\Http\Controllers\MotDgController;
+use App\Http\Controllers\BiographieDgController;
+use App\Http\Controllers\EvenementController;
+use App\Http\Controllers\EnaController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,13 +27,23 @@ Route::get('/', function () {
 });*/
 
 Route::get('/', [DgampController::class, 'home'])->name('accueildgamp');
-Route::get('/mot_du_dg', [DgampController::class, 'mot_du_dg'])->name('motdudg');
-Route::get('/biographie_du_dg', [DgampController::class, 'biographie_du_dg'])->name('biographiedudg');
+Route::get('/mot_du_dg', [MotDgController::class, 'show'])->name('motdudg');
+Route::get('/biographie_du_dg', [BiographieDgController::class, 'show'])->name('biographiedudg');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
 
-Route::get('/even_à_venir', [DgampController::class, 'even_à_venir'])->name('evenàvenir');
-Route::get('/even_passé', [DgampController::class, 'even_passé'])->name('evenpassé');
-Route::get('/ena', [DgampController::class, 'ena'])->name('ena');
+Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
+Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif'])->name('missionetobjectif');
+Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
+Route::get('/lois_dgam', [DgampController::class, 'lois_dgam'])->name('loisdgam');
+Route::get('/decret_dgam', [DgampController::class, 'decret_dgam'])->name('decretdgam');
+Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decision'])->name('arrêtédedecision');
+Route::get('/convention_dgam', [DgampController::class, 'convention_dgam'])->name('conventiondgam');
+Route::get('/accord_dgam', [DgampController::class, 'accord_dgam'])->name('accorddgam');
+Route::get('/protocole_dgam', [DgampController::class, 'protocole_dgam'])->name('protocoledgam');
+Route::get('/even_à_venir', [EvenementController::class, 'showAvenir'])->name('evenàvenir');
+Route::get('/even_passé', [EvenementController::class, 'showPasses'])->name('evenpassé');
+Route::get('/ena', [EnaController::class, 'show'])->name('ena');
+
 Route::get('/fonction_publique', [DgampController::class, 'fonction_publique'])->name('fonctionpublique');
 Route::get('/galerie_img', [DgampController::class, 'galerie_img'])->name('galerie_img');
 Route::get('/galerie_vidéo', [DgampController::class, 'galerie_vidéo'])->name('galerie_vidéo');
@@ -66,8 +81,6 @@ Route::get('/opérateur', [DgampController::class, 'opérateur'])->name('opérat
 Route::get('/partenaire', [DgampController::class, 'partenaire'])->name('partenaire');
 
 
-
-
 //ROUTES ADOU
 
 //Site principale
@@ -89,11 +102,7 @@ Route::get('/protocole_dgam', [DocumentationController::class, 'showProtocoles']
 
 // Espace admin
 Route::get('/admin', [AdminController::class, 'home'])->name('accueiladmin');
-// Route::get('/admin/mot_dg', [AdminController::class, 'mot_dg'])->name('motdg');
-// Route::post('/admin/mot_dg', [AdminController::class, 'mot_dg_update'])->name('motdg.update');
 
-Route::get('/admin/biographie_dg', [AdminController::class, 'bio_dg'])->name('biodg');
-Route::post('/admin/biographie_dg', [AdminController::class, 'bio_dg_update'])->name('biodg.update');
 
 Route::get('/admin/historique',[OrganisationController::class, 'historique'])->name('admin.historique');
 Route::post('/admin/historique',[OrganisationController::class, 'updateHistorique'])->name('admin.historique.update');
@@ -127,12 +136,6 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/admin/evenements', [AdminController::class, 'evenements'])->name('evenements');
-Route::post('/admin/evenements/passes', [AdminController::class, 'evenements_passes_update'])->name('evenements.passes.update');
-Route::post('/admin/evenements/avenir', [AdminController::class, 'evenements_avenir_update'])->name('evenements.avenir.update');
-
-Route::get('/admin/ena', [AdminController::class, 'ena'])->name('admin.ena');
-Route::post('/admin/ena', [AdminController::class, 'ena_update'])->name('ena.update');
 
 Route::get('/admin/fonction-publique', [AdminController::class, 'fonctionPublique'])->name('fonction-publique');
 Route::post('/admin/fonction-publique', [AdminController::class, 'fonctionPublique_update'])->name('fonction-publique.update');
@@ -159,3 +162,15 @@ Route::get('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne
 Route::post('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne_update'])->name('services-en-ligne.update');
 
 
+// Routes eliette
+// Admin
+Route::get('/admin/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
+Route::post('/admin/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
+Route::post('/admin/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
+Route::get('/admin/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
+Route::post('/admin/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
+Route::get('/admin/evenements', [EvenementController::class, 'edit'])->name('evenements');
+Route::post('/admin/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
+Route::post('/admin/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
+Route::get('/admin/ena', [EnaController::class, 'edit'])->name('admin.ena');
+Route::post('/admin/ena', [EnaController::class, 'update'])->name('ena.update');

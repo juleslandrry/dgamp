@@ -7,57 +7,45 @@
 
         <div class="profile-card shadow-lg">
             <div class="profile-content">
-                <div class="info-details">
-                    <p><span>Nom :</span> KOUASSI</p>
-                    <p><span>Prénoms :</span> Yao Julien</p>
-                    <p><span>Naissance :</span> 03/05/1966 à Assingoukan (Bouaké)</p>
-                    <p><span>Corps :</span> Administrateur en Chef des Affaires Maritimes</p>
-                    <p><span>Grade / Classe :</span> A6 / Classe 1 (Échelon 3)</p>
+                                <div class="info-details">
+                    <p><span>Nom :</span> {{ $nom }}</p>
+                    <p><span>Prénoms :</span> {{ $prenoms }}</p>
+                    <p><span>Naissance :</span> {{ \Carbon\Carbon::parse($date_naissance)->format('d/m/Y') }} à {{ $lieu_naissance }}</p>
+                    <p><span>Corps :</span> {{ $corps }}</p>
+                    <p><span>Grade / Classe :</span> {{ $grade }}</p>
                     <div class="current-role">
                         <strong>Fonction actuelle :</strong><br>
-                        Directeur Général des Affaires Maritimes et Portuaires par Intérim
+                        {{ $fonction }}
                     </div>
                 </div>
             </div>
             <div class="profile-image-container">
-                <img src="assets/images/image37.jpeg" alt="Portrait DG" class="img-fluid rounded shadow">
+                <img src="{{ asset($photo) }}" alt="Portrait DG" class="img-fluid rounded shadow">
             </div>
         </div>
 
         <div class="row mt-5">
             <div class="col-md-7">
                 <h2 class="sub-title"><i class=""></i><strong>Parcours Professionnel</strong></h2>
-                <div class="custom-timeline">
-                    <div class="timeline-box">
-                        <span class="date-badge">Depuis juin 2020</span>
-                        <p>Directeur Général des Affaires Maritimes et Portuaires (Intérim)</p>
-                    </div>
-                    <div class="timeline-box">
-                        <span class="date-badge">2012 – 2020</span>
-                        <p>Directeur de la Sûreté, des Affaires Portuaires et du Domaine</p>
-                    </div>
-                    <div class="timeline-box">
-                        <span class="date-badge">2005 – 2012</span>
-                        <p>Sous-directeur de la Navigation et de la Sécurité Maritimes</p>
-                    </div>
-                    <div class="timeline-box">
-                        <span class="date-badge">2003 – 2005</span>
-                        <p>Chef du Service de la Législation et de la Documentation</p>
-                    </div>
+                    <div class="custom-timeline">
+                    @foreach($timeline as $item)
+                        <div class="timeline-box">
+                            <span class="date-badge">{{ $item->date }}</span>
+                            <p>{{ $item->texte }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
             <div class="col-md-5">
                 <h2 class="sub-title"><i class=""></i><strong> Formation </strong></h2>
-                <div class="edu-card">
-                    <div class="edu-item">
-                        <h5>1999</h5>
-                        <p>Diplôme d'Administrateur (ENA)</p>
-                    </div>
-                    <div class="edu-item">
-                        <h5>1994</h5>
-                        <p>Maîtrise d’Économie Appliquée</p>
-                    </div>
+                                    <div class="edu-card">
+                    @foreach($formation as $item)
+                        <div class="edu-item">
+                            <h5>{{ $item->annee }}</h5>
+                            <p>{{ $item->texte }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

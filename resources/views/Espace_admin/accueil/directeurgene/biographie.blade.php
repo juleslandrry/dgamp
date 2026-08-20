@@ -27,8 +27,7 @@
     .mdg-alert{background:#E5F5EC;border-left:4px solid #1F7A4D;color:#1F7A4D;padding:12px 18px;
         border-radius:6px;margin-bottom:22px;font-size:13.5px;}
 
-    .mdg-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:40px;align-items:start;}
-
+    .mdg-layout{display:block;}
     .mdg-row2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 
     .mdg-field{margin-bottom:22px;min-width:0;}
@@ -44,6 +43,7 @@
     .mdg-icon.i-navy{background:var(--navy);}
 
     .mdg-field input[type=text],
+    .mdg-field input[type=date],
     .mdg-field textarea{
         width:100%;border:1.5px solid var(--line);border-radius:9px;background:#fff;
         padding:12px 14px;font-size:14.5px;font-family:inherit;color:var(--ink);
@@ -118,36 +118,28 @@
     <form method="POST" action="{{ route('biodg.update') }}" enctype="multipart/form-data" id="bioForm">
         @csrf
 
-        <div class="mdg-layout">
+                <div class="mdg-layout">
             <div>
                 <div class="mdg-row2">
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
-                            Nom
+                            <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.2"/><path d="M2.5 6.5h11M5 3v3.5M11 3v3.5"/></svg></span>
+                            Date de naissance
                         </div>
-                        <input type="text" name="nom" value="{{ old('nom', $nom) }}">
-                        @error('nom') <div class="mdg-error">{{ $message }}</div> @enderror
+                        <input type="date" name="date_naissance" value="{{ old('date_naissance', $date_naissance) }}">
+                        @error('date_naissance') <div class="mdg-error">{{ $message }}</div> @enderror
                     </div>
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>
-                            Prénoms
+                            <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5s4 3.5 4 7a4 4 0 01-8 0c0-3.5 4-7 4-7z"/></svg></span>
+                            Lieu de naissance
                         </div>
-                        <input type="text" name="prenoms" value="{{ old('prenoms', $prenoms) }}">
-                        @error('prenoms') <div class="mdg-error">{{ $message }}</div> @enderror
+                        <input type="text" name="lieu_naissance" value="{{ old('lieu_naissance', $lieu_naissance) }}" placeholder="Ex: Assingoukan (Bouaké)">
+                        @error('lieu_naissance') <div class="mdg-error">{{ $message }}</div> @enderror
                     </div>
                 </div>
 
                 <div class="mdg-row2">
-                    <div class="mdg-field">
-                        <div class="mdg-label">
-                            <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.2"/><path d="M2.5 6.5h11M5 3v3.5M11 3v3.5"/></svg></span>
-                            Naissance
-                        </div>
-                        <input type="text" name="naissance" value="{{ old('naissance', $naissance) }}">
-                        @error('naissance') <div class="mdg-error">{{ $message }}</div> @enderror
-                    </div>
                     <div class="mdg-field">
                         <div class="mdg-label">
                             <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5 2v4c0 3.6-2.2 5.9-5 6.7-2.8-.8-5-3.1-5-6.7v-4z"/></svg></span>
@@ -156,15 +148,14 @@
                         <input type="text" name="corps" value="{{ old('corps', $corps) }}">
                         @error('corps') <div class="mdg-error">{{ $message }}</div> @enderror
                     </div>
-                </div>
-
-                <div class="mdg-field">
-                    <div class="mdg-label">
-                        <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l6-4.5L14 8l-6 4.5z"/><path d="M4.5 9.3V13c0 .6 1.6 1.2 3.5 1.2s3.5-.6 3.5-1.2V9.3"/></svg></span>
-                        Grade / Classe
+                    <div class="mdg-field">
+                        <div class="mdg-label">
+                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l6-4.5L14 8l-6 4.5z"/><path d="M4.5 9.3V13c0 .6 1.6 1.2 3.5 1.2s3.5-.6 3.5-1.2V9.3"/></svg></span>
+                            Grade / Classe
+                        </div>
+                        <input type="text" name="grade" value="{{ old('grade', $grade) }}">
+                        @error('grade') <div class="mdg-error">{{ $message }}</div> @enderror
                     </div>
-                    <input type="text" name="grade" value="{{ old('grade', $grade) }}">
-                    @error('grade') <div class="mdg-error">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mdg-field">
@@ -176,22 +167,7 @@
                     @error('fonction') <div class="mdg-error">{{ $message }}</div> @enderror
                 </div>
             </div>
-
-            <div class="mdg-photo-col">
-                <div class="mdg-label" style="justify-content:center;">
-                    <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.2"/><circle cx="5.5" cy="6.5" r="1.1"/><path d="M2.5 11.5l3.5-3.5L9 11l2-2 2.5 2.5"/></svg></span>
-                    Photo
-                </div>
-                <img src="{{ asset($photo) }}" class="mdg-photo-preview" id="mdg-preview" alt="Photo DG">
-                <label for="mdg-photo-input" class="mdg-file-btn">Choisir une nouvelle photo</label>
-                <input type="file" name="photo" id="mdg-photo-input" class="mdg-file-input" accept="image/*"
-                    onchange="document.getElementById('mdg-preview').src=URL.createObjectURL(this.files[0]);
-                              document.getElementById('mdg-filename').textContent=this.files[0].name;">
-                <div class="mdg-file-name" id="mdg-filename">Aucun fichier choisi</div>
-                @error('photo') <div class="mdg-error">{{ $message }}</div> @enderror
-            </div>
         </div>
-
         {{-- PARCOURS PROFESSIONNEL --}}
         <div class="mdg-section-title">Parcours Professionnel</div>
         <div id="timeline-list">

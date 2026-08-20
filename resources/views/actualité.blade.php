@@ -5,7 +5,7 @@
     <div class="overlay-dark"></div>
     
     <div class="container relative-content">
-        <h1 class="title-news">Actualités DGAMP</h1>
+        <h1 class="title-news">Actualités DGAMP </h1>
         
         <div class="search-wrapper">
             <div class="search-box">
