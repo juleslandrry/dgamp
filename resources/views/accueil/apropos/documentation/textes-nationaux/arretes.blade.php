@@ -25,25 +25,27 @@
                 </thead>
 
                 <tbody id="arrestBody">
-                    <tr class="doc-row" data-search="arrete 332 2020 visite certification navires ivoiriens">
-                        <td><strong>Arrêté n°332 du 26 fév. 2020</strong></td>
-                        <td>Conditions de visite et de certification des navires ivoiriens.</td>
-                        <td>
-                            <a href="assets/images/PDF9.pdf" download class="btn-download" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="doc-row" data-search="arrete 046 memt dgamp 2005 organisation attributions">
-                        <td><strong>Arrêté n°046 MEMT/DGAMP</strong></td>
-                        <td>Organisation et attributions des services relevant de la DGAMP (10 mars 2005).</td>
-                        <td>
-                            <a href="assets/images/PDF10.pdf" download class="btn-download">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse($arretes as $arrete)
+                        <tr class="doc-row" data-search="{{ strtolower($arrete->titre . ' ' . $arrete->mots_cles . ' ' . $arrete->description) }}">
+                            <td><strong>{{ $arrete->titre }}</strong></td>
+                            <td>{{ $arrete->description }}</td>
+                            <td>
+                                @if($arrete->fichier_path)
+                                    <a href="{{ asset('storage/' . $arrete->fichier_path) }}" download class="btn-download" target="_blank">
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #888; font-size: 13px;">Aucun fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucun arrêté disponible pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div id="noResults" style="display: none; padding: 30px; text-align: center; background: white; color: #666;">
@@ -71,17 +73,17 @@
 .container { position: relative; width: 90%; max-width: 1100px; margin: auto; z-index: 2; }
 .title-doc { text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 35px; color: white; }
 
-/* --- CORRECTION CENTRAGE BARRE DE RECHERCHE --- */
+/* --- CENTRAGE BARRE DE RECHERCHE --- */
 .search-wrapper-center {
     display: flex;
-    justify-content: center; /* Centre horizontalement */
+    justify-content: center;
     width: 100%;
     margin-bottom: 40px;
 }
 
 .search-container-doc {
     width: 100%;
-    max-width: 550px; /* Garde ta largeur initiale */
+    max-width: 550px;
 }
 
 #arrestSearch {
@@ -165,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 row.style.transform = "translateY(0)";
             }, 50 * i);
         });
-        noResults.style.display = filteredRows.length === 0 ? "block" : "none";
+        noResults.style.display = (filteredRows.length === 0 && allRows.length > 0) ? "block" : "none";
         renderPagination();
     }
 
@@ -186,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener("input", function() {
         const query = this.value.toLowerCase();
         filteredRows = allRows.filter(row => {
-            const searchData = row.getAttribute("data-search").toLowerCase();
+            const searchData = (row.getAttribute("data-search") || "").toLowerCase();
             const visibleText = row.innerText.toLowerCase();
             return searchData.includes(query) || visibleText.includes(query);
         });

@@ -6,45 +6,68 @@
         <h1 class="title" style="color:white">Structure De Gourvernance DGAMP</h1>
 
         <div class="org-chart">
-            <ul>
-                <li>
-                    <div class="box directeur">Directeur Général</div>
-                    
-                    <ul>
-                        <li>
-                            <div class="box sg">Secrétariat Général</div>
-                            <ul>
-                                <li><div class="box service">Service Courrier</div></li>
-                                <li><div class="box service">Service Archives</div></li>
-                            </ul>
-                        </li>
 
-                        <li>
-                            <div class="box dpt">Direction Maritime</div>
-                            <ul>
-                                <li><div class="box service">Sécurité Maritime</div></li>
-                                <li><div class="box service">Gens de Mer</div></li>
-                            </ul>
-                        </li>
+            @if($organigramme)
 
-                        <li>
-                            <div class="box dpt">Direction Portuaire</div>
-                            <ul>
-                                <li><div class="box service">Exploitation</div></li>
-                                <li><div class="box service">Domaine Public</div></li>
-                            </ul>
-                        </li>
+                <ul>
+                    <li>
 
-                        <li>
-                            <div class="box dpt">Direction Administrative</div>
+                        {{-- Directeur général --}}
+                        <div class="box directeur">
+                            {{ $organigramme->directeur_titre }}
+                        </div>
+
+                        {{-- Directions --}}
+                        @if($organigramme->nodes->count())
+
                             <ul>
-                                <li><div class="box service">Ressources Humaines</div></li>
-                                <li><div class="box service">Moyens Généraux</div></li>
+
+                                @foreach($organigramme->nodes as $direction)
+
+                                    <li>
+
+                                        <div class="box dpt">
+                                            {{ $direction->nom }}
+                                        </div>
+
+                                        {{-- Services de la direction --}}
+                                        @if($direction->enfants->count())
+
+                                            <ul>
+
+                                                @foreach($direction->enfants as $service)
+
+                                                    <li>
+                                                        <div class="box service">
+                                                            {{ $service->nom }}
+                                                        </div>
+                                                    </li>
+
+                                                @endforeach
+
+                                            </ul>
+
+                                        @endif
+
+                                    </li>
+
+                                @endforeach
+
                             </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+
+                        @endif
+
+                    </li>
+                </ul>
+
+            @else
+
+                <p style="color:white;">
+                    L'organigramme n'est pas encore disponible.
+                </p>
+
+            @endif
+
         </div>
     </div>
 </section>
@@ -53,14 +76,66 @@
     <div class="container">
         <h2 class="title">Portail des Ressources Réglementaires</h2>
         <div class="pdf-list">
-            <div class="pdf-item">
-                <p>Décret organisation DGAMP</p>
-                <a href="#" class="btn-pdf">Voir le PDF</a>
-            </div>
-            <div class="pdf-item">
-                <p>Organigramme complet</p>
-                <a href="#" class="btn-pdf">Télécharger</a>
-            </div>
+
+            {{-- Décret --}}
+            @if($organigramme && $organigramme->decret_pdf)
+
+                <div class="pdf-item">
+
+                    <p>
+                        Décret organisation DGAMP
+                    </p>
+
+                    <a
+                        href="{{ asset('storage/' . $organigramme->decret_pdf) }}"
+                        class="btn-pdf"
+                        target="_blank"
+                    >
+                        Voir le PDF
+                    </a>
+
+                </div>
+
+            @endif
+
+
+            {{-- Organigramme --}}
+            @if($organigramme && $organigramme->organigramme_pdf)
+
+                <div class="pdf-item">
+
+                    <p>
+                        Organigramme complet
+                    </p>
+
+                    <a
+                        href="{{ asset('storage/' . $organigramme->organigramme_pdf) }}"
+                        class="btn-pdf"
+                        target="_blank"
+                    >
+                        Télécharger
+                    </a>
+
+                </div>
+
+            @endif
+
+
+            {{-- Aucun document --}}
+            @if(
+                !$organigramme ||
+                (
+                    !$organigramme->decret_pdf &&
+                    !$organigramme->organigramme_pdf
+                )
+            )
+
+                <p>
+                    Aucun document disponible pour le moment.
+                </p>
+
+            @endif
+
         </div>
     </div>
 </section>

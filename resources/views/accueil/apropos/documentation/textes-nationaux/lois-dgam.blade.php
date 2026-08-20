@@ -24,35 +24,27 @@
                 </thead>
 
                 <tbody id="lawBody">
-                    <tr class="law-row" data-search="code maritime ivoirien 2017-442">
-                        <td><strong>Loi N° 2017-442</strong></td>
-                        <td>Portant Code maritime ivoirien.</td>
-                        <td>
-                            <a href="assets/images/PDF1.pdf" class="btn-download-law" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="law-row" data-search="code environnement 2014-138">
-                        <td><strong>Loi N° 2014-138</strong></td>
-                        <td>Portant Code de l’Environnement.</td>
-                        <td>
-                            <a href="assets/images/PDF2.pdf" class="btn-download-law">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr class="law-row" data-search="isps code surete navires">
-                        <td><strong>Code ISPS</strong></td>
-                        <td>Sûreté des navires et des installations portuaires.</td>
-                        <td>
-                            <a href="assets/images/PDF3.pdf" class="btn-download-law">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse($lois as $loi)
+                        <tr class="law-row" data-search="{{ strtolower($loi->reference . ' ' . $loi->intitule) }}">
+                            <td><strong>{{ $loi->reference }}</strong></td>
+                            <td>{{ $loi->intitule }}</td>
+                            <td>
+                                @if($loi->fichier_path)
+                                    <a href="{{ Storage::url($loi->fichier_path) }}" class="btn-download-law" target="_blank">
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #999; font-size: 13px;">Non disponible</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr id="noDataRow">
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucune loi enregistrée pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{-- Message si recherche vide --}}

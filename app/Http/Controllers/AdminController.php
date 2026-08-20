@@ -85,7 +85,7 @@ class AdminController extends Controller
     {
         $this->motDgViewPath = resource_path('views/accueil/apropos/direction-general/mot-du-dg.blade.php');
         $this->bioDgViewPath = resource_path('views/accueil/apropos/direction-general/biographie-du-dg.blade.php');
-        $this->historiqueViewPath = resource_path('views/accueil/apropos/organisation/historique-dgam.blade.php');
+        // $this->historiqueViewPath = resource_path('views/accueil/apropos/organisation/historique-dgam.blade.php');
         $this->missionsViewPath   = resource_path('views/accueil/apropos/organisation/mission-et-objectif.blade.php');
         $this->organigrammeViewPath = resource_path('views/accueil/apropos/organisation/organigrame-dgam.blade.php');
         $this->loisViewPath         = resource_path('views/accueil/apropos/documentation/textes-nationaux/lois-dgam.blade.php');
@@ -328,78 +328,78 @@ class AdminController extends Controller
     //  HISTORIQUE
     // ===================================================================
 
-    public function historique()
-    {
-        if (!File::exists($this->historiqueViewPath)) {
-            abort(404, 'Fichier Historique introuvable : ' . $this->historiqueViewPath);
-        }
+    // public function historique()
+    // {
+    //     if (!File::exists($this->historiqueViewPath)) {
+    //         abort(404, 'Fichier Historique introuvable : ' . $this->historiqueViewPath);
+    //     }
 
-        $content = File::get($this->historiqueViewPath);
+    //     $content = File::get($this->historiqueViewPath);
 
-        preg_match('/<p class="intro">\s*(.*?)\s*<\/p>/su', $content, $mIntro);
+    //     preg_match('/<p class="intro">\s*(.*?)\s*<\/p>/su', $content, $mIntro);
 
-        preg_match_all(
-            '/<div class="timeline-item">\s*<span class="year">\s*(.*?)\s*<\/span>\s*<p>\s*(.*?)\s*<\/p>\s*<\/div>/su',
-            $content,
-            $mItems,
-            PREG_SET_ORDER
-        );
+    //     preg_match_all(
+    //         '/<div class="timeline-item">\s*<span class="year">\s*(.*?)\s*<\/span>\s*<p>\s*(.*?)\s*<\/p>\s*<\/div>/su',
+    //         $content,
+    //         $mItems,
+    //         PREG_SET_ORDER
+    //     );
 
-        $timeline = array_map(function ($m) {
-            $texte = str_replace(['<br>', '<br/>', '<br />'], "\n", $m[2]);
-            $texte = preg_replace('/[ \t]*\n[ \t]*/', "\n", trim($texte));
-            return ['annee' => trim($m[1]), 'texte' => $texte];
-        }, $mItems);
+    //     $timeline = array_map(function ($m) {
+    //         $texte = str_replace(['<br>', '<br/>', '<br />'], "\n", $m[2]);
+    //         $texte = preg_replace('/[ \t]*\n[ \t]*/', "\n", trim($texte));
+    //         return ['annee' => trim($m[1]), 'texte' => $texte];
+    //     }, $mItems);
 
-        $data = [
-            'intro'    => trim($mIntro[1] ?? ''),
-            'timeline' => $timeline,
-        ];
+    //     $data = [
+    //         'intro'    => trim($mIntro[1] ?? ''),
+    //         'timeline' => $timeline,
+    //     ];
 
-        return view('Espace_admin.accueil.directeurgene.organisation.historique', $data);
-    }
+    //     return view('Espace_admin.accueil.directeurgene.organisation.historique', $data);
+    // }
 
-    public function historique_update(Request $request)
-    {
-        $request->validate([
-            'intro'              => 'required|string',
-            'annee'              => 'required|array',
-            'annee.*'            => 'required|string|max:100',
-            'texte'              => 'required|array',
-            'texte.*'            => 'required|string',
-        ]);
+    // public function historique_update(Request $request)
+    // {
+    //     $request->validate([
+    //         'intro'              => 'required|string',
+    //         'annee'              => 'required|array',
+    //         'annee.*'            => 'required|string|max:100',
+    //         'texte'              => 'required|array',
+    //         'texte.*'            => 'required|string',
+    //     ]);
 
-        $content = File::get($this->historiqueViewPath);
+    //     $content = File::get($this->historiqueViewPath);
 
-        $content = preg_replace_callback(
-            '/(<p class="intro">\s*).*?(\s*<\/p>)/su',
-            fn($m) => $m[1] . "\n" . e($request->intro) . "\n" . $m[2],
-            $content
-        );
+    //     $content = preg_replace_callback(
+    //         '/(<p class="intro">\s*).*?(\s*<\/p>)/su',
+    //         fn($m) => $m[1] . "\n" . e($request->intro) . "\n" . $m[2],
+    //         $content
+    //     );
 
-        $timelineHtml = '';
-        foreach ($request->annee as $i => $annee) {
-            $texteRaw = $request->texte[$i] ?? '';
-            $texteFormatted = nl2br(e($texteRaw));
+    //     $timelineHtml = '';
+    //     foreach ($request->annee as $i => $annee) {
+    //         $texteRaw = $request->texte[$i] ?? '';
+    //         $texteFormatted = nl2br(e($texteRaw));
 
-            $timelineHtml .= "<div class=\"timeline-item\">\n";
-            $timelineHtml .= "<span class=\"year\">" . e($annee) . "</span>\n";
-            $timelineHtml .= "<p>" . $texteFormatted . "</p>\n";
-            $timelineHtml .= "</div>\n\n";
-        }
+    //         $timelineHtml .= "<div class=\"timeline-item\">\n";
+    //         $timelineHtml .= "<span class=\"year\">" . e($annee) . "</span>\n";
+    //         $timelineHtml .= "<p>" . $texteFormatted . "</p>\n";
+    //         $timelineHtml .= "</div>\n\n";
+    //     }
 
-        $content = preg_replace_callback(
-            '/(<div class="timeline">\s*).*?(\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/section>)/su',
-            fn($m) => $m[1] . "\n" . $timelineHtml . $m[2],
-            $content
-        );
+    //     $content = preg_replace_callback(
+    //         '/(<div class="timeline">\s*).*?(\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/section>)/su',
+    //         fn($m) => $m[1] . "\n" . $timelineHtml . $m[2],
+    //         $content
+    //     );
 
-        File::put($this->historiqueViewPath, $content);
+    //     File::put($this->historiqueViewPath, $content);
 
-        return redirect()
-            ->route('historique')
-            ->with('success', 'La page Historique a été mise à jour avec succès.');
-    }
+    //     return redirect()
+    //         ->route('historique')
+    //         ->with('success', 'La page Historique a été mise à jour avec succès.');
+    // }
 
     // ===================================================================
     //  MISSIONS & OBJECTIFS

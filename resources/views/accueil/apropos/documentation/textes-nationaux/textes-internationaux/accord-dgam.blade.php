@@ -2,7 +2,6 @@
 @section('layout')
 
 <section class="laws-section">
-    {{-- Couche d'opacité ajoutée pour la lisibilité --}}
     <div class="background-overlay-law"></div>
     
     <div class="container main-content-law">
@@ -25,19 +24,29 @@
                 </thead>
 
                 <tbody id="lawBody">
-                    <tr class="law-row" data-search="accord n1">
-                        <td><strong>Accord N°1</strong></td>
-                        <td>Accord N°1</td>
-                        <td>
-                            <a href="assets/images/PDF17.pdf" class="btn-download-law" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
-                    {{-- Ajoute tes autres lignes ici --}}
+                    @forelse($accords as $accord)
+                        <tr class="law-row" data-search="{{ strtolower($accord->reference . ' ' . $accord->intitule . ' ' . $accord->mots_cles) }}">
+                            <td><strong>{{ $accord->reference }}</strong></td>
+                            <td>{{ $accord->intitule }}</td>
+                            <td>
+                                @if($accord->fichier_path)
+                                    <a href="{{ asset('storage/' . $accord->fichier_path) }}" class="btn-download-law" target="_blank" download>
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #888; font-size: 13px;">Aucun fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucun accord disponible pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
-            {{-- Message si recherche vide --}}
             <div id="noResults" style="display: none; padding: 30px; text-align: center; background: white; color: #666; border-radius: 0 0 10px 10px;">
                 Aucun accord trouvé.
             </div>

@@ -7,51 +7,87 @@
             <h1 class="mission-main-title">MISSIONS & OBJECTIFS</h1>
 
             <div class="mission-block">
-                <h2 class="section-subtitle">Nos Missions</h2>
+
+                <h2 class="section-subtitle">
+                    {{ $contenu?->missions_titre ?? 'Nos Missions' }}
+                </h2>
+
                 <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Politique Maritime</h3></div>
-                            <div class="card-back"><p>Conduire la politique des transports maritimes et fluvio-lagunaires ;</p></div>
+
+                    @forelse($contenu?->missions ?? [] as $mission)
+
+                        <div class="mission-card">
+
+                            <div class="card-inner">
+
+                                <div class="card-front">
+                                    <h3>
+                                        {{ $mission->titre }}
+                                    </h3>
+                                </div>
+
+                                <div class="card-back">
+                                    <p>
+                                        {{ $mission->description }}
+                                    </p>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Sécurité</h3></div>
-                            <div class="card-back"><p>Promouvoir la sécurité et la sureté maritime (navigation, pêche, port, domaines publics maritimes et lagunaires, plages, plateformes pétrolières off-shore) ;</p></div>
-                        </div>
-                    </div>
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Gens de Mer</h3></div>
-                            <div class="card-back"><p>Gestion du domaine public maritime et fluvio-lagunaire ;</p></div>
-                        </div>
-                    </div>
+
+                    @empty
+
+                        <p style="color:white;">
+                            Aucune mission n'est actuellement disponible.
+                        </p>
+
+                    @endforelse
+
                 </div>
+
             </div>
 
             <div class="mission-block">
-                <h2 class="section-subtitle">Nos Objectifs</h2>
+
+                <h2 class="section-subtitle">
+                    {{ $contenu?->objectifs_titre ?? 'Nos Objectifs' }}
+                </h2>
+
                 <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Coopération</h3></div>
-                            <div class="card-back"><p>Développer la coopération maritime régionale et internationale.</p></div>
+
+                    @forelse($contenu?->objectifs ?? [] as $objectif)
+
+                        <div class="mission-card">
+
+                            <div class="card-inner">
+
+                                <div class="card-front">
+                                    <h3>
+                                        {{ $objectif->titre }}
+                                    </h3>
+                                </div>
+
+                                <div class="card-back">
+                                    <p>
+                                        {{ $objectif->description }}
+                                    </p>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Modernisation</h3></div>
-                            <div class="card-back"><p>Moderniser les outils de surveillance et de contrôle des activités.</p></div>
-                        </div>
-                    </div>
-                    <div class="mission-card">
-                        <div class="card-inner">
-                            <div class="card-front"><h3>Performance</h3></div>
-                            <div class="card-back"><p>Optimiser la gestion des ports et des infrastructures fluviales.</p></div>
-                        </div>
-                    </div>
+
+                    @empty
+
+                        <p style="color:white;">
+                            Aucun objectif n'est actuellement disponible.
+                        </p>
+
+                    @endforelse
+
                 </div>
+
             </div>
 
         </div>

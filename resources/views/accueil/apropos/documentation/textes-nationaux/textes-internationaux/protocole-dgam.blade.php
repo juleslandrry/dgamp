@@ -25,15 +25,27 @@
                 </thead>
 
                 <tbody id="lawBody">
-                    <tr class="law-row" data-search="ouverture concours entree ena">
-                        <td><strong></strong></td>
-                        <td></td>
-                        <td>
-                            <a href="assets/images/PDF18.pdf" class="btn-download-law" target="_blank">
-                                📥 Télécharger
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse($protocoles as $proto)
+                        <tr class="law-row" data-search="{{ strtolower($proto->reference . ' ' . $proto->intitule . ' ' . $proto->mots_cles) }}">
+                            <td><strong>{{ $proto->reference }}</strong></td>
+                            <td>{{ $proto->intitule }}</td>
+                            <td>
+                                @if($proto->fichier_path)
+                                    <a href="{{ asset('storage/' . $proto->fichier_path) }}" class="btn-download-law" target="_blank" download>
+                                        📥 Télécharger
+                                    </a>
+                                @else
+                                    <span style="color: #888; font-size: 13px;">Aucun fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
+                                Aucun protocole disponible pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{-- Message si recherche vide --}}

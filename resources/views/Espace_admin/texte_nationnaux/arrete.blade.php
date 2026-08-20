@@ -27,7 +27,6 @@
 
     .mdg-alert{background:#E5F5EC;border-left:4px solid #1F7A4D;color:#1F7A4D;padding:12px 18px;
         border-radius:6px;margin-bottom:22px;font-size:13.5px;}
-    .mdg-alert.warn{background:#FBF3DD;border-left-color:var(--gold);color:#8A6D14;}
 
     .card-block{background:#FAF9F5;border:1.5px solid var(--line);border-radius:12px;
         padding:22px 24px;margin-bottom:18px;position:relative;}
@@ -40,7 +39,7 @@
 
     .mdg-field{margin-bottom:16px;min-width:0;}
     .mdg-field:last-child{margin-bottom:0;}
-    .mdg-label{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;color:var(--navy);
+    .mdg-label{display:flex;align-items:center;gap:99px;font-size:11.5px;font-weight:700;color:var(--navy);
         text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
     .mdg-icon{width:22px;height:22px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;
         justify-content:center;color:#fff;}
@@ -90,61 +89,58 @@
         <div class="mdg-alert">{{ session('success') }}</div>
     @endif
 
-    @if(!$detection_ok)
-        <div class="mdg-alert warn">⚠️ Les arrêtés n'ont pas pu être détectés automatiquement. Vérifie le contenu avant d'enregistrer.</div>
-    @endif
-
     <form method="POST" action="{{ route('arretes.update') }}" enctype="multipart/form-data">
         @csrf
 
         <div id="arretes-list">
             @foreach($arretes as $i => $doc)
                 <div class="card-block">
+                    <!-- Clé primaire indispensable pour la synchronisation BDD -->
+                    <input type="hidden" name="id[]" value="{{ $doc->id }}">
+
                     <div class="card-block-label">
                         <span class="card-num">{{ $i + 1 }}</span>
                         <span class="txt">Arrêté {{ $i + 1 }}</span>
                     </div>
-                    @if($i > 0)
-                        <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Retirer</button>
-                    @endif
+
+                    <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Supprimer</button>
 
                     <div class="mdg-row2">
                         <div class="mdg-field">
                             <div class="mdg-label">
-                                <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
+                                <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
                                 Titre
                             </div>
-                            <input type="text" name="titre[]" value="{{ $doc['titre'] }}" placeholder="Ex: Arrêté n°332 du 26 fév. 2020">
+                            <input type="text" name="titre[]" value="{{ $doc->titre }}" placeholder="Ex: Arrêté n°332 du 26 fév. 2020" required>
                         </div>
                         <div class="mdg-field">
-                            <div class="mdg-label">
-                                <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                                Mots-clés de recherche
-                            </div>
-                            <input type="text" name="mots_cles[]" value="{{ $doc['mots_cles'] }}" placeholder="Ex: arrete 332 2020 visite navires">
                         </div>
                     </div>
 
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
+                            <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
                             Description
                         </div>
-                        <input type="text" name="description[]" value="{{ $doc['description'] }}" placeholder="Ex: Conditions de visite et certification">
+                        <input type="text" name="description[]" value="{{ $doc->description }}" placeholder="Ex: Conditions de visite et certification" required>
                     </div>
 
                     <div class="mdg-field">
                         <div class="mdg-label">
-                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
+                            <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
                             Remplacer le fichier PDF (optionnel)
                         </div>
                         <input type="file" name="fichier[]" accept="application/pdf">
-                        <input type="hidden" name="lien[]" value="{{ $doc['lien'] }}">
-                        <div class="mdg-hint">Laisse vide pour garder le fichier actuel</div>
+                        @if($doc->fichier_path)
+                            <div class="mdg-hint">Fichier actuel : <a href="{{ asset('storage/' . $doc->fichier_path) }}" target="_blank">Consulter le PDF</a></div>
+                        @else
+                            <div class="mdg-hint">Aucun fichier associé</div>
+                        @endif
                     </div>
                 </div>
             @endforeach
         </div>
+
         <button type="button" class="btn-add-card" onclick="addArrete()">+ Ajouter un arrêté</button>
 
         <div class="mdg-actions">
@@ -161,6 +157,7 @@ function addArrete() {
     const wrap = document.createElement('div');
     wrap.className = 'card-block';
     wrap.innerHTML = `
+        <input type="hidden" name="id[]" value="">
         <div class="card-block-label">
             <span class="card-num">${num}</span>
             <span class="txt">Arrêté ${num} (nouveau)</span>
@@ -170,36 +167,31 @@ function addArrete() {
         <div class="mdg-row2">
             <div class="mdg-field">
                 <div class="mdg-label">
-                    <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
+                    <span class="mdg-icon i-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg></span>
                     Titre
                 </div>
-                <input type="text" name="titre[]" placeholder="Ex: Arrêté n°332 du 26 fév. 2020">
+                <input type="text" name="titre[]" placeholder="Ex: Arrêté n°332 du 26 fév. 2020" required>
             </div>
             <div class="mdg-field">
-                <div class="mdg-label">
-                    <span class="mdg-icon i-orange"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2L14 14"/></svg></span>
-                    Mots-clés de recherche
-                </div>
-                <input type="text" name="mots_cles[]" placeholder="Ex: arrete 332 2020 visite navires">
+                
             </div>
         </div>
 
         <div class="mdg-field">
             <div class="mdg-label">
-                <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
+                <span class="mdg-icon i-green"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg></span>
                 Description
             </div>
-            <input type="text" name="description[]" placeholder="Ex: Conditions de visite et certification">
+            <input type="text" name="description[]" placeholder="Ex: Conditions de visite et certification" required>
         </div>
 
         <div class="mdg-field">
             <div class="mdg-label">
-                <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
+                <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg></span>
                 Fichier PDF
             </div>
             <input type="file" name="fichier[]" accept="application/pdf">
-            <input type="hidden" name="lien[]" value="">
-            <div class="mdg-hint">Un fichier PDF est requis pour un nouvel arrêté</div>
+            <div class="mdg-hint">Un fichier PDF est recommandé pour un nouvel arrêté</div>
         </div>
     `;
     list.appendChild(wrap);

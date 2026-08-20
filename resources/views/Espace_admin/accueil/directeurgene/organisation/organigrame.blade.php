@@ -1,10 +1,11 @@
 @extends('Espace_admin.layout')
+
 @section('content')
 
 <style>
+
     :root{
         --navy:#0B2340;
-        --navy-2:#123A63;
         --blue:#1E7FB8;
         --orange:#E8720C;
         --green:#1F7A4D;
@@ -15,186 +16,906 @@
         --line:#E7E2D6;
     }
 
-    .mdg-wrap{max-width:900px;margin:0 auto;padding:36px 24px 60px;}
-
-    .mdg-crumb{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);
-        font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-    .mdg-crumb::before{content:"";width:14px;height:2px;background:var(--orange);border-radius:2px;}
-
-    .mdg-title{font-family:'IBM Plex Sans',sans-serif;font-size:25px;font-weight:700;color:var(--navy);
-        margin:0 0 8px;letter-spacing:-.01em;}
-    .mdg-sub{font-size:13px;color:var(--ink-soft);margin:0 0 26px;}
-
-    .mdg-alert{background:#E5F5EC;border-left:4px solid #1F7A4D;color:#1F7A4D;padding:12px 18px;
-        border-radius:6px;margin-bottom:22px;font-size:13.5px;}
-    .mdg-alert.warn{background:#FBF3DD;border-left-color:var(--gold);color:#8A6D14;}
-
-    .mdg-section-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;
-        color:var(--navy);margin:38px 0 18px;padding-bottom:10px;border-bottom:2px solid var(--gold);}
-    .mdg-section-title:first-of-type{margin-top:6px;}
-
-    .mdg-field{margin-bottom:22px;min-width:0;}
-    .mdg-label{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;color:var(--navy);
-        text-transform:uppercase;letter-spacing:.05em;margin-bottom:9px;}
-    .mdg-icon{width:24px;height:24px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;
-        justify-content:center;color:#fff;}
-    .mdg-icon svg{width:13px;height:13px;}
-    .mdg-icon.i-blue{background:var(--blue);}
-    .mdg-icon.i-orange{background:var(--orange);}
-    .mdg-icon.i-navy{background:var(--navy);}
-
-    .mdg-field input[type=text]{
-        width:100%;border:1.5px solid var(--line);border-radius:9px;background:#fff;
-        padding:12px 14px;font-size:14.5px;font-family:inherit;color:var(--ink);
-        transition:.15s ease;box-sizing:border-box;
+    .mdg-wrap{
+        max-width:900px;
+        margin:0 auto;
+        padding:36px 24px 60px;
     }
-    .mdg-field input[type=text]:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,35,64,.08);}
 
-    /* Cartes répétables */
-    .card-block{background:#FAF9F5;border:1.5px solid var(--line);border-radius:10px;
-        padding:18px 20px;margin-bottom:16px;position:relative;}
-    .card-block-label{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);
-        font-size:12.5px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.05em;}
-    .card-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;
-        display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
-    .field{margin-bottom:12px;}
-    .field:last-child{margin-bottom:0;}
-    .field label{display:block;font-weight:700;color:var(--ink-soft);margin-bottom:6px;font-size:11.5px;
-        text-transform:uppercase;letter-spacing:.04em;}
-    .field input[type=text]{
-        width:100%;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;
-        font-size:13.5px;font-family:inherit;box-sizing:border-box;background:#fff;transition:.15s ease;
+    .mdg-crumb{
+        font-size:11px;
+        text-transform:uppercase;
+        letter-spacing:.12em;
+        color:var(--orange);
+        font-weight:700;
+        display:flex;
+        align-items:center;
+        gap:6px;
+        margin-bottom:6px;
     }
-    .field input:focus{outline:none;border-color:var(--navy);}
-    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
-    .btn-remove-card{position:absolute;top:14px;right:16px;background:#FBEAEA;color:#C0392B;
-        border:none;border-radius:7px;padding:7px 13px;cursor:pointer;font-size:12px;font-weight:700;
-        transition:.15s ease;}
-    .btn-remove-card:hover{background:#F5D5D5;}
-
-    .btn-add-card{background:transparent;color:var(--navy);border:1.5px dashed var(--navy);border-radius:8px;
-        padding:10px 18px;cursor:pointer;font-size:12.5px;font-weight:700;margin-bottom:10px;transition:.15s ease;}
-    .btn-add-card:hover{background:var(--gold-soft);}
-
-    .mdg-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:34px;}
-    .mdg-btn{border:none;border-radius:6px;padding:11px 24px;font-weight:700;cursor:pointer;
-        font-size:13px;letter-spacing:.02em;transition:.15s ease;}
-    .mdg-btn-save{background:linear-gradient(135deg,var(--gold),#DFAF3C);color:#fff;
-        box-shadow:0 4px 12px rgba(201,162,39,.35);}
-    .mdg-btn-save:hover{box-shadow:0 5px 16px rgba(201,162,39,.5);transform:translateY(-1px);}
-
-    @media (max-width: 640px){
-        .field-row{grid-template-columns:1fr;}
+    .mdg-crumb::before{
+        content:"";
+        width:14px;
+        height:2px;
+        background:var(--orange);
+        border-radius:2px;
     }
+
+    .mdg-title{
+        font-size:25px;
+        font-weight:700;
+        color:var(--navy);
+        margin:0 0 8px;
+    }
+
+    .mdg-sub{
+        font-size:13px;
+        color:var(--ink-soft);
+        margin:0 0 26px;
+    }
+
+    .mdg-alert{
+        background:#E5F5EC;
+        border-left:4px solid var(--green);
+        color:var(--green);
+        padding:12px 18px;
+        border-radius:6px;
+        margin-bottom:22px;
+        font-size:13.5px;
+    }
+
+    .mdg-section-title{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-size:17px;
+        font-weight:700;
+        color:var(--navy);
+        margin:38px 0 18px;
+        padding-bottom:10px;
+        border-bottom:2px solid var(--gold);
+    }
+
+    .mdg-field{
+        margin-bottom:22px;
+    }
+
+    .mdg-label{
+        display:block;
+        font-size:12.5px;
+        font-weight:700;
+        color:var(--navy);
+        text-transform:uppercase;
+        letter-spacing:.05em;
+        margin-bottom:9px;
+    }
+
+    .mdg-field input,
+    .node-name,
+    .service-name{
+        width:100%;
+        border:1.5px solid var(--line);
+        border-radius:9px;
+        background:#fff;
+        padding:11px 13px;
+        font-size:14px;
+        font-family:inherit;
+        color:var(--ink);
+        box-sizing:border-box;
+    }
+
+    .mdg-field input:focus,
+    .node-name:focus,
+    .service-name:focus{
+        outline:none;
+        border-color:var(--navy);
+        box-shadow:0 0 0 3px rgba(11,35,64,.08);
+    }
+
+    .node-card{
+        background:#FAF9F5;
+        border:1.5px solid var(--line);
+        border-radius:10px;
+        padding:18px;
+        margin-bottom:16px;
+    }
+
+    .node-header{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:16px;
+    }
+
+    .node-number{
+        width:26px;
+        height:26px;
+        border-radius:50%;
+        background:var(--navy);
+        color:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:12px;
+        font-weight:700;
+        flex-shrink:0;
+    }
+
+    .node-header-title{
+        font-size:13px;
+        font-weight:700;
+        color:var(--navy);
+        text-transform:uppercase;
+        flex:1;
+    }
+
+    .node-remove{
+        border:none;
+        background:#FBEAEA;
+        color:#C0392B;
+        border-radius:7px;
+        padding:7px 12px;
+        cursor:pointer;
+        font-size:12px;
+        font-weight:700;
+    }
+
+    .children-title{
+        margin:18px 0 10px;
+        font-size:11.5px;
+        font-weight:700;
+        color:var(--ink-soft);
+        text-transform:uppercase;
+        letter-spacing:.05em;
+    }
+
+    .service-row{
+        display:flex;
+        gap:8px;
+        margin-bottom:8px;
+    }
+
+    .service-row .service-name{
+        flex:1;
+    }
+
+    .service-remove{
+        border:none;
+        background:#FBEAEA;
+        color:#C0392B;
+        border-radius:7px;
+        padding:0 12px;
+        cursor:pointer;
+        font-size:11px;
+        font-weight:700;
+    }
+
+    .btn-add{
+        background:transparent;
+        color:var(--navy);
+        border:1.5px dashed var(--navy);
+        border-radius:8px;
+        padding:9px 15px;
+        cursor:pointer;
+        font-size:12px;
+        font-weight:700;
+    }
+
+    .btn-add:hover{
+        background:var(--gold-soft);
+    }
+
+    .btn-add-direction{
+        margin-top:4px;
+    }
+
+    .documents-card{
+        background:#FAF9F5;
+        border:1.5px solid var(--line);
+        border-radius:10px;
+        padding:18px;
+        margin-bottom:16px;
+    }
+
+    .document-title{
+        font-size:13px;
+        font-weight:700;
+        color:var(--navy);
+        margin-bottom:15px;
+    }
+
+    .current-file{
+        margin-top:10px;
+        padding:9px 12px;
+        background:#E5F5EC;
+        color:var(--green);
+        border-radius:7px;
+        font-size:12px;
+    }
+
+    .mdg-actions{
+        display:flex;
+        justify-content:flex-end;
+        margin-top:34px;
+    }
+
+    .mdg-btn-save{
+        border:none;
+        border-radius:6px;
+        padding:11px 24px;
+        font-weight:700;
+        cursor:pointer;
+        font-size:13px;
+        background:linear-gradient(135deg,var(--gold),#DFAF3C);
+        color:white;
+    }
+
+    .mdg-error{
+        color:#C0392B;
+        font-size:11.5px;
+        margin-top:5px;
+    }
+
+    @media(max-width:640px){
+
+        .service-row{
+            flex-direction:column;
+        }
+
+        .service-remove{
+            padding:8px;
+        }
+    }
+
 </style>
 
+
 <div class="mdg-wrap">
-    <div class="mdg-crumb">Connaître la DGAM &nbsp;›&nbsp; Organisation</div>
-    <h1 class="mdg-title">Organigramme</h1>
-    <p class="mdg-sub">Modifie les noms des directions/services, ou gère la liste des documents PDF.</p>
+
+    <div class="mdg-crumb">
+        Connaître la DGAM &nbsp;›&nbsp; Organisation
+    </div>
+
+    <h1 class="mdg-title">
+        Organigramme
+    </h1>
+
+    <p class="mdg-sub">
+        Gérez les directions, services et documents officiels de l'organigramme.
+    </p>
+
+
+    {{-- SUCCESS --}}
 
     @if(session('success'))
-        <div class="mdg-alert">{{ session('success') }}</div>
+
+        <div class="mdg-alert">
+            {{ session('success') }}
+        </div>
+
     @endif
 
-    @if(!$detection_ok)
-        <div class="mdg-alert warn">⚠️ La structure n'a pas pu être détectée automatiquement. Vérifie le contenu avant d'enregistrer.</div>
+
+    {{-- ERREURS --}}
+
+    @if($errors->any())
+
+        <div
+            class="mdg-alert"
+            style="background:#FBEAEA;color:#C0392B;border-color:#C0392B;"
+        >
+            <strong>Veuillez corriger les erreurs :</strong>
+
+            <ul style="margin:8px 0 0 18px;">
+
+                @foreach($errors->all() as $error)
+
+                    <li>{{ $error }}</li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
     @endif
 
-    <form method="POST" action="{{ route('organigramme.update') }}">
+
+    <form
+        method="POST"
+        action="{{ route('admin.organigramme.update') }}"
+        enctype="multipart/form-data"
+    >
+
         @csrf
 
-        {{-- ===== DIRECTEUR GÉNÉRAL ===== --}}
-        <div class="mdg-section-title">Direction Générale</div>
+
+        {{-- ================================================= --}}
+        {{-- DIRECTION GENERALE                               --}}
+        {{-- ================================================= --}}
+
+        <div class="mdg-section-title">
+            Direction Générale
+        </div>
+
+
         <div class="mdg-field">
-            <div class="mdg-label">
-                <span class="mdg-icon i-navy"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="1.5" width="4" height="3"/><rect x="1" y="10.5" width="4" height="3"/><rect x="11" y="10.5" width="4" height="3"/><path d="M8 4.5v3.5M8 8h-5v2.5M8 8h5v2.5"/></svg></span>
+
+            <label class="mdg-label">
                 Titre de la boîte principale
-            </div>
-            <input type="text" name="directeur_titre" value="{{ old('directeur_titre', $directeur_titre) }}">
+            </label>
+
+            <input
+                type="text"
+                name="directeur_titre"
+                value="{{ old(
+                    'directeur_titre',
+                    $organigramme?->directeur_titre ?? ''
+                ) }}"
+                placeholder="Ex : Directeur Général"
+            >
+
+            @error('directeur_titre')
+
+                <div class="mdg-error">
+                    {{ $message }}
+                </div>
+
+            @enderror
+
         </div>
 
-        {{-- ===== DÉPARTEMENTS ===== --}}
-        <div class="mdg-section-title">Directions & Services</div>
-        @foreach($departements as $i => $dept)
-            <div class="card-block">
-                <div class="card-block-label"><span class="card-num">{{ $i + 1 }}</span> Direction {{ $i + 1 }}</div>
-                <div class="field">
-                    <label>Nom de la direction</label>
-                    <input type="text" name="dept_nom[]" value="{{ $dept['nom'] }}">
-                </div>
-                <div class="field-row">
-                    <div class="field">
-                        <label>Service 1</label>
-                        <input type="text" name="dept_service1[]" value="{{ $dept['service1'] }}">
-                    </div>
-                    <div class="field">
-                        <label>Service 2</label>
-                        <input type="text" name="dept_service2[]" value="{{ $dept['service2'] }}">
-                    </div>
-                </div>
-            </div>
-        @endforeach
 
-        {{-- ===== DOCUMENTS PDF ===== --}}
-        <div class="mdg-section-title">Documents PDF</div>
-        <div id="pdf-list">
-            @foreach($pdfs as $i => $pdf)
-                <div class="card-block">
-                    <div class="card-block-label"><span class="card-num">{{ $i + 1 }}</span> Document {{ $i + 1 }}</div>
-                    <div class="field">
-                        <label>Titre du document</label>
-                        <input type="text" name="pdf_titre[]" value="{{ $pdf['titre'] }}">
+        {{-- ================================================= --}}
+        {{-- DIRECTIONS                                       --}}
+        {{-- ================================================= --}}
+
+        <div class="mdg-section-title">
+            Directions & Services
+        </div>
+
+
+        <div id="nodes-list">
+
+            @php
+
+                $nodes = old(
+                    'nodes',
+                    $organigramme?->nodes
+                        ?->map(function ($node) {
+
+                            return [
+                                'nom' => $node->nom,
+
+                                'enfants' => $node->enfants
+                                    ->map(function ($enfant) {
+
+                                        return [
+                                            'nom' => $enfant->nom
+                                        ];
+
+                                    })
+                                    ->toArray()
+                            ];
+
+                        })
+                        ->toArray() ?? []
+                );
+
+            @endphp
+
+
+            @foreach($nodes as $i => $node)
+
+                <div class="node-card">
+
+                    <div class="node-header">
+
+                        <span class="node-number">
+                            {{ $i + 1 }}
+                        </span>
+
+                        <span class="node-header-title">
+                            Direction {{ $i + 1 }}
+                        </span>
+
+                        <button
+                            type="button"
+                            class="node-remove"
+                            onclick="removeNode(this)"
+                        >
+                            Retirer
+                        </button>
+
                     </div>
-                    <div class="field-row">
-                        <div class="field">
-                            <label>Lien du fichier</label>
-                            <input type="text" name="pdf_lien[]" value="{{ $pdf['lien'] }}" placeholder="ex: /storage/documents/decret.pdf">
-                        </div>
-                        <div class="field">
-                            <label>Texte du bouton</label>
-                            <input type="text" name="pdf_bouton[]" value="{{ $pdf['bouton'] }}" placeholder="Voir le PDF">
-                        </div>
+
+
+                    <div class="mdg-field">
+
+                        <label class="mdg-label">
+                            Nom de la direction / structure
+                        </label>
+
+                        <input
+                            class="node-name"
+                            type="text"
+                            name="nodes[{{ $i }}][nom]"
+                            value="{{ $node['nom'] ?? '' }}"
+                        >
+
                     </div>
+
+
+                    <div class="children-title">
+                        Services / structures rattachées
+                    </div>
+
+
+                    <div class="children-list">
+
+                        @foreach($node['enfants'] ?? [] as $j => $enfant)
+
+                            <div class="service-row">
+
+                                <input
+                                    class="service-name"
+                                    type="text"
+                                    name="nodes[{{ $i }}][enfants][{{ $j }}][nom]"
+                                    value="{{ $enfant['nom'] ?? '' }}"
+                                    placeholder="Nom du service"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="service-remove"
+                                    onclick="removeService(this)"
+                                >
+                                    Retirer
+                                </button>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn-add"
+                        onclick="addService(this)"
+                    >
+                        + Ajouter un service
+                    </button>
+
                 </div>
+
             @endforeach
+
         </div>
-        <button type="button" class="btn-add-card" onclick="addPdf()">+ Ajouter un document PDF</button>
+
+
+        <button
+            type="button"
+            class="btn-add btn-add-direction"
+            onclick="addNode()"
+        >
+            + Ajouter une direction
+        </button>
+
+        <div class="mdg-section-title">
+            Documents officiels
+        </div>
+
+
+        {{-- ================================================= --}}
+        {{-- PDF ORGANIGRAMME                                  --}}
+        {{-- ================================================= --}}
+
+        <div class="documents-card">
+
+            <div class="document-title">
+                PDF de l'organigramme
+            </div>
+
+            <div class="field">
+
+                <label class="mdg-label">
+                    Fichier PDF
+                </label>
+
+                <input
+                    type="file"
+                    name="organigramme_pdf"
+                    accept=".pdf,application/pdf"
+                >
+
+                @error('organigramme_pdf')
+
+                    <div class="mdg-error">
+                        {{ $message }}
+                    </div>
+
+                @enderror
+
+            </div>
+
+
+            @if(
+                $organigramme &&
+                $organigramme->organigramme_pdf
+            )
+
+                <div class="current-file">
+
+                    ✓ Un fichier est actuellement enregistré.
+
+                    <a
+                        href="{{ asset('storage/' . $organigramme->organigramme_pdf) }}"
+                        target="_blank"
+                        style="margin-left:8px;font-weight:700;"
+                    >
+                        Voir le PDF
+                    </a>
+
+                </div>
+
+            @else
+
+                <div style="font-size:12px;color:#66707B;margin-top:8px;">
+                    Aucun PDF d'organigramme enregistré.
+                </div>
+
+            @endif
+
+        </div>
+
+
+        {{-- ================================================= --}}
+        {{-- PDF DECRET                                        --}}
+        {{-- ================================================= --}}
+
+        <div class="documents-card">
+
+            <div class="document-title">
+                Décret de l'organigramme
+            </div>
+
+            <div class="field">
+
+                <label class="mdg-label">
+                    Fichier PDF
+                </label>
+
+                <input
+                    type="file"
+                    name="decret_pdf"
+                    accept=".pdf,application/pdf"
+                >
+
+                @error('decret_pdf')
+
+                    <div class="mdg-error">
+                        {{ $message }}
+                    </div>
+
+                @enderror
+
+            </div>
+
+
+            @if(
+                $organigramme &&
+                $organigramme->decret_pdf
+            )
+
+                <div class="current-file">
+
+                    ✓ Un fichier est actuellement enregistré.
+
+                    <a
+                        href="{{ asset('storage/' . $organigramme->decret_pdf) }}"
+                        target="_blank"
+                        style="margin-left:8px;font-weight:700;"
+                    >
+                        Voir le décret
+                    </a>
+
+                </div>
+
+            @else
+
+                <div style="font-size:12px;color:#66707B;margin-top:8px;">
+                    Aucun décret enregistré.
+                </div>
+
+            @endif
+
+        </div>
+
+
+        {{-- ================================================= --}}
+        {{-- ENREGISTRER                                      --}}
+        {{-- ================================================= --}}
 
         <div class="mdg-actions">
-            <button type="submit" class="mdg-btn mdg-btn-save">Enregistrer les modifications</button>
+
+            <button
+                type="submit"
+                class="mdg-btn-save"
+            >
+                Enregistrer les modifications
+            </button>
+
         </div>
+
     </form>
+
 </div>
 
-<script>
-function addPdf() {
-    const list = document.getElementById('pdf-list');
-    const num = list.querySelectorAll('.card-block').length + 1;
 
-    const wrap = document.createElement('div');
-    wrap.className = 'card-block';
-    wrap.innerHTML = `
-        <div class="card-block-label"><span class="card-num">${num}</span> Document ${num} (nouveau)</div>
-        <button type="button" class="btn-remove-card" onclick="this.parentElement.remove()">Annuler l'ajout</button>
-        <div class="field">
-            <label>Titre du document</label>
-            <input type="text" name="pdf_titre[]">
-        </div>
-        <div class="field-row">
-            <div class="field">
-                <label>Lien du fichier</label>
-                <input type="text" name="pdf_lien[]" placeholder="ex: /storage/documents/decret.pdf">
+<script>
+
+    let nodeIndex = {{ count($nodes) }};
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ajouter une direction
+    |--------------------------------------------------------------------------
+    */
+
+    function addNode()
+    {
+        const list =
+            document.getElementById('nodes-list');
+
+
+        const index = nodeIndex++;
+
+
+        const node = document.createElement('div');
+
+        node.className = 'node-card';
+
+
+        node.innerHTML = `
+
+            <div class="node-header">
+
+                <span class="node-number">
+                    1
+                </span>
+
+                <span class="node-header-title">
+                    Nouvelle direction
+                </span>
+
+                <button
+                    type="button"
+                    class="node-remove"
+                    onclick="removeNode(this)"
+                >
+                    Retirer
+                </button>
+
             </div>
-            <div class="field">
-                <label>Texte du bouton</label>
-                <input type="text" name="pdf_bouton[]" placeholder="Voir le PDF">
+
+
+            <div class="mdg-field">
+
+                <label class="mdg-label">
+                    Nom de la direction / structure
+                </label>
+
+                <input
+                    class="node-name"
+                    type="text"
+                    name="nodes[${index}][nom]"
+                    placeholder="Ex : Direction Maritime"
+                >
+
             </div>
-        </div>
-    `;
-    list.appendChild(wrap);
-}
+
+
+            <div class="children-title">
+                Services / structures rattachées
+            </div>
+
+
+            <div class="children-list">
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-add"
+                onclick="addService(this)"
+            >
+                + Ajouter un service
+            </button>
+
+        `;
+
+
+        list.appendChild(node);
+
+        renumberNodes();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ajouter un service
+    |--------------------------------------------------------------------------
+    */
+
+    function addService(button)
+    {
+        const nodeCard =
+            button.closest('.node-card');
+
+        const childrenList =
+            nodeCard.querySelector('.children-list');
+
+
+        const nodeNameInput =
+            nodeCard.querySelector('.node-name');
+
+
+        const nodeName =
+            nodeNameInput.getAttribute('name');
+
+
+        const match =
+            nodeName.match(/nodes\[(\d+)\]/);
+
+
+        if (!match) {
+            return;
+        }
+
+
+        const nodeIndex =
+            match[1];
+
+
+        const serviceIndex =
+            childrenList.querySelectorAll('.service-row').length;
+
+
+        const row =
+            document.createElement('div');
+
+        row.className = 'service-row';
+
+
+        row.innerHTML = `
+
+            <input
+                class="service-name"
+                type="text"
+                name="nodes[${nodeIndex}][enfants][${serviceIndex}][nom]"
+                placeholder="Nom du service"
+            >
+
+            <button
+                type="button"
+                class="service-remove"
+                onclick="removeService(this)"
+            >
+                Retirer
+            </button>
+
+        `;
+
+
+        childrenList.appendChild(row);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supprimer une direction
+    |--------------------------------------------------------------------------
+    */
+
+    function removeNode(button)
+    {
+        const node =
+            button.closest('.node-card');
+
+        node.remove();
+
+        renumberNodes();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supprimer un service
+    |--------------------------------------------------------------------------
+    */
+
+    function removeService(button)
+    {
+        const row =
+            button.closest('.service-row');
+
+        const childrenList =
+            row.parentElement;
+
+        row.remove();
+
+
+        /*
+        | Réindexer les services
+        */
+
+        const nodeCard =
+            childrenList.closest('.node-card');
+
+        const nodeNameInput =
+            nodeCard.querySelector('.node-name');
+
+        const nodeName =
+            nodeNameInput.getAttribute('name');
+
+        const match =
+            nodeName.match(/nodes\[(\d+)\]/);
+
+        if (!match) {
+            return;
+        }
+
+        const nodeIndex =
+            match[1];
+
+
+        childrenList
+            .querySelectorAll('.service-row')
+            .forEach((service, index) => {
+
+                const input =
+                    service.querySelector('.service-name');
+
+                input.name =
+                    `nodes[${nodeIndex}][enfants][${index}][nom]`;
+
+            });
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Réindexer les directions
+    |--------------------------------------------------------------------------
+    */
+
+    function renumberNodes()
+    {
+        const nodes =
+            document.querySelectorAll('.node-card');
+
+
+        nodes.forEach((node, index) => {
+
+            const number =
+                node.querySelector('.node-number');
+
+            const title =
+                node.querySelector('.node-header-title');
+
+            number.textContent =
+                index + 1;
+
+            title.textContent =
+                `Direction ${index + 1}`;
+
+        });
+    }
+
 </script>
 
 @endsection

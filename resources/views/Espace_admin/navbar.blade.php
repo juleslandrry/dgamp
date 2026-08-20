@@ -10,29 +10,29 @@
         <ul class="sub" id="accueil">
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Directeur Général</div></li>
-          <li><a href="{{ route('motdg') }}" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg>Mot du DG</a></li>
-          <li><a href="{{ route('biodg') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>Biographie</a></li>
+          <li><a href="#" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg>Mot du DG</a></li>
+          <li><a href="#"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>Biographie</a></li>
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Organisation</div></li>
-          <li><a href="{{ route('historique') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg>Historique</a></li>
-          <li><a href="{{ route('missions') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r=".4" fill="currentColor"/></svg>Mission et Objectifs</a></li>
-          <li><a href="{{ route('organigramme') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="1.5" width="4" height="3"/><rect x="1" y="10.5" width="4" height="3"/><rect x="11" y="10.5" width="4" height="3"/><path d="M8 4.5v3.5M8 8h-5v2.5M8 8h5v2.5"/></svg>Organigramme</a></li>
+          <li><a href="{{ route('admin.historique') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg>Historique</a></li>
+          <li><a href="{{ route('admin.missions') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r=".4" fill="currentColor"/></svg>Mission et Objectifs</a></li>
+          <li><a href="{{ route('admin.organigramme') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="1.5" width="4" height="3"/><rect x="1" y="10.5" width="4" height="3"/><rect x="11" y="10.5" width="4" height="3"/><path d="M8 4.5v3.5M8 8h-5v2.5M8 8h5v2.5"/></svg>Organigramme</a></li>
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Documentation</div></li>
           <li>
             <div class="node" data-toggle="textesnat"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2v12M2 3h10l-2 2 2 2H2"/></svg>Textes nationaux<svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg></div>
             <ul class="sub" id="textesnat">
-              <li><a href="{{ route('lois') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Lois</a></li>
-              <li><a href="{{ route('decrets') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Décrets</a></li>
-              <li><a href="{{ route('arretes') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Arrêtés et Décisions</a></li>
+              <li><a href="{{ route('lois.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Lois</a></li>
+              <li><a href="{{ route('decrets.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Décrets</a></li>
+              <li><a href="{{ route('arretes.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Arrêtés et Décisions</a></li>
             </ul>
           </li>
           <li>
             <div class="node" data-toggle="textesint"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c1.8 2 1.8 10 0 12M8 2c-1.8 2-1.8 10 0 12"/></svg>Textes Internationaux<svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg></div>
             <ul class="sub" id="textesint">
-              <li><a href="{{ route('conventions') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Conventions</a></li>
-              <li><a href="{{ route('accords') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Accords</a></li>
-              <li><a href="{{ route('protocoles') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Protocoles</a></li>
+              <li><a href="{{ route('conventions.edit') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Conventions</a></li>
+              <li><a href="{{ route('accords.edit') }}"class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Accords</a></li>
+              <li><a href="{{ route('protocoles.edit') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/></svg>Protocoles</a></li>
             </ul>
           </li>
 
