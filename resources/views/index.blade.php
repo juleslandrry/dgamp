@@ -614,6 +614,7 @@
 </script>
 
   <!-- Recent Posts Start -->
+<!-- Recent Posts Start -->
 <section class="recent-posts">
     <div class="container">
         <div class="row">
@@ -625,115 +626,53 @@
                 </div>
             </div>
 
-            <!-- Actualité 1 -->
-           <div class="col-lg-6 mb-4">
-           <div class="single-rpost d-flex align-items-center">
+            @forelse($actualites as $actu)
+                <div class="col-lg-6 mb-4">
+                    <div class="single-rpost d-flex align-items-center">
 
-                <!-- BADGE -->
-                <div class="post-badge securite">RENCONTRE</div>
-
-                <div class="post-thumb">
-                    <img src="assets/images/image14.jpeg" alt="">
-                </div>
-
-               <div class="post-content">
-                    <time>Publié le : 11 Décembre 2025</time>
-                    <h4>
-                        <a href="#" class="no-underline">
-                            Abidjan abrite un atelier sous-régional...
-                        </a>
-                    </h4>
-                    <div class="views">
-                        👁 <span class="static-view">15</span> vues
-                    </div>
-                    <a class="post-btn" href="#">→</a>
-                </div>
-            </div>
-        </div>
-
-            <!-- Actualité 2 -->
-            <div class="col-lg-6 mb-4">
-                <div class="single-rpost d-flex align-items-center">
-                    <div class="post-thumb">
-
-                         <!-- BADGE -->
-                        <div class="post-badge securite">FORMATION</div>
-
-                        <img src="assets/images/image12.jpeg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <time>Publié le : 01 Décembre 2025</time>
-                        <h4>
-                            <a href="#" class="no-underline">
-                                Abidjan accueille un atelier...
-                            </a>
-                        </h4>
-                        <div class="views">
-                            👁 <span class="static-view">50</span> vues
+                        <!-- BADGE CATEGORIE -->
+                        <div class="post-badge securite">
+                            {{ $actu->categorie ?? 'ACTUALITÉ' }}
                         </div>
-                        <a class="post-btn" href="#">→</a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Actualité 3 -->
-            <div class="col-lg-6 mb-4">
-                <div class="single-rpost d-flex align-items-center">
-                    <div class="post-thumb">
-                         <!-- BADGE -->
-                        <div class="post-badge securite">SÉCURITÉ</div>
-                        <img src="assets/images/image38.jpeg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <time>Publié le : 22 Octobre 2025</time>
-                        <h4>
-                            <a href="#" class="no-underline">
-                                Sécurisaté maritime operation espadon3...
-                            </a>
-                        </h4>
-                        <div class="views">
-                            👁 <span class="static-view">20</span> vues
+                        <div class="post-thumb">
+                            <img src="{{ $actu->image_path ? asset('storage/' . $actu->image_path) : asset('assets/images/image14.jpeg') }}" alt="{{ $actu->titre }}">
                         </div>
-                        <a class="post-btn" href="#">→</a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Actualité 4 -->
-            <div class="col-lg-6 mb-4">
-                <div class="single-rpost d-flex align-items-center">
-                    <div class="post-thumb">
-                         <!-- BADGE -->
-                        <div class="post-badge securite">DON</div>
-                        <img src="assets/images/image15.jpeg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <time>Publié le : 22 Octobre 2025</time>
-                        <h4>
-                            <a href="#" class="no-underline">
-                                Opération Dauphin1 : Étape de...
-                            </a>
-                        </h4>
-                        <div class="views">
-                            👁 <span class="static-view">10</span> vues
+                        <div class="post-content">
+                            <time>
+                                Publié le : {{ $actu->date_publication ? \Carbon\Carbon::parse($actu->date_publication)->translatedFormat('d F Y') : \Carbon\Carbon::parse($actu->created_at)->translatedFormat('d F Y') }}
+                            </time>
+                            <h4>
+                                <a href="{{ route('actualitesdgam') }}" class="no-underline">
+                                    {{ Str::limit($actu->titre, 60, '...') }}
+                                </a>
+                            </h4>
+                            <div class="views">
+                                👁 <span class="static-view">{{ $actu->vues ?? 0 }}</span> vues
+                            </div>
+                            <a class="post-btn" href="{{ route('actualitesdgam') }}">→</a>
                         </div>
-                        <a class="post-btn" href="#">→</a>
                     </div>
                 </div>
-            </div>
+            @empty
+                <div class="col-12 text-center py-4">
+                    <p class="text-muted">Aucune actualité disponible pour le moment.</p>
+                </div>
+            @endforelse
 
         </div>
 
         <!-- Bouton voir plus -->
         <div class="text-center mt-4" id="groupebtn">
-            <a href="{{route('actualité') }}" 
-                class="btn-actualites" id="btn-voirplus">
+            <a href="{{ route('actualitesdgam') }}" class="btn-actualites" id="btn-voirplus">
                 Voir plus
             </a>
         </div>
 
     </div>
 </section>
+<!-- Recent Posts End -->
 
 <style>
         .recent-posts {
@@ -935,54 +874,50 @@
 <!-- Recent Posts End -->
 
 
+<!-- Communiqués Start -->
 <section class="communique-section">
+    <div class="container">
 
-        <div class="container">
-
-            <!-- Titre (inchangé) -->
-            <div class="col-12">
-                        <div class="actualite-bar">
-                            <h3 class="actualite-title">COMMUNIQUÉS</h3>
-                        </div>
-                    </div>
-
-            <div class="row">
-
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="communique-card">
-                        <img src="assets/images/service3.png" alt="">
-                        <h5>Arrêté n°332 du 26 février 2020 fixant...</h5>
-                        <p>Conditions de visite et réglementation maritime...</p>
-                        <a href="#" class="btn-download">Télécharger</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="communique-card">
-                        <img src="assets/images/service3.png" alt="">
-                        <h5>Décret n°2021-804 organisation...</h5>
-                        <p>Organisation des affaires maritimes...</p>
-                        <a href="#" class="btn-download">Télécharger</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="communique-card">
-                        <img src="assets/images/service3.png" alt="">
-                        <h5>Décret n°2021-804 organisation...</h5>
-                        <p>Organisation des affaires maritimes...</p>
-                        <a href="#" class="btn-download">Télécharger</a>
-                    </div>
-                </div>
-
+        <!-- Titre -->
+        <div class="col-12">
+            <div class="actualite-bar">
+                <h3 class="actualite-title">COMMUNIQUÉS</h3>
             </div>
-
-            <div class="text-center mt-4">
-                <a href="{{ route('communiqué') }}" class="btn-orange">Voir plus</a>
-            </div>
-
         </div>
+
+        <div class="row">
+            @forelse($communiques as $communique)
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="communique-card">
+                        <img src="{{ asset('assets/images/service3.png') }}" alt="Icône document">
+                        <h5>{{ Str::limit($communique->titre, 50, '...') }}</h5>
+                        <p>{{ Str::limit(strip_tags($communique->description ?? $communique->contenu), 80, '...') }}</p>
+                        
+                        @if(!empty($communique->fichier_path))
+                            <a href="{{ asset('storage/' . $communique->fichier_path) }}" class="btn-download" target="_blank" download>
+                                Télécharger
+                            </a>
+                        @else
+                            <a href="{{ route('communiquesdgam') }}" class="btn-download">
+                                Consulter
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center py-4">
+                    <p class="text-muted">Aucun communiqué disponible pour le moment.</p>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ route('communiquesdgam') }}" class="btn-orange">Voir plus</a>
+        </div>
+
+    </div>
 </section>
+<!-- Communiqués End -->
 
 
     <style>
@@ -1054,6 +989,7 @@
             }
     </style>
         <!-- Services End -->
+
 <section class="mega-gallery-section py-5">
     <div class="container">
         

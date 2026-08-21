@@ -10,7 +10,7 @@
         <ul class="sub" id="accueil">
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Directeur Général</div></li>
-          <li><a href="#" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg>Mot du DG</a></li>
+          <li><a href="{{ route('motdg') }}" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg>Mot du DG</a></li>
           <li><a href="#"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>Biographie</a></li>
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Organisation</div></li>
@@ -48,18 +48,18 @@
           <li><a href="{{ route('videos') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="8" rx="1.2"/><path d="M10 6.3l4-1.8v7l-4-1.8z"/></svg>Galerie Vidéos</a></li>
 
           <li><div class="group-label">Communication</div></li>
-          <li><a href="{{ route('communiques') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 1h7l3 3v11H3z"/></svg>Communiqué</a></li>
-          <li><a href="{{ route('actualites') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg>Actualités</a></li>
+          <li><a href="{{ route('communiques.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 1h7l3 3v11H3z"/></svg>Communiqué</a></li>
+          <li><a href="{{ route('actualites.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9v10H2z"/><path d="M11 5h3v8h-2"/><path d="M4 6h5M4 8h5M4 10h3"/></svg>Actualités</a></li>
 
         </ul>
       </li>
 
-      <li><a href="{{ route('activites-nos') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13l3-5 3 3 3-6 3 8"/></svg></span>Nos Activités</a></li>
+      <li><a href="{{ route('activites.index') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13l3-5 3 3 3-6 3 8"/></svg></span>Nos Activités</a></li>
 
       <li><a href="{{ route('services-en-ligne') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.3"/><path d="M1.7 8h12.6M8 1.7c1.8 2 1.8 10.6 0 12.6M8 1.7c-1.8 2-1.8 10.6 0 12.6"/></svg></span>Services en Ligne</a></li>
 
       <li>
-        <div class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14.5S3 10 3 6.3a5 5 0 0110 0C13 10 8 14.5 8 14.5z"/><circle cx="8" cy="6.3" r="1.8"/></svg></span>Régions et Arrondissements</div>
+        <a href="arrondissements" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14.5S3 10 3 6.3a5 5 0 0110 0C13 10 8 14.5 8 14.5z"/><circle cx="8" cy="6.3" r="1.8"/></svg></span>Régions et Arrondissements</a>
       </li>
 
       <li>
@@ -87,8 +87,8 @@
         </ul>
       </li>
 
-      <li><div class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>Opérateurs</div></li>
-      <li><div class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h5l1 2h6v8H2z"/></svg></span>Partenaires</div></li>
+      <li><a href="{{ route('operateurs.index') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>Opérateurs</a></li>
+      <li><a href="{{ route('partenaires.index') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h5l1 2h6v8H2z"/></svg></span>Partenaires</a></li>
 
       <li>
         <div class="node" data-toggle="parametres">

@@ -8,6 +8,11 @@ use App\Http\Controllers\MotDgController;
 use App\Http\Controllers\BiographieDgController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\EnaController;
+use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\ActiviteController;
+use App\Http\Controllers\ArrondissementController;
+use App\Http\Controllers\OperateurController;
+use App\Http\Controllers\PartenaireController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -47,38 +52,18 @@ Route::get('/ena', [EnaController::class, 'show'])->name('ena');
 Route::get('/fonction_publique', [DgampController::class, 'fonction_publique'])->name('fonctionpublique');
 Route::get('/galerie_img', [DgampController::class, 'galerie_img'])->name('galerie_img');
 Route::get('/galerie_vidéo', [DgampController::class, 'galerie_vidéo'])->name('galerie_vidéo');
-Route::get('/communiqué', [DgampController::class, 'communiqué'])->name('communiqué');
-Route::get('/actualité', [DgampController::class, 'actualité'])->name('actualité');
-Route::get('/securité_maritime', [DgampController::class, 'securité_maritime'])->name('securitémaritime');
-Route::get('/sureté_portuaire', [DgampController::class, 'sureté_portuaire'])->name('suretéportuaire');
-Route::get('/santé_population_mer', [DgampController::class, 'santé_population_mer'])->name('santépopulationmer');
-Route::get('/gestion_population_mer', [DgampController::class, 'gestion_population_mer'])->name('gestionpopulationmer');
-Route::get('/plaisance_activité_nautique', [DgampController::class, 'plaisance_activité_nautique'])->name('plaisanceactiviténautique');
-Route::get('/transport_fluvio_lagunaire', [DgampController::class, 'transport_fluvio_lagunaire'])->name('transportfluviolagunaire');
-Route::get('/recouvrement', [DgampController::class, 'recouvrement'])->name('recouvrement');
-Route::get('/coordination_sauvetage_maritime', [DgampController::class, 'coordination_sauvetage_maritime'])->name('coordinationsauvetagemaritime');
+
 Route::get('/agrément_visa', [DgampController::class, 'agrément_visa'])->name('agrémentvisa');
 Route::get('/immatriculation_navire', [DgampController::class, 'immatriculation_navire'])->name('immatriculationnavire');
 Route::get('/visite_technique', [DgampController::class, 'visite_technique'])->name('visitetechnique');
 Route::get('/permis_conduire', [DgampController::class, 'permis_conduire'])->name('permisconduire');
 Route::get('/titres_maritimes', [DgampController::class, 'titres_maritimes'])->name('titresmaritimes');
-Route::get('/arrondissement_adiaké', [DgampController::class, 'arrondissement_adiaké'])->name('arrondissementadiaké');
-Route::get('/arrondissement_san_pedro', [DgampController::class, 'arrondissement_san_pedro'])->name('arrondissementsanpedro');
-Route::get('/arrondissement_grand_bassam', [DgampController::class, 'arrondissement_grand_bassam'])->name('arrondissementgrandbassam');
-Route::get('/arrondissement_tabou', [DgampController::class, 'arrondissement_tabou'])->name('arrondissementtabou');
-Route::get('/arrondissement_abidjan', [DgampController::class, 'arrondissement_abidjan'])->name('arrondissementabidjan');
-Route::get('/arrondissement_jacqueville', [DgampController::class, 'arrondissement_jacqueville'])->name('arrondissementjacqueville');
-Route::get('/arrondissement_sassandra', [DgampController::class, 'arrondissement_sassandra'])->name('arrondissementsassandra');
-Route::get('/arrondissement_grand_lahou', [DgampController::class, 'arrondissement_grand_lahou'])->name('arrondissementgrandlahou');
-Route::get('/arrondissement_bingerville', [DgampController::class, 'arrondissement_bingerville'])->name('arrondissementbingerville');
-Route::get('/arrondissement_fresco', [DgampController::class, 'arrondissement_fresco'])->name('arrondissementfresco');
+
 Route::get('/personnel_militaire', [DgampController::class, 'personnel_militaire'])->name('personnelmilitaire');
 Route::get('/personnel_interministériel', [DgampController::class, 'personnel_interministériel'])->name('personnelinterministériel');
 Route::get('/fond_prévoyance', [DgampController::class, 'fond_prévoyance'])->name('fondprévoyance');
 Route::get('/vie_social', [DgampController::class, 'vie_social'])->name('viesocial');
 Route::get('/autre_association', [DgampController::class, 'autre_association'])->name('autreassociation');
-Route::get('/opérateur', [DgampController::class, 'opérateur'])->name('opérateur');
-Route::get('/partenaire', [DgampController::class, 'partenaire'])->name('partenaire');
 
 
 //ROUTES ADOU
@@ -98,6 +83,12 @@ Route::get('/arrêté_de_decision', [DocumentationController::class, 'showArrete
 Route::get('/convention_dgam', [DocumentationController::class, 'showConventions'])->name('conventiondgam');
 Route::get('/accord_dgam', [DocumentationController::class, 'showAccords'])->name('accorddgam');
 Route::get('/protocole_dgam', [DocumentationController::class, 'showProtocoles'])->name('protocoledgam');
+Route::get('/communiques', [CommunicationController::class, 'showCommunique'])->name('communiquesdgam');
+Route::get('/actualites', [CommunicationController::class, 'showActualite'])->name('actualitesdgam');
+Route::get('/activites/{slug}', [ActiviteController::class, 'showActivite'])->name('activitesdgam');
+Route::get('/arrondissements/{slug}', [ArrondissementController::class, 'showArrondissement'])->name('arrondissements.show');
+Route::get('/operateurs', [OperateurController::class, 'showOperateur'])->name('operateursdgam');
+Route::get('/partenaires', [PartenaireController::class, 'showPartenaire'])->name('parteaniresdgam');
 
 
 // Espace admin
@@ -120,7 +111,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/decrets-et-arretes', [DocumentationController::class, 'indexDecrets'])->name('decrets.index');
     Route::post('/decrets-et-arretes', [DocumentationController::class, 'updateDecrets'])->name('decrets.update');
-    
+
     Route::get('/arretes', [DocumentationController::class, 'indexArrete'])->name('arretes.index');
     Route::post('/arretes/update', [DocumentationController::class, 'updateArretes'])->name('arretes.update');
 
@@ -132,6 +123,40 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/protocoles', [DocumentationController::class, 'editProtocoles'])->name('protocoles.edit');
     Route::post('/protocoles', [DocumentationController::class, 'updateProtocoles'])->name('protocoles.update');
+
+    Route::get('/communiques', [CommunicationController::class, 'indexCommunique'])->name('communiques.index');
+    Route::post('/communiques', [CommunicationController::class, 'storeCommunique'])->name('communiques.store');
+    Route::put('/communiques/{id}', [CommunicationController::class, 'updateCommunique'])->name('communiques.update');
+    Route::delete('/communiques/{id}', [CommunicationController::class, 'destroyCommunique'])->name('communiques.destroy');
+
+    Route::get('/actualites', [CommunicationController::class, 'indexActualite'])->name('actualites.index');
+    Route::post('/actualites', [CommunicationController::class, 'storeActualite'])->name('actualites.store');
+    Route::put('/actualites/{id}', [CommunicationController::class, 'updateActualite'])->name('actualites.update');
+    Route::delete('/actualites/{id}', [CommunicationController::class, 'destroyActualite'])->name('actualites.destroy');
+
+    Route::get('/activites', [ActiviteController::class, 'indexActivite'])->name('activites.index');
+    
+    // CRUD Activités
+    Route::post('/activites', [ActiviteController::class, 'storeActivite'])->name('activites.store');
+    Route::put('/activites/{activite}', [ActiviteController::class, 'updateActivite'])->name('activites.update');
+    Route::delete('/activites/{activite}', [ActiviteController::class, 'destroyActivite'])->name('activites.destroy');
+
+    // CRUD Réglementations
+    Route::post('/activites/{activite}/reglementations', [ActiviteController::class, 'storeReglementation'])->name('activites.reglementations.store');
+    Route::delete('/reglementations/{reglementation}', [ActiviteController::class, 'destroyReglementation'])->name('reglementations.destroy');
+
+    Route::resource('arrondissements', ArrondissementController::class)->names('arrondissements')->except(['show']);
+    Route::post('arrondissements/upload-image', [ArrondissementController::class, 'uploadImage'])->name('arrondissements.upload_image');
+
+    Route::get('/operateur', [OperateurController::class, 'index'])->name('operateurs.index');
+    Route::post('/operateur', [OperateurController::class, 'store'])->name('operateurs.store');
+    Route::put('/operateur/{id}', [OperateurController::class, 'update'])->name('operateurs.update');
+    Route::delete('/operateur/{id}', [OperateurController::class, 'destroy'])->name('operateurs.destroy');
+
+    Route::get('/partenaires', [PartenaireController::class, 'index'])->name('partenaires.index');
+    Route::post('/partenaires', [PartenaireController::class, 'store'])->name('partenaires.store');
+    Route::put('/partenaires/{partenaire}', [PartenaireController::class, 'update'])->name('partenaires.update');
+    Route::delete('/partenaires/{partenaire}', [PartenaireController::class, 'destroy'])->name('partenaires.destroy');
 
 });
 
@@ -145,15 +170,6 @@ Route::post('/admin/galerie', [AdminController::class, 'galerie_update'])->name(
 
 Route::get('/admin/videos', [AdminController::class, 'videos'])->name('videos');
 Route::post('/admin/videos', [AdminController::class, 'videos_update'])->name('videos.update');
-
-Route::get('/admin/actualites', [AdminController::class, 'actualites'])->name('actualites');
-Route::post('/admin/actualites', [AdminController::class, 'actualites_update'])->name('actualites.update');
-
-Route::get('/admin/communiques', [AdminController::class, 'communiques'])->name('communiques');
-Route::post('/admin/communiques', [AdminController::class, 'communiques_update'])->name('communiques.update');
-
-Route::get('/admin/activites-nos', [AdminController::class, 'activites'])->name('activites-nos');
-Route::post('/admin/activites-nos/{section}', [AdminController::class, 'activites_update'])->name('activites-nos.update');
 
 Route::get('/admin/visa', [AdminController::class, 'visa'])->name('visa');
 Route::post('/admin/visa', [AdminController::class, 'visa_update'])->name('visa.update');

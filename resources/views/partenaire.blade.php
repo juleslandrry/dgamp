@@ -1,4 +1,5 @@
 @extends('template')
+
 @section('layout')
 
 <div class="partners-site-container">
@@ -12,74 +13,32 @@
 
         <section class="partners-grid-section">
             <div class="partners-grid" id="partnersGrid">
-                
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image19.jpeg" alt="Partenaire 1" class="img-fluid">
+                @forelse($partenaires as $partenaire)
+                    <div class="partner-card-glass partner-item">
+                        <div class="partner-logo-box">
+                            <img src="{{ asset('storage/' . $partenaire->logo) }}" alt="{{ $partenaire->nom }}" class="img-fluid">
+                        </div>
+                        <div class="partner-info">
+                            <h3 class="text-white">{{ $partenaire->nom }}</h3>
+                            @if($partenaire->type)
+                                <p class="text-white-50">{{ $partenaire->type }}</p>
+                            @endif
+                        </div>
                     </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">AIGF</h3>
-                        <p class="text-white-50">Partenaire en mer</p>
+                @empty
+                    <div class="text-center text-white py-5 w-100">
+                        <p class="lead">Aucun partenaire enregistré pour le moment.</p>
                     </div>
-                </div>
-
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image20.jpeg" alt="Partenaire 2" class="img-fluid">
-                    </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">ARSTM</h3>
-                        <p class="text-white-50">Formation Maritime</p>
-                    </div>
-                </div>
-
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image24.jpeg" alt="Partenaire 3" class="img-fluid">
-                    </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">organisation maritime internationnale</h3>
-                        <p class="text-white-50">Sécurité et Défense</p>
-                    </div>
-                </div>
-
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image22.jpeg" alt="Partenaire 4" class="img-fluid">
-                    </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">OMAOC</h3>
-                        <p class="text-white-50">Action de l'État en Mer</p>
-                    </div>
-                </div>
-
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image18.jpeg" alt="Partenaire 5" class="img-fluid">
-                    </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">centre ivoirien antipollution</h3>
-                        <p class="text-white-50">Action de l'État en Mer</p>
-                    </div>
-                </div>
-
-                <div class="partner-card-glass partner-item">
-                    <div class="partner-logo-box">
-                        <img src="assets/images/image21.jpeg" alt="Partenaire 6" class="img-fluid">
-                    </div>
-                    <div class="partner-info">
-                        <h3 class="text-white">organisation internationale du travail</h3>
-                        <p class="text-white-50">Action de l'État </p>
-                    </div>
-                </div>
-
+                @endforelse
             </div>
 
-            <div class="pagination-container" id="paginationWrapper">
-                <div class="page-item" id="prevBtn">&laquo;</div>
-                <div id="pageNumbers" style="display: flex; gap: 8px;"></div>
-                <div class="page-item" id="nextBtn">&raquo;</div>
-            </div>
+            @if($partenaires->count() > 6)
+                <div class="pagination-container" id="paginationWrapper">
+                    <div class="page-item" id="prevBtn">&laquo;</div>
+                    <div id="pageNumbers" style="display: flex; gap: 8px;"></div>
+                    <div class="page-item" id="nextBtn">&raquo;</div>
+                </div>
+            @endif
         </section>
 
         <div class="cta-glass-box text-center">
@@ -93,7 +52,6 @@
 </div>
 
 <style>
-    /* TES STYLES ORIGINAUX (AUCUN CHANGEMENT) */
     .partners-site-container {
         position: relative;
         width: 100%;
@@ -113,7 +71,6 @@
     .content-z { position: relative; z-index: 2; }
     .partners-header { padding: 100px 0 50px; }
     .partners-header h1 { font-size: 3rem; font-weight: 800; text-transform: uppercase; }
-    .badge-partners { background: #e37419; color: white; padding: 5px 15px; border-radius: 50px; font-weight: 600; margin-bottom: 15px; display: inline-block; }
     .partners-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -159,7 +116,6 @@
     }
     .btn-partner-action:hover { background: #e37419; }
 
-    /* STYLE DE LA PAGINATION AJOUTÉ */
     .pagination-container { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
     .page-item {
         width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
@@ -178,7 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
 
-    let itemsPerPage = 6; // Nombre de logos par page
+    if (items.length === 0 || !pageNumbers) return;
+
+    let itemsPerPage = 6;
     let currentPage = 1;
 
     function displayPage(page) {

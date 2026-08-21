@@ -23,88 +23,26 @@
                         <th class="text-right">Action</th>
                     </tr>
                 </thead>
-                <tbody id="docBody">
-                    <tr class="doc-row">
-                        <td><strong>Arrêté n°332 du 26 février 2020 fixant les conditions de visite et de certification des navires ivoiriens</strong></td>
-                        <td>fixant les conditions de visit.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" target="_blank">
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Décret n° 2021-804 du 8 décembre 2021 portant organisation du SEMTAM</strong></td>
-                        <td>Décret refermant l'organisati.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Règlement d'exécution num. 003/2019/COM/UEMOA</strong></td>
-                        <td>Règlement d'exécution déter.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Arrêté n°334 sur l'activité de recrutement.....</strong></td>
-                        <td>Arrêté n°334 sur l'activité de recrutement.</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Arrêté n°335 retrait ou suspension des brevets..</strong></td>
-                        <td>Arrêté n°335 retrait ou suspension des brevets.</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Arrêté n°336 prévention de l'abus de l'alcool..</strong></td>
-                        <td>Arrêté n°336 prévention de l'abus de l'alcool.</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>Décret N° 2019-243 du 20 mars 2019 fixant les procédures de définitions et les modalités de gestion des domaines publics maritimes..</strong></td>
-                        <td>le présent décret a pour obj.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="doc-row">
-                        <td><strong>CODE ISPS</strong></td>
-                        <td>Code International pour la Sû.....</td>
-                        <td><span class="badge-pdf">PDF</span></td>
-                        <td class="text-right">
-                            <a href="#" class="btn-download" download>
-                                Télécharger <span class="download-icon">📥</span>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
+                    <tbody id="docBody">
+                        @forelse($communiques as $com)
+                            <tr class="doc-row">
+                                <td><strong>{{ $com->titre }}</strong></td>
+                                <td>{{ $com->description ?? 'N/A' }}</td>
+                                <td><span class="badge-pdf">PDF</span></td>
+                                <td class="text-right">
+                                    @if($com->fichier_path)
+                                        <a href="{{ asset('storage/' . $com->fichier_path) }}" class="btn-download" target="_blank" download>
+                                            Télécharger <span class="download-icon">📥</span>
+                                        </a>
+                                    @else
+                                        <span style="color: #888; font-size: 12px;">Aucun fichier</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            {{-- La ligne vide sera masquée par le script JS si besoin --}}
+                        @endforelse
+                    </tbody>
             </table>
             {{-- Message si vide --}}
             <div id="noResults" style="display: none; padding: 30px; text-align: center; color: #666;">

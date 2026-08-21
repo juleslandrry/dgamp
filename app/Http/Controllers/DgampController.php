@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actualite;
+use App\Models\Communique;
 use Illuminate\Http\Request;
 
 class DgampController extends Controller
 {
-    public function home() {
-        return view('index');
+    public function home() 
+    {
+        // Récupère les 4 dernières actualités
+        $actualites = Actualite::orderBy('date_publication', 'desc')
+                        ->latest()
+                        ->take(4)
+                        ->get();
+
+        // Récupère les 3 derniers communiqués
+        $communiques = Communique::orderBy('created_at', 'desc')
+                        ->latest()
+                        ->take(3)
+                        ->get();
+
+        return view('index', compact('actualites', 'communiques'));
     }
 
     public function mot_du_dg () {

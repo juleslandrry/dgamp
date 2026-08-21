@@ -151,22 +151,21 @@
                                         <li><a href="{{ route('galerie_vidéo') }}">Galerie Vidéos</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{ route('communiqué') }}">Communiqués</a></li>
-                                 <li><a href="{{ route('actualité') }}">Actualité</a></li>
+                                <li><a href="{{ route('communiquesdgam') }}">Communiqués</a></li>
+                                 <li><a href="{{ route('actualitesdgam') }}">Actualité</a></li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">Nos Activités</a>
                             <ul class="dropdown-menu-custom dropdown-activites">
-                                <li><a href="{{ route('securitémaritime') }}">Sécurité Maritime</a></li>
-                                <li><a href="{{ route('suretéportuaire') }}">Sûreté Maritime et Portuaire</a></li>
-                                <li><a href="{{ route ('santépopulationmer') }}">Santé de la population en mer</a></li>
-                                <li><a href="{{ route('gestionpopulationmer') }}">Gestion de la population en mer</a></li>
-                                <li><a href="{{ route('plaisanceactiviténautique') }}">Plaisance et Activité Nautique</a></li>
-                                <li><a href="{{ route('transportfluviolagunaire') }}">Transport Maritime & Fluvio Lagunaire</a></li>
-                                <li><a href="{{ route('recouvrement') }}">Recouvrement</a></li>
-                                <li><a href="{{ route('coordinationsauvetagemaritime') }}">Sauvetage Maritime (MRCC)</a></li>
+                                @foreach($menuActivites as $item)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('activitesdgam', $item->slug) }}">
+                                            {{ $item->titre }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </li>
 
@@ -184,16 +183,19 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">Régions et Arrondissements</a>
                             <ul class="dropdown-menu-custom dropdown-arrondissements">
-                                <li><a href="{{ route('arrondissementadiaké') }}">Arrondissement d'adiaké</a></li>
-                                <li><a href="{{ route('arrondissementsanpedro') }}">Arrondissement de San-Pedro</a></li>
-                                <li><a href="{{ route('arrondissementgrandbassam') }}">Arrondissement de Grand-Bassam</a></li>
-                                <li><a href="{{ route('arrondissementtabou') }}">Arrondissement de Tabou</a></li>
-                                <li><a href="{{ route('arrondissementabidjan') }}">Arrondissement d' abidjan</a></li>
-                                <li><a href="{{ route('arrondissementjacqueville') }}">Arrondissement de jacqueville</a></li>
-                                <li><a href="{{ route('arrondissementsassandra') }}">Arrondissement de sassandra</a></li>
-                                <li><a href="{{ route('arrondissementgrandlahou') }}">Arrondissement de grand lahou</a></li>
-                                <li><a href="{{ route('arrondissementbingerville') }}">Arrondissement de bingerville</a></li>
-                                <li><a href="{{ route('arrondissementfresco') }}">Arrondissement de fresco</a></li>
+                                @isset($headerArrondissements)
+                                    @forelse($headerArrondissements as $item)
+                                        <li>
+                                            <a href="{{ route('arrondissements.show', $item->slug) }}">
+                                                {{ $item->titre }}
+                                            </a>
+                                        </li>
+                                    @empty
+                                        <li><a href="#">Aucun arrondissement disponible</a></li>
+                                    @endforelse
+                                @endisset
+
+                                
                             </ul>
                         </li>
 
@@ -218,8 +220,8 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a href="{{ route('opérateur') }}" class="nav-link">Opérateurs</a></li>
-                        <li class="nav-item"><a href="{{ route ('partenaire') }}" class="nav-link">Partenaires</a></li>
+                        <li class="nav-item"><a href="{{ route('operateursdgam') }}" class="nav-link">Opérateurs</a></li>
+                        <li class="nav-item"><a href="{{ route ('parteaniresdgam') }}" class="nav-link">Partenaires</a></li>
                     </ul>
                 </div>
             </nav>
