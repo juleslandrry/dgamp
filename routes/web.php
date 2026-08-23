@@ -13,6 +13,8 @@ use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PartenaireController;
+use App\Http\Controllers\ParametreController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -36,15 +38,7 @@ Route::get('/mot_du_dg', [MotDgController::class, 'show'])->name('motdudg');
 Route::get('/biographie_du_dg', [BiographieDgController::class, 'show'])->name('biographiedudg');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
 
-Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
-Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif'])->name('missionetobjectif');
-Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
-Route::get('/lois_dgam', [DgampController::class, 'lois_dgam'])->name('loisdgam');
-Route::get('/decret_dgam', [DgampController::class, 'decret_dgam'])->name('decretdgam');
-Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decision'])->name('arrêtédedecision');
-Route::get('/convention_dgam', [DgampController::class, 'convention_dgam'])->name('conventiondgam');
-Route::get('/accord_dgam', [DgampController::class, 'accord_dgam'])->name('accorddgam');
-Route::get('/protocole_dgam', [DgampController::class, 'protocole_dgam'])->name('protocoledgam');
+
 Route::get('/even_à_venir', [EvenementController::class, 'showAvenir'])->name('evenàvenir');
 Route::get('/even_passé', [EvenementController::class, 'showPasses'])->name('evenpassé');
 Route::get('/ena', [EnaController::class, 'show'])->name('ena');
@@ -135,7 +129,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/actualites/{id}', [CommunicationController::class, 'destroyActualite'])->name('actualites.destroy');
 
     Route::get('/activites', [ActiviteController::class, 'indexActivite'])->name('activites.index');
-    
+
     // CRUD Activités
     Route::post('/activites', [ActiviteController::class, 'storeActivite'])->name('activites.store');
     Route::put('/activites/{activite}', [ActiviteController::class, 'updateActivite'])->name('activites.update');
@@ -158,6 +152,8 @@ Route::prefix('admin')->group(function () {
     Route::put('/partenaires/{partenaire}', [PartenaireController::class, 'update'])->name('partenaires.update');
     Route::delete('/partenaires/{partenaire}', [PartenaireController::class, 'destroy'])->name('partenaires.destroy');
 
+    Route::get('/settings', [ParametreController::class, 'index'])->name('parametre.index');
+    Route::put('/settings', [ParametreController::class, 'update'])->name('parametre.update');
 });
 
 

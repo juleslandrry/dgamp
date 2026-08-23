@@ -39,12 +39,11 @@ class OrganisationController extends Controller
 
     public function missionsObjectifs()
     {
-        $contenu = MissionsObjectifs::with([
-            'missions',
-            'objectifs'
-        ])->first();
+        $contenu = MissionsObjectifs::with(['cartes'])->first();
 
-        return view('accueil.apropos.organisation.mission-et-objectif', compact('contenu'));
+        return view('accueil.apropos.organisation.mission-et-objectif', [
+            'contenu' => $contenu
+        ]);
     }
 
     public function historique()

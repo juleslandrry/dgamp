@@ -13,37 +13,20 @@
                 </h2>
 
                 <div class="mission-grid">
-
-                    @forelse($contenu?->missions ?? [] as $mission)
-
+                    @forelse($contenu?->cartes->where('type', 'mission') ?? [] as $mission)
                         <div class="mission-card">
-
                             <div class="card-inner">
-
                                 <div class="card-front">
-                                    <h3>
-                                        {{ $mission->titre }}
-                                    </h3>
+                                    <h3>{{ $mission->titre }}</h3>
                                 </div>
-
                                 <div class="card-back">
-                                    <p>
-                                        {{ $mission->description }}
-                                    </p>
+                                    <p>{{ $mission->description }}</p>
                                 </div>
-
                             </div>
-
                         </div>
-
                     @empty
-
-                        <p style="color:white;">
-                            Aucune mission n'est actuellement disponible.
-                        </p>
-
+                        <p style="color:white;">Aucune mission n'est actuellement disponible.</p>
                     @endforelse
-
                 </div>
 
             </div>
@@ -55,37 +38,20 @@
                 </h2>
 
                 <div class="mission-grid">
-
-                    @forelse($contenu?->objectifs ?? [] as $objectif)
-
+                    @forelse($contenu?->cartes->where('type', 'objectif') ?? [] as $objectif)
                         <div class="mission-card">
-
                             <div class="card-inner">
-
                                 <div class="card-front">
-                                    <h3>
-                                        {{ $objectif->titre }}
-                                    </h3>
+                                    <h3>{{ $objectif->titre }}</h3>
                                 </div>
-
                                 <div class="card-back">
-                                    <p>
-                                        {{ $objectif->description }}
-                                    </p>
+                                    <p>{{ $objectif->description }}</p>
                                 </div>
-
                             </div>
-
                         </div>
-
                     @empty
-
-                        <p style="color:white;">
-                            Aucun objectif n'est actuellement disponible.
-                        </p>
-
+                        <p style="color:white;">Aucun objectif n'est actuellement disponible.</p>
                     @endforelse
-
                 </div>
 
             </div>

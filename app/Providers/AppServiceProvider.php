@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 
+use App\Models\Configuration;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -32,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('template', function ($view) {
             $view->with('headerArrondissements', Arrondissement::select('id', 'titre', 'slug')->get());
+        });
+
+        View::composer('*', function ($view) {
+            $siteSettings = Configuration::first();
+            $view->with('siteSettings', $siteSettings);
         });
     }
 }

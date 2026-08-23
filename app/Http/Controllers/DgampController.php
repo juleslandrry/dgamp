@@ -12,7 +12,6 @@ class DgampController extends Controller
     {
         // Récupère les 4 dernières actualités
         $actualites = Actualite::orderBy('date_publication', 'desc')
-                        ->latest()
                         ->take(4)
                         ->get();
 

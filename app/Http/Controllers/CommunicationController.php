@@ -80,7 +80,7 @@ class CommunicationController extends Controller
 
     public function showActualite()
     {
-        $actualites = Actualite::latest()->get();
+        $actualites = Actualite::orderBy('date_publication', 'desc')->get();
         return view('actualite', compact('actualites'));
     }
 

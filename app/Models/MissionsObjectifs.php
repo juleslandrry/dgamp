@@ -14,20 +14,20 @@ class MissionsObjectifs extends Model
 
     public function cartes(): HasMany
     {
-        return $this->hasMany(MissionsObjectifsCarte::class)
+        return $this->hasMany(MissionsObjectifsCarte::class, 'missions_objectifs_id')
             ->orderBy('ordre');
     }
 
     public function missions(): HasMany
     {
-        return $this->hasMany(MissionsObjectifsCarte::class)
+        return $this->hasMany(MissionsObjectifsCarte::class, 'missions_objectifs_id')
             ->where('type', 'mission')
             ->orderBy('ordre');
     }
 
     public function objectifs(): HasMany
     {
-        return $this->hasMany(MissionsObjectifsCarte::class)
+        return $this->hasMany(MissionsObjectifsCarte::class, 'missions_objectifs_id')
             ->where('type', 'objectif')
             ->orderBy('ordre');
     }
