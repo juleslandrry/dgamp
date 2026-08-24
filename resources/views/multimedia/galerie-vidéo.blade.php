@@ -12,32 +12,19 @@
 <section class="gallery-section">
     <div class="container">
         <div class="gallery-grid" id="videoGrid">
-            <div class="video-card-v2">
-                <div class="video-preview">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/y3kUE7Ew3rA?si=5M_Oaw0oAADmyKQv"  allowfullscreen ></iframe> 
-                </div>
-                <div class="video-details">
-                    <h3>Reportage de la Cérémonie de clôture pilotée par le cabinet GR CONSULTING</h3>
-                </div>
+    @forelse($videos as $video)
+        <div class="video-card-v2">
+            <div class="video-preview">
+                <iframe width="100%" height="100%" src="{{ $video->url }}" allowfullscreen></iframe>
             </div>
-
-            <div class="video-card-v2">
-                <div class="video-preview">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/TbEBUxR8Fyg?si=P6OxUc0wuSrcplCt"  allowfullscreen ></iframe> 
-                </div>
-                <div class="video-details">
-                    <h3>Sécurité maritime et portuaire : des équipements d'une valeur...</h3>
-                </div>
-            </div>
-
-            <div class="video-card-v2">
-                <div class="video-preview">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/824gwdL2Zd8?si=t8limTDHrWTotP87" allowfullscreen></iframe>
-                <div class="video-details">
-                    <h3>Transport : Remise d'équipements à la direction des affaires maritimes</h3>
-                </div>
+            <div class="video-details">
+                <h3>{{ $video->titre }}</h3>
             </div>
         </div>
+    @empty
+        <p style="color:white;text-align:center;">Aucune vidéo disponible pour le moment.</p>
+    @endforelse
+</div>
 
     </div>
 
