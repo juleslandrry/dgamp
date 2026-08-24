@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Actualite;
 use App\Models\Communique;
 use Illuminate\Http\Request;
+use App\Models\ServiceEnLigne;
 
 class DgampController extends Controller
 {
@@ -139,25 +140,29 @@ class DgampController extends Controller
     }
 
      public function agrément_visa () {
-        return view('service-en-ligne.agrément-visa');
-    }
+    $service = ServiceEnLigne::where('cle', 'Agréments et visas')->first();
+    return view('service-en-ligne.agrement-visa', ['service' => $service]);
+}
 
-    public function immatriculation_navire() {
-        return view('service-en-ligne.immatriculation-navire');
-    }
+public function immatriculation_navire() {
+    $service = ServiceEnLigne::where('cle', 'Immatriculations des navires')->first();
+    return view('service-en-ligne.immatriculation-navire', ['service' => $service]);
+}
 
-     public function visite_technique() {
-        return view('service-en-ligne.visite-technique');
-    }
+public function visite_technique() {
+    $service = ServiceEnLigne::where('cle', 'Visite technique des navires')->first();
+    return view('service-en-ligne.visite-technique', ['service' => $service]);
+}
 
-     public function permis_conduire() {
-        return view('service-en-ligne.permis-conduire');
-    }
+public function permis_conduire() {
+    $service = ServiceEnLigne::where('cle', 'Permis de conduire des navires')->first();
+    return view('service-en-ligne.permis-conduire', ['service' => $service]);
+}
 
-    public function titres_maritimes() {
-        return view('service-en-ligne.titres-maritimes');
-    }
-
+public function titres_maritimes() {
+    $service = ServiceEnLigne::where('cle', 'Livrets et titres maritimes')->first();
+    return view('service-en-ligne.titres-maritimes', ['service' => $service]);
+}
     public function arrondissement_adiaké() {
         return view('arrondissement.arrondissement-adiaké');
     }

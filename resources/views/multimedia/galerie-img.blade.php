@@ -14,71 +14,18 @@
 
 <div class="container gallery-wrapper">
     <div id="albumsGrid" class="album-grid">
-        <div class="album-card" onclick="openAlbum('visite-port', 'opération DAUPHIN 1', 'Sécurisation des plans d\'eau - Février 2026')">
-            <div class="album-cover">
-                <img src="assets/images/image17.jpeg" alt="Couverture">
-                <div class="album-badge">12 Photos</div>
+        @foreach($albums as $album)
+            <div class="album-card" onclick="openAlbum('{{ $album->album_id }}', '{{ addslashes($album->popup_titre) }}', '{{ addslashes($album->popup_sous) }}')">
+                <div class="album-cover">
+                    <img src="{{ asset($album->cover) }}" alt="Couverture">
+                    <div class="album-badge">{{ count($album->photos ?? []) }} Photos</div>
+                </div>
+                <div class="album-info">
+                    <h3>{{ $album->titre }}</h3>
+                    <p>{{ $album->date ? $album->date->translatedFormat('F Y') : '' }}</p>
+                </div>
             </div>
-            <div class="album-info">
-                <h3>opération DAUPHIN 1 dédiée à la sécurisation des plans d'eau durant cette période électorale</h3>
-                <p>Février 2026</p>
-            </div>
-        </div>
-
-        <div class="album-card" onclick="openAlbum('voeux-2026', 'Le Ministre Délégué', 'Siège social DGAMP - Janvier 2026')">
-            <div class="album-cover">
-                <img src="assets/images/image4.jpeg" alt="Couverture">
-                <div class="album-badge">08 Photos</div>
-            </div>
-            <div class="album-info">
-                <h3>Le ministre Délégué auprès du Ministre des Transports chargé des Affaires Maritimes à la DGAMP</h3>
-                <p>Janvier 2026</p>
-            </div>
-        </div>
-
-        <div class="album-card" onclick="openAlbum('reconvertis', 'Militaires Reconvertis', 'Etat Major - 15 mars 2023')">
-            <div class="album-cover">
-                <img src="assets/images/image81.jpeg" alt="Couverture">
-                <div class="album-badge">08 Photos</div>
-            </div>
-            <div class="album-info">
-                <h3>Cérémonie de remise de 117 militaires reconvertis au Ministère des Transports. 15 mars 2023</h3>
-                <p>Mars 2023</p>
-            </div>
-        </div>
-
-        <div class="album-card" onclick="openAlbum('drapeau', 'Présentation au Drapeau', 'ENSOA, Bouaké - 25 août 2022')">
-            <div class="album-cover">
-                <img src="assets/images/image59.jpeg" alt="Couverture">
-                <div class="album-badge">08 Photos</div>
-            </div>
-            <div class="album-info">
-                <h3>cérémonie de présentation au drapeau national à la 11è promotion, ENSOA, Bouaké, 25 août 2022</h3>
-                <p>Août 2022</p>
-            </div>
-        </div>
-
-        <div class="album-card" onclick="openAlbum('vehicules', 'Remise de Véhicules', 'Arrondissements DGAMP - 2026')">
-            <div class="album-cover">
-                <img src="assets/images/image65.jpeg" alt="Couverture">
-                <div class="album-badge">08 Photos</div>
-            </div>
-            <div class="album-info">
-                <h3>Cérémonie de remise de véhicules et engins roulants aux chefs des arrondissements de la DGAMP</h3>
-                <p>Janvier 2026</p>
-            </div>
-        </div>
-
-        <div class="album-card" onclick="openAlbum('coast-guard', 'Garde Côte Américaine', 'Mission de délégation - Nov 2021')">
-            <div class="album-cover">
-                <img src="assets/images/image68.jpeg" alt="Couverture">
-                <div class="album-badge">08 Photos</div>
-            </div>
-            <div class="album-info">
-                <h3>Mission de la délégation des Gardes Côte Américaine à la DGAMP ce mardi 16 Novembre 2021</h3>
-                <p>Novembre 2021</p>
-            </div>
-        </div>
+        @endforeach
     </div>
 
     <div id="photosView" class="photos-grid" style="display: none;"></div>
@@ -190,15 +137,8 @@
 </style>
 
 <script>
-// Simulation de données d'images
-const albumData = {
-    'visite-port': ['assets/images/image17.jpeg', 'assets/images/image14.jpeg', 'assets/images/image12.jpeg'],
-    'voeux-2026': ['assets/images/image4.jpeg', 'assets/images/image69.jpeg'],
-    'reconvertis': ['assets/images/image81.jpeg'],
-    'drapeau': ['assets/images/image59.jpeg'],
-    'vehicules': ['assets/images/image65.jpeg'],
-    'coast-guard': ['assets/images/image68.jpeg']
-};
+// Données des albums injectées depuis la base de données
+const albumData = @json($albums->pluck('photos', 'album_id'));
 
 function openAlbum(albumId, title, subtitle) {
     document.getElementById('galleryTitle').innerText = title;

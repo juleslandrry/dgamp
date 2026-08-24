@@ -115,6 +115,7 @@
         <div id="albums-list">
             @foreach($albums as $i => $album)
                 <div class="card-block">
+                    <input type="hidden" name="db_id[]" value="{{ $album['db_id'] ?? '' }}">
                     <div class="card-block-top">
                         <div class="card-num">{{ $i + 1 }}</div>
                         <div class="card-block-top-title">{{ $album['titre'] ?: 'Nouvel album' }}</div>
@@ -149,12 +150,12 @@
                                 <input type="text" name="titre[]" value="{{ $album['titre'] }}" placeholder="Titre complet de l'événement">
                             </div>
                             <div class="mdg-field">
-                                <div class="mdg-label">
-                                    <span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>
-                                    Date affichée
-                                </div>
-                                <input type="text" name="date[]" value="{{ $album['date'] }}" placeholder="Ex: Février 2026">
+                            <div class="mdg-label">
+                                <span class="mdg-icon i-gold">...</span>
+                                Date affichée
                             </div>
+                            <input type="date" name="date[]" value="{{ $album['date'] }}">
+                        </div>
                         </div>
 
                         <div class="mdg-row2">
@@ -263,7 +264,7 @@ function addAlbum() {
                 </div>
                 <div class="mdg-field">
                     <div class="mdg-label"><span class="mdg-icon i-gold"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.2"/><path d="M2 6.5h12M5 2v3M11 2v3"/></svg></span>Date affichée</div>
-                    <input type="text" name="date[]" placeholder="Ex: Juillet 2026">
+                    <input type="date" name="date[]">
                 </div>
             </div>
             <div class="mdg-row2">

@@ -1,19 +1,19 @@
 @extends('template')
 @section('layout')
 
-<section class="license-section">
-    <div class="license-background"></div>
-    <div class="license-content">
-        <span class="license-badge">{{ $service->badge ?? 'Formation & Certification' }}</span>
-        <h1 class="license-title">{{ $service->titre ?? 'Permis de Conduire' }}</h1>
-        <p class="license-description">{!! $service->description ?? "Obtenez votre précieux sésame en toute sérénité. De l'inscription à l'examen final, nous vous accompagnons pour faire de vous un conducteur responsable et certifié." !!}</p>
+<section class="visa-section">
+    <div class="visa-background"></div>
+    <div class="visa-content">
+        <span class="visa-badge">{{ $service->badge ?? 'Services Officiels' }}</span>
+        <h1 class="ship-title">{{ $service->titre ?? 'Agrément & Visa' }}</h1>
+        <p class="visa-description">{!! $service->description ?? "Simplifiez vos démarches administratives avec notre expertise. Nous vous accompagnons dans l'obtention de vos certifications et documents de voyage." !!}</p>
         
-        <div class="license-actions">
-            <a href="#" class="btn-license-explore" onclick="document.getElementById('detailsModal').style.display='flex'; return false;">
-                <span class="btn-text">{{ $service->bouton_texte ?? 'Démarrer mon inscription' }}</span>
+        <div class="visa-actions">
+            <a href="#" class="btn-explore" onclick="document.getElementById('detailsModal').style.display='flex'; return false;">
+                <span class="btn-text">{{ $service->bouton_texte ?? 'En savoir plus' }}</span>
                 <span class="btn-circle">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 5L21 11M21 11L15 17M21 11H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
             </a>
@@ -25,7 +25,7 @@
 <div id="detailsModal" class="details-modal">
     <div class="details-modal-box">
         <span class="details-modal-close" onclick="document.getElementById('detailsModal').style.display='none';">&times;</span>
-        <h2 class="details-modal-title">{{ $service->titre ?? 'Permis de Conduire des Navires' }}</h2>
+        <h2 class="details-modal-title">{{ $service->titre ?? 'Agrément & Visa' }}</h2>
 
         @if($service && $service->detail_texte)
             <p class="details-modal-text">{!! $service->detail_texte !!}</p>
@@ -44,20 +44,24 @@
 </div>
 
 <style>
-    .license-section {
+    :root {
+        --primary-color: #007bff; 
+        --accent-color: #ffd700;
+        --text-light: #ffffff;
+    }
+
+    .visa-section {
         position: relative;
         height: 450px;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        color: #ffffff;
+        color: var(--text-light);
         font-family: 'Inter', sans-serif;
-        padding-top: 20px;
-        box-sizing: border-box;
     }
 
-    .license-background {
+    .visa-background {
         position: absolute;
         top: -5%; left: -5%; width: 110%; height: 110%;
         background: url('assets/images/image33.jpeg') center/cover no-repeat;
@@ -65,62 +69,58 @@
         transition: transform 0.1s ease-out;
     }
 
-    .license-section::before {
+    .visa-section::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(44, 44, 44, 0.4) 100%);
+        background: linear-gradient(45deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
         z-index: 2;
     }
 
-    .license-content {
+    .visa-content {
         position: relative;
         z-index: 3;
         text-align: center;
         max-width: 700px;
         padding: 30px;
         backdrop-filter: blur(5px);
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.05);
         border-radius: 20px;
         border: 1px solid rgba(255,255,255,0.1);
         opacity: 0;
         transform: translateY(30px);
-        transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: all 0.8s ease-out;
     }
 
-    .license-content.is-visible {
+    .visa-content.is-visible {
         opacity: 1;
         transform: translateY(0);
     }
 
-    .license-badge {
+    .visa-badge {
         display: inline-block;
-        background: #007bff;
-        padding: 4px 14px;
+        background: var(--primary-color);
+        padding: 4px 12px;
         border-radius: 50px;
         font-size: 0.7rem;
-        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-bottom: 15px;
-        box-shadow: 0 4px 10px rgba(243, 156, 18, 0.2);
     }
 
-    .license-title {
+    .ship-title {
         font-size: 2.5rem;
         margin-bottom: 10px;
         font-weight: 700;
     }
 
-    .license-description {
+    .visa-description {
         font-size: 1rem;
         margin-bottom: 25px;
         opacity: 0.9;
-        font-weight: 300;
-        line-height: 1.5;
     }
 
-    .btn-license-explore {
+    .btn-explore {
         display: inline-flex;
         align-items: center;
         gap: 15px;
@@ -130,17 +130,17 @@
         transition: all 0.4s ease;
     }
 
-    .btn-license-explore,
-    .btn-license-explore:hover,
-    .btn-license-explore:focus,
-    .btn-license-explore:active {
+    .btn-explore,
+    .btn-explore:hover,
+    .btn-explore:focus,
+    .btn-explore:active {
         text-decoration: none !important;
     }
 
     .btn-circle {
         width: 45px;
         height: 45px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.4);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -153,32 +153,23 @@
         content: '';
         position: absolute;
         top: 100%; left: 0; width: 100%; height: 100%;
-        background: #007bff;
+        background: var(--primary-color);
         transition: all 0.4s ease;
         z-index: 1;
     }
 
-    .btn-license-explore:hover .btn-circle::before { top: 0; }
-    .btn-license-explore:hover .btn-text { color: #007bff; }
-    
-    .btn-circle svg { 
-        width: 18px; 
-        z-index: 2; 
-        transition: transform 0.3s ease;
-    }
-    
-    .btn-license-explore:hover svg { 
-        transform: translateX(5px);
-        stroke: white;
-    }
+    .btn-explore:hover .btn-circle::before { top: 0; }
+    .btn-explore:hover .btn-text { color: #007bff; }
+    .btn-circle svg { width: 18px; z-index: 2; transition: transform 0.3s ease; }
+    .btn-explore:hover svg { transform: translateX(3px); }
 
     .btn-text {
         transition: all 0.3s ease;
         text-decoration: none;
     }
 
-    .btn-license-explore:hover .btn-text,
-    .btn-license-explore:focus .btn-text {
+    .btn-explore:hover .btn-text,
+    .btn-explore:focus .btn-text {
         text-decoration: none !important;
     }
 
@@ -254,41 +245,37 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const lSection = document.querySelector('.license-section');
-    const lContent = document.querySelector('.license-content');
-    const lBg = document.querySelector('.license-background');
-    const lBtn = document.querySelector('.btn-license-explore');
+    const section = document.querySelector('.visa-section');
+    const content = document.querySelector('.visa-content');
+    const bg = document.querySelector('.visa-background');
+    const btn = document.querySelector('.btn-explore');
 
-    const lObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) lContent.classList.add('is-visible');
+            if (entry.isIntersecting) content.classList.add('is-visible');
         });
     }, { threshold: 0.2 });
 
-    lObserver.observe(lSection);
+    observer.observe(section);
 
-    lSection.addEventListener('mousemove', (e) => {
+    section.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
-        
         const xBg = (clientX / window.innerWidth - 0.5) * 20;
-        const yBg = (clientY / window.innerHeight - 0.5) * 10;
-        lBg.style.transform = `translate(${xBg}px, ${yBg}px) scale(1.05)`;
+        const yBg = (clientY / window.innerHeight - 0.5) * 20;
+        bg.style.transform = `translate(${xBg}px, ${yBg}px) scale(1.05)`;
 
-        const rect = lBtn.getBoundingClientRect();
+        const rect = btn.getBoundingClientRect();
         const dist = Math.hypot(clientX - (rect.left + rect.width/2), clientY - (rect.top + rect.height/2));
-        
         if(dist < 120) {
-            const xMove = (clientX - (rect.left + rect.width/2)) * 0.35;
-            const yMove = (clientY - (rect.top + rect.height/2)) * 0.35;
-            lBtn.style.transform = `translate(${xMove}px, ${yMove}px)`;
+            btn.style.transform = `translate(${(clientX - (rect.left + rect.width/2)) * 0.3}px, ${(clientY - (rect.top + rect.height/2)) * 0.3}px)`;
         } else {
-            lBtn.style.transform = `translate(0, 0)`;
+            btn.style.transform = `translate(0, 0)`;
         }
     });
 
-    lSection.addEventListener('mouseleave', () => {
-        lBg.style.transform = `translate(0, 0) scale(1)`;
-        lBtn.style.transform = `translate(0, 0)`;
+    section.addEventListener('mouseleave', () => {
+        bg.style.transform = `translate(0, 0) scale(1)`;
+        btn.style.transform = `translate(0, 0)`;
     });
 
     document.getElementById('detailsModal').addEventListener('click', function(e) {

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EnaDocument;
+use App\Models\FonctionPubliqueDocument;
 use Illuminate\Http\Request;
 
-class EnaController extends Controller
+class FonctionPubliqueController extends Controller
 {
     /**
      * Formulaire admin
      */
     public function edit()
     {
-        $ena = EnaDocument::orderBy('ordre')->get()->map(fn($d) => [
+        $documents = FonctionPubliqueDocument::orderBy('ordre')->get()->map(fn($d) => [
             'id'        => $d->id,
             'reference' => $d->reference,
             'intitule'  => $d->intitule,
             'lien'      => $d->lien,
         ])->toArray();
 
-        if (empty($ena)) {
-            $ena = [['id' => null, 'reference' => '', 'intitule' => '', 'lien' => '']];
+        if (empty($documents)) {
+            $documents = [['id' => null, 'reference' => '', 'intitule' => '', 'lien' => '']];
         }
 
-        return view('Espace_admin.recrutement.ena', [
-            'ena'          => $ena,
-            'detection_ok' => EnaDocument::count() > 0,
+        return view('Espace_admin.recrutement.fonction_publique', [
+            'documents'    => $documents,
+            'detection_ok' => FonctionPubliqueDocument::count() > 0,
         ]);
     }
 
@@ -35,16 +35,16 @@ class EnaController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'id'          => 'nullable|array',
-            'id.*'        => 'nullable|integer|exists:ena_documents,id',
-            'reference'   => 'required|array',
-            'reference.*' => 'required|string|max:255',
-            'intitule'    => 'required|array',
-            'intitule.*'  => 'required|string|max:500',
-            'lien'        => 'nullable|array',
-            'lien.*'      => 'nullable|string|max:500',
-            'fichier'     => 'nullable|array',
-            'fichier.*'   => 'nullable|file|mimes:pdf|max:10240',
+            'id'              => 'nullable|array',
+            'id.*'            => 'nullable|integer|exists:fonction_publique_documents,id',
+            'reference'       => 'required|array',
+            'reference.*'     => 'required|string|max:255',
+            'intitule'        => 'required|array',
+            'intitule.*'      => 'required|string|max:500',
+            'lien'            => 'nullable|array',
+            'lien.*'          => 'nullable|string|max:500',
+            'fichier'         => 'nullable|array',
+            'fichier.*'       => 'nullable|file|mimes:pdf|max:10240',
         ]);
 
         $liens = $request->lien ?? [];
@@ -52,7 +52,7 @@ class EnaController extends Controller
         if ($request->hasFile('fichier')) {
             foreach ($request->file('fichier') as $i => $file) {
                 if ($file) {
-                    $filename = 'ena_' . time() . '_' . $i . '.' . $file->extension();
+                    $filename = 'fonction_publique_' . time() . '_' . $i . '.' . $file->extension();
                     $file->move(public_path('assets/images'), $filename);
                     $liens[$i] = 'assets/images/' . $filename;
                 }
@@ -79,19 +79,19 @@ class EnaController extends Controller
             }
 
             if ($id) {
-                $doc = EnaDocument::find($id);
+                $doc = FonctionPubliqueDocument::find($id);
                 if ($doc) {
                     $doc->update($data);
                 }
             } else {
                 $data['lien'] = $lien;
-                EnaDocument::create($data);
+                FonctionPubliqueDocument::create($data);
             }
         }
 
         return redirect()
-            ->route('admin.ena')
-            ->with('success', 'La page ENA a été mise à jour avec succès.');
+            ->route('fonction-publique')
+            ->with('success', 'La page Fonction Publique a été mise à jour avec succès.');
     }
 
     /**
@@ -99,10 +99,10 @@ class EnaController extends Controller
      */
     public function destroy(int $id)
     {
-        EnaDocument::where('id', $id)->delete();
+        FonctionPubliqueDocument::where('id', $id)->delete();
 
         return redirect()
-            ->route('admin.ena')
+            ->route('fonction-publique')
             ->with('success', 'Le document a été supprimé.');
     }
 
@@ -111,9 +111,9 @@ class EnaController extends Controller
      */
     public function show()
     {
-        $documents = EnaDocument::orderBy('ordre')->get();
+        $documents = FonctionPubliqueDocument::orderBy('ordre')->get();
 
-        return view('accueil.recrutement.ena', [
+        return view('accueil.recrutement.fonction-publique', [
             'documents' => $documents,
         ]);
     }
