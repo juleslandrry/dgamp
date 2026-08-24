@@ -170,14 +170,12 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
+                              <li class="nav-item">
                             <a href="#" class="nav-link">Services en ligne</a>
                             <ul class="dropdown-menu-custom">
-                                <li><a href="{{ route('agrémentvisa') }}">Agrément et Visa</a></li>
-                                <li><a href="{{ route('immatriculationnavire') }}">Immatriculation des navires</a></li>
-                                <li><a href="{{ route('visitetechnique') }}">Visite technique</a></li>
-                                <li><a href="{{ route('permisconduire') }}">Permis de conduire</a></li>
-                                <li><a href="{{ route('titresmaritimes') }}">Titres Maritimes</a></li>
+                                @foreach($servicesEnLigneMenu ?? [] as $s)
+                                    <li><a href="{{ route('service.show', $s->slug) }}">{{ $s->titre }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
 

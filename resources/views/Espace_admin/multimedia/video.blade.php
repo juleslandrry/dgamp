@@ -96,6 +96,7 @@
         <div id="videos-list">
             @foreach($videos as $i => $video)
                 <div class="card-block">
+                    <input type="hidden" name="id[]" value="{{ $video['id'] ?? '' }}">
                     <div class="card-block-label">
                         <span class="card-num">{{ $i + 1 }}</span>
                         <span class="txt">Vidéo {{ $i + 1 }}</span>

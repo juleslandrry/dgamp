@@ -4,13 +4,13 @@
 <section class="ship-reg-section">
     <div class="ship-background"></div>
     <div class="ship-content">
-        <span class="ship-badge">Autorité Maritime</span>
-        <h1 class="ship-title">Immatriculation des Navires</h1>
-        <p class="ship-description">Officialisez votre présence en mer. Nous gérons l'enregistrement, le pavillon et la conformité de votre flotte avec une précision rigoureuse.</p>
+        <span class="ship-badge">{{ $service->badge ?? 'Autorité Maritime' }}</span>
+        <h1 class="ship-title">{{ $service->titre ?? 'Immatriculation des Navires' }}</h1>
+        <p class="ship-description">{!! $service->description ?? "Officialisez votre présence en mer. Nous gérons l'enregistrement, le pavillon et la conformité de votre flotte avec une précision rigoureuse." !!}</p>
         
         <div class="ship-actions">
-            <a href="#" class="btn-ship-explore">
-                <span class="btn-text">Consulter le registre</span>
+            <a href="#" class="btn-ship-explore" onclick="document.getElementById('detailsModal').style.display='flex'; return false;">
+                <span class="btn-text">{{ $service->bouton_texte ?? 'Consulter le registre' }}</span>
                 <span class="btn-circle">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L12 22M12 2L15 5M12 2L9 5M22 12H2M19 15L22 12L19 9M5 9L2 12L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -21,8 +21,29 @@
     </div>
 </section>
 
+{{-- Popup "En savoir plus" --}}
+<div id="detailsModal" class="details-modal">
+    <div class="details-modal-box">
+        <span class="details-modal-close" onclick="document.getElementById('detailsModal').style.display='none';">&times;</span>
+        <h2 class="details-modal-title">{{ $service->titre ?? 'Immatriculation des Navires' }}</h2>
+
+        @if($service && $service->detail_texte)
+            <p class="details-modal-text">{!! $service->detail_texte !!}</p>
+        @else
+            <p class="details-modal-text">Les informations détaillées sur ce service seront bientôt disponibles.</p>
+        @endif
+
+        @if($service && !empty($service->detail_points))
+            <ul class="details-modal-list">
+                @foreach($service->detail_points as $point)
+                    <li>{{ $point }}</li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
+</div>
+
 <style>
-    /* Section compacte (450px comme demandé précédemment) */
     .ship-reg-section {
         position: relative;
         height: 450px;
@@ -32,20 +53,18 @@
         overflow: hidden;
         color: #ffffff;
         font-family: 'Inter', sans-serif;
-        padding-top: 20px; /* Espace entre les deux rubriques, sans laisser apparaître le blanc */
+        padding-top: 20px;
         box-sizing: border-box;
     }
 
     .ship-background {
         position: absolute;
         top: -5%; left: -5%; width: 110%; height: 110%;
-        /* Utilise une image de proue de navire ou de mer profonde */
         background: url('assets/images/image33.jpeg') center/cover no-repeat;
         z-index: 1;
         transition: transform 0.1s ease-out;
     }
 
-    /* Overlay bleu nuit pour l'aspect maritime */
     .ship-reg-section::before {
         content: '';
         position: absolute;
@@ -76,7 +95,7 @@
 
     .ship-badge {
         display: inline-block;
-        background: #007bff; /* Bleu mer vif */
+        background: #007bff;
         padding: 4px 12px;
         border-radius: 50px;
         font-size: 0.7rem;
@@ -99,7 +118,6 @@
         font-weight: 300;
     }
 
-    /* Bouton Magnétique Maritime */
     .btn-ship-explore {
         display: inline-flex;
         align-items: center;
@@ -147,7 +165,7 @@
         transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     }
     
-    .btn-ship-explore:hover svg { transform: rotate(180deg); } /* Effet boussole */
+    .btn-ship-explore:hover svg { transform: rotate(180deg); }
 
     .btn-text {
         transition: all 0.3s ease;
@@ -158,6 +176,75 @@
     .btn-ship-explore:focus .btn-text {
         text-decoration: none !important;
     }
+
+    .details-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .details-modal-box {
+        background: #ffffff;
+        color: #1C2733;
+        max-width: 600px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 16px;
+        padding: 36px 32px;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: modalFadeIn 0.3s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .details-modal-close {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        color: #66707B;
+        line-height: 1;
+        transition: color 0.2s ease;
+    }
+    .details-modal-close:hover { color: #0B2340; }
+
+    .details-modal-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0B2340;
+        margin: 0 0 18px;
+    }
+
+    .details-modal-text {
+        font-size: 15px;
+        line-height: 1.7;
+        color: #1C2733;
+        margin: 0 0 18px;
+        white-space: pre-line;
+    }
+
+    .details-modal-list {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .details-modal-list li {
+        font-size: 14.5px;
+        line-height: 1.8;
+        color: #1C2733;
+    }
 </style>
 
 <script>
@@ -167,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sBg = document.querySelector('.ship-background');
     const sBtn = document.querySelector('.btn-ship-explore');
 
-    // Apparition
     const sObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) sContent.classList.add('is-visible');
@@ -176,16 +262,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sObserver.observe(sSection);
 
-    // Parallaxe & Magnétisme
     sSection.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
         
-        // Fond
         const xBg = (clientX / window.innerWidth - 0.5) * 15;
         const yBg = (clientY / window.innerHeight - 0.5) * 15;
         sBg.style.transform = `translate(${xBg}px, ${yBg}px) scale(1.05)`;
 
-        // Bouton
         const rect = sBtn.getBoundingClientRect();
         const dist = Math.hypot(clientX - (rect.left + rect.width/2), clientY - (rect.top + rect.height/2));
         
@@ -202,8 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sBg.style.transform = `translate(0, 0) scale(1)`;
         sBtn.style.transform = `translate(0, 0)`;
     });
+
+    document.getElementById('detailsModal').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
 });
 </script>
-
 
 @endsection

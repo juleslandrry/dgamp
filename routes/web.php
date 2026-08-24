@@ -8,7 +8,13 @@ use App\Http\Controllers\MotDgController;
 use App\Http\Controllers\BiographieDgController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\EnaController;
-
+use App\Http\Controllers\FonctionPubliqueController;
+use App\Http\Controllers\GalerieController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ServiceEnLigneController;
+use App\Http\Controllers\PersonnelParamilitaireController;
+use App\Http\Controllers\PersonnelInterministerielController;
+use App\Http\Controllers\VieAssociativeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +33,6 @@ Route::get('/', function () {
 });*/
 
 Route::get('/', [DgampController::class, 'home'])->name('accueildgamp');
-Route::get('/mot_du_dg', [MotDgController::class, 'show'])->name('motdudg');
-Route::get('/biographie_du_dg', [BiographieDgController::class, 'show'])->name('biographiedudg');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
 
 Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
@@ -40,13 +44,10 @@ Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decisi
 Route::get('/convention_dgam', [DgampController::class, 'convention_dgam'])->name('conventiondgam');
 Route::get('/accord_dgam', [DgampController::class, 'accord_dgam'])->name('accorddgam');
 Route::get('/protocole_dgam', [DgampController::class, 'protocole_dgam'])->name('protocoledgam');
-Route::get('/even_à_venir', [EvenementController::class, 'showAvenir'])->name('evenàvenir');
-Route::get('/even_passé', [EvenementController::class, 'showPasses'])->name('evenpassé');
-Route::get('/ena', [EnaController::class, 'show'])->name('ena');
 
-Route::get('/fonction_publique', [DgampController::class, 'fonction_publique'])->name('fonctionpublique');
-Route::get('/galerie_img', [DgampController::class, 'galerie_img'])->name('galerie_img');
-Route::get('/galerie_vidéo', [DgampController::class, 'galerie_vidéo'])->name('galerie_vidéo');
+
+
+
 Route::get('/communiqué', [DgampController::class, 'communiqué'])->name('communiqué');
 Route::get('/actualité', [DgampController::class, 'actualité'])->name('actualité');
 Route::get('/securité_maritime', [DgampController::class, 'securité_maritime'])->name('securitémaritime');
@@ -57,11 +58,11 @@ Route::get('/plaisance_activité_nautique', [DgampController::class, 'plaisance_
 Route::get('/transport_fluvio_lagunaire', [DgampController::class, 'transport_fluvio_lagunaire'])->name('transportfluviolagunaire');
 Route::get('/recouvrement', [DgampController::class, 'recouvrement'])->name('recouvrement');
 Route::get('/coordination_sauvetage_maritime', [DgampController::class, 'coordination_sauvetage_maritime'])->name('coordinationsauvetagemaritime');
-Route::get('/agrément_visa', [DgampController::class, 'agrément_visa'])->name('agrémentvisa');
-Route::get('/immatriculation_navire', [DgampController::class, 'immatriculation_navire'])->name('immatriculationnavire');
-Route::get('/visite_technique', [DgampController::class, 'visite_technique'])->name('visitetechnique');
-Route::get('/permis_conduire', [DgampController::class, 'permis_conduire'])->name('permisconduire');
-Route::get('/titres_maritimes', [DgampController::class, 'titres_maritimes'])->name('titresmaritimes');
+// Route::get('/agrément_visa', [DgampController::class, 'agrément_visa'])->name('agrémentvisa');
+// Route::get('/immatriculation_navire', [DgampController::class, 'immatriculation_navire'])->name('immatriculationnavire');
+// Route::get('/visite_technique', [DgampController::class, 'visite_technique'])->name('visitetechnique');
+// Route::get('/permis_conduire', [DgampController::class, 'permis_conduire'])->name('permisconduire');
+// Route::get('/titres_maritimes', [DgampController::class, 'titres_maritimes'])->name('titresmaritimes');
 Route::get('/arrondissement_adiaké', [DgampController::class, 'arrondissement_adiaké'])->name('arrondissementadiaké');
 Route::get('/arrondissement_san_pedro', [DgampController::class, 'arrondissement_san_pedro'])->name('arrondissementsanpedro');
 Route::get('/arrondissement_grand_bassam', [DgampController::class, 'arrondissement_grand_bassam'])->name('arrondissementgrandbassam');
@@ -72,11 +73,11 @@ Route::get('/arrondissement_sassandra', [DgampController::class, 'arrondissement
 Route::get('/arrondissement_grand_lahou', [DgampController::class, 'arrondissement_grand_lahou'])->name('arrondissementgrandlahou');
 Route::get('/arrondissement_bingerville', [DgampController::class, 'arrondissement_bingerville'])->name('arrondissementbingerville');
 Route::get('/arrondissement_fresco', [DgampController::class, 'arrondissement_fresco'])->name('arrondissementfresco');
-Route::get('/personnel_militaire', [DgampController::class, 'personnel_militaire'])->name('personnelmilitaire');
-Route::get('/personnel_interministériel', [DgampController::class, 'personnel_interministériel'])->name('personnelinterministériel');
-Route::get('/fond_prévoyance', [DgampController::class, 'fond_prévoyance'])->name('fondprévoyance');
-Route::get('/vie_social', [DgampController::class, 'vie_social'])->name('viesocial');
-Route::get('/autre_association', [DgampController::class, 'autre_association'])->name('autreassociation');
+// Route::get('/personnel_militaire', [DgampController::class, 'personnel_militaire'])->name('personnelmilitaire');
+// Route::get('/personnel_interministériel', [DgampController::class, 'personnel_interministériel'])->name('personnelinterministériel');
+// Route::get('/fond_prévoyance', [DgampController::class, 'fond_prévoyance'])->name('fondprévoyance');
+// Route::get('/vie_social', [DgampController::class, 'vie_social'])->name('viesocial');
+// Route::get('/autre_association', [DgampController::class, 'autre_association'])->name('autreassociation');
 Route::get('/opérateur', [DgampController::class, 'opérateur'])->name('opérateur');
 Route::get('/partenaire', [DgampController::class, 'partenaire'])->name('partenaire');
 
@@ -137,14 +138,8 @@ Route::prefix('admin')->group(function () {
 
 
 
-Route::get('/admin/fonction-publique', [AdminController::class, 'fonctionPublique'])->name('fonction-publique');
-Route::post('/admin/fonction-publique', [AdminController::class, 'fonctionPublique_update'])->name('fonction-publique.update');
 
-Route::get('/admin/galerie', [AdminController::class, 'galerie'])->name('galerie');
-Route::post('/admin/galerie', [AdminController::class, 'galerie_update'])->name('galerie.update');
 
-Route::get('/admin/videos', [AdminController::class, 'videos'])->name('videos');
-Route::post('/admin/videos', [AdminController::class, 'videos_update'])->name('videos.update');
 
 Route::get('/admin/actualites', [AdminController::class, 'actualites'])->name('actualites');
 Route::post('/admin/actualites', [AdminController::class, 'actualites_update'])->name('actualites.update');
@@ -158,11 +153,28 @@ Route::post('/admin/activites-nos/{section}', [AdminController::class, 'activite
 Route::get('/admin/visa', [AdminController::class, 'visa'])->name('visa');
 Route::post('/admin/visa', [AdminController::class, 'visa_update'])->name('visa.update');
 
-Route::get('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne'])->name('services-en-ligne');
-Route::post('/admin/services-en-ligne', [AdminController::class, 'servicesEnLigne_update'])->name('services-en-ligne.update');
+
 
 
 // Routes eliette
+//site principale
+Route::get('/mot_du_dg', [MotDgController::class, 'show'])->name('motdudg');
+Route::get('/biographie_du_dg', [BiographieDgController::class, 'show'])->name('biographiedudg');
+Route::get('/even_à_venir', [EvenementController::class, 'showAvenir'])->name('evenàvenir');
+Route::get('/even_passé', [EvenementController::class, 'showPasses'])->name('evenpassé');
+Route::get('/ena', [EnaController::class, 'show'])->name('ena');
+Route::get('/fonction_publique', [FonctionPubliqueController::class, 'show'])->name('fonctionpublique');
+Route::get('/galerie_img', [GalerieController::class, 'show'])->name('galerie_img');
+Route::get('/galerie_vidéo', [VideoController::class, 'show'])->name('galerie_vidéo');
+Route::get('/service/{slug}', [ServiceEnLigneController::class, 'show'])->name('service.show');
+Route::get('/personnel_militaire', [PersonnelParamilitaireController::class, 'show'])->name('personnelmilitaire');
+Route::get('/personnel_interministériel', [PersonnelInterministerielController::class, 'show'])->name('personnelinterministériel');
+Route::get('/fond_prévoyance', [VieAssociativeController::class, 'showPrevoyance'])->name('fondprévoyance');
+Route::get('/vie_social', [VieAssociativeController::class, 'showVieSociale'])->name('viesocial');
+Route::get('/autre_association', [VieAssociativeController::class, 'showAutresAssociations'])->name('autreassociation');
+
+
+
 // Admin
 Route::get('/admin/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
 Route::post('/admin/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
@@ -174,3 +186,24 @@ Route::post('/admin/evenements/passes', [EvenementController::class, 'updatePass
 Route::post('/admin/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
 Route::get('/admin/ena', [EnaController::class, 'edit'])->name('admin.ena');
 Route::post('/admin/ena', [EnaController::class, 'update'])->name('ena.update');
+Route::get('/admin/fonction-publique', [FonctionPubliqueController::class, 'edit'])->name('fonction-publique');
+Route::post('/admin/fonction-publique', [FonctionPubliqueController::class, 'update'])->name('fonction-publique.update');
+Route::get('/admin/galerie', [GalerieController::class, 'edit'])->name('galerie');
+Route::post('/admin/galerie', [GalerieController::class, 'update'])->name('galerie.update');
+
+Route::get('/admin/videos', [VideoController::class, 'edit'])->name('videos');
+Route::post('/admin/videos', [VideoController::class, 'update'])->name('videos.update');
+Route::get('/admin/services-en-ligne', [ServiceEnLigneController::class, 'edit'])->name('services-en-ligne');
+Route::post('/admin/services-en-ligne', [ServiceEnLigneController::class, 'update'])->name('services-en-ligne.update');
+Route::delete('/admin/services-en-ligne/{id}', [ServiceEnLigneController::class, 'destroy'])->where('id', '[0-9]+')->name('services-en-ligne.destroy');
+Route::delete('/admin/ena/{id}', [EnaController::class, 'destroy'])->where('id', '[0-9]+')->name('ena.destroy');
+
+Route::delete('/admin/fonction-publique/{id}', [FonctionPubliqueController::class, 'destroy'])->where('id', '[0-9]+')->name('fonction-publique.destroy');
+Route::get('/admin/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'edit'])->name('admin.personnel-paramilitaire');
+Route::post('/admin/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'update'])->name('admin.personnel-paramilitaire.update');
+Route::get('/admin/personnel_interministeriel', [PersonnelInterministerielController::class, 'edit'])->name('admin.personnel-interministeriel');
+Route::post('/admin/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
+Route::get('/admin/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
+Route::post('/admin/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
+Route::post('/admin/vie-associative/{type}/cartes', [VieAssociativeController::class, 'updateCards'])->name('admin.vie-associative.cards.update');
+Route::delete('/admin/vie-associative/{type}/cartes/{id}', [VieAssociativeController::class, 'destroyCard'])->where('id', '[0-9]+')->name('admin.vie-associative.cards.destroy');

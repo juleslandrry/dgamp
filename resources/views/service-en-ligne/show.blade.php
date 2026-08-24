@@ -4,13 +4,13 @@
 <section class="visa-section">
     <div class="visa-background"></div>
     <div class="visa-content">
-        <span class="visa-badge">Services Officiels</span>
-        <h1 class="ship-title">Agrément & Visa</h1>
-        <p class="visa-description">Simplifiez vos démarches administratives avec notre expertise. Nous vous accompagnons dans l'obtention de vos certifications et documents de voyage.</p>
+        <span class="visa-badge">{{ $service->badge ?? 'Services Officiels' }}</span>
+        <h1 class="ship-title">{{ $service->titre ?? 'Agrément & Visa' }}</h1>
+        <p class="visa-description">{!! $service->description ?? "Simplifiez vos démarches administratives avec notre expertise. Nous vous accompagnons dans l'obtention de vos certifications et documents de voyage." !!}</p>
         
         <div class="visa-actions">
-            <a href="#" class="btn-explore">
-                <span class="btn-text">En savoir plus</span>
+            <a href="#" class="btn-explore" onclick="document.getElementById('detailsModal').style.display='flex'; return false;">
+                <span class="btn-text">{{ $service->bouton_texte ?? 'En savoir plus' }}</span>
                 <span class="btn-circle">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -21,6 +21,28 @@
     </div>
 </section>
 
+{{-- Popup "En savoir plus" --}}
+<div id="detailsModal" class="details-modal">
+    <div class="details-modal-box">
+        <span class="details-modal-close" onclick="document.getElementById('detailsModal').style.display='none';">&times;</span>
+        <h2 class="details-modal-title">{{ $service->titre ?? 'Agrément & Visa' }}</h2>
+
+        @if($service && $service->detail_texte)
+            <p class="details-modal-text">{!! $service->detail_texte !!}</p>
+        @else
+            <p class="details-modal-text">Les informations détaillées sur ce service seront bientôt disponibles.</p>
+        @endif
+
+        @if($service && !empty($service->detail_points))
+            <ul class="details-modal-list">
+                @foreach($service->detail_points as $point)
+                    <li>{{ $point }}</li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
+</div>
+
 <style>
     :root {
         --primary-color: #007bff; 
@@ -30,7 +52,7 @@
 
     .visa-section {
         position: relative;
-        height: 450px; /* Taille réduite comme au début */
+        height: 450px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -42,7 +64,7 @@
     .visa-background {
         position: absolute;
         top: -5%; left: -5%; width: 110%; height: 110%;
-        background: url('assets/images/image33.jpeg') center/cover no-repeat;
+        background: url('{{ asset('assets/images/image33.jpeg') }}') center/cover no-repeat;
         z-index: 1;
         transition: transform 0.1s ease-out;
     }
@@ -60,7 +82,7 @@
         z-index: 3;
         text-align: center;
         max-width: 700px;
-        padding: 30px; /* Padding réduit */
+        padding: 30px;
         backdrop-filter: blur(5px);
         background: rgba(255, 255, 255, 0.05);
         border-radius: 20px;
@@ -86,7 +108,7 @@
         margin-bottom: 15px;
     }
 
-      .ship-title {
+    .ship-title {
         font-size: 2.5rem;
         margin-bottom: 10px;
         font-weight: 700;
@@ -98,7 +120,6 @@
         opacity: 0.9;
     }
 
-    /* Bouton Magnétique Compact */
     .btn-explore {
         display: inline-flex;
         align-items: center;
@@ -151,6 +172,75 @@
     .btn-explore:focus .btn-text {
         text-decoration: none !important;
     }
+
+    .details-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .details-modal-box {
+        background: #ffffff;
+        color: #1C2733;
+        max-width: 600px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 16px;
+        padding: 36px 32px;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: modalFadeIn 0.3s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .details-modal-close {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        color: #66707B;
+        line-height: 1;
+        transition: color 0.2s ease;
+    }
+    .details-modal-close:hover { color: #0B2340; }
+
+    .details-modal-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0B2340;
+        margin: 0 0 18px;
+    }
+
+    .details-modal-text {
+        font-size: 15px;
+        line-height: 1.7;
+        color: #1C2733;
+        margin: 0 0 18px;
+        white-space: pre-line;
+    }
+
+    .details-modal-list {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .details-modal-list li {
+        font-size: 14.5px;
+        line-height: 1.8;
+        color: #1C2733;
+    }
 </style>
 
 <script>
@@ -186,6 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
     section.addEventListener('mouseleave', () => {
         bg.style.transform = `translate(0, 0) scale(1)`;
         btn.style.transform = `translate(0, 0)`;
+    });
+
+    document.getElementById('detailsModal').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
     });
 });
 </script>
