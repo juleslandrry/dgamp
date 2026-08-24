@@ -207,6 +207,7 @@ function addDocument() {
             <input type="hidden" name="lien[]" value="">
         </div>
     `;
+    
     list.appendChild(wrap);
 }
 </script>
