@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class VieAssociativeCard extends Model
 {
     protected $fillable = [
-        'vie_associative_page_id', 'titre', 'description', 'points', 'couleur', 'ordre',
-    ];
-
-    protected $casts = [
-        'points' => 'array',
+        'vie_associative_page_id', 'titre', 'description', 'ordre',
     ];
 
     public function page()

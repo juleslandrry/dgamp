@@ -6,25 +6,35 @@ use App\Models\Actualite;
 use App\Models\Communique;
 use Illuminate\Http\Request;
 use App\Models\ServiceEnLigne;
+use App\Models\MotDg;
+use App\Models\GalerieAlbum;
+use App\Models\Video;
 
 class DgampController extends Controller
 {
     public function home() 
-    {
-        // Récupère les 4 dernières actualités
-        $actualites = Actualite::orderBy('date_publication', 'desc')
-                        ->latest()
-                        ->take(4)
-                        ->get();
+{
+    // Récupère les 4 dernières actualités
+    $actualites = Actualite::orderBy('date_publication', 'desc')
+                    ->latest()
+                    ->take(4)
+                    ->get();
 
-        // Récupère les 3 derniers communiqués
-        $communiques = Communique::orderBy('created_at', 'desc')
-                        ->latest()
-                        ->take(3)
-                        ->get();
+    // Récupère les 3 derniers communiqués
+    $communiques = Communique::orderBy('created_at', 'desc')
+                    ->latest()
+                    ->take(3)
+                    ->get();
 
-        return view('index', compact('actualites', 'communiques'));
-    }
+    // Mot du DG (une seule ligne en base)
+    $motDg = MotDg::first();
+
+    // Aperçu galerie : 3 albums et 3 vidéos les plus récents
+    $albumsApercu = GalerieAlbum::orderBy('ordre')->take(3)->get();
+    $videosApercu = Video::orderBy('ordre')->take(3)->get();
+
+    return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu'));
+}
 
     public function mot_du_dg () {
         return view('accueil.apropos.direction-general.mot-du-dg');

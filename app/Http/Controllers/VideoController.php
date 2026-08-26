@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
+    /**
+     * Formulaire admin
+     */
     public function edit()
     {
         $videos = Video::orderBy('ordre')->get()->map(fn($v) => [
@@ -25,6 +28,9 @@ class VideoController extends Controller
         ]);
     }
 
+    /**
+     * Enregistre les modifications (update / create, sans toucher aux vidéos non envoyées)
+     */
     public function update(Request $request)
     {
         $request->validate([
@@ -37,7 +43,6 @@ class VideoController extends Controller
         ]);
 
         $ids = $request->id ?? [];
-        $idsGardes = [];
 
         foreach ($request->url as $i => $url) {
             $data = [
@@ -52,21 +57,32 @@ class VideoController extends Controller
                 $video = Video::find($id);
                 if ($video) {
                     $video->update($data);
-                    $idsGardes[] = $video->id;
                 }
             } else {
-                $nouveau = Video::create($data);
-                $idsGardes[] = $nouveau->id;
+                Video::create($data);
             }
         }
-
-        Video::whereNotIn('id', $idsGardes)->delete();
 
         return redirect()
             ->route('videos')
             ->with('success', 'La page Vidéos a été mise à jour avec succès.');
     }
 
+    /**
+     * Supprime une vidéo individuellement
+     */
+    public function destroy(int $id)
+    {
+        Video::where('id', $id)->delete();
+
+        return redirect()
+            ->route('videos')
+            ->with('success', 'La vidéo a été supprimée.');
+    }
+
+    /**
+     * Page publique
+     */
     public function show()
     {
         $videos = Video::orderBy('ordre')->get();

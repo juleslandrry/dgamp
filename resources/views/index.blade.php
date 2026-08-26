@@ -482,31 +482,29 @@
 
             <!-- IMAGE -->
             <div class="col-md-5">
-                <div class="featured-img">
-                    <img class="img-fluid"
-                         src="assets/images/image37.jpeg"
-                         alt="Colonel Kouassi Yao Julien">
+    <div class="featured-img">
+        <img class="img-fluid"
+             src="{{ $motDg && $motDg->photo ? asset($motDg->photo) : asset('assets/images/image37.jpeg') }}"
+             alt="{{ trim(($motDg->nom_dg ?? '') . ' ' . ($motDg->prenom_dg ?? '')) ?: 'Directeur Général' }}">
 
-                    <h5 class="mb-0">Colonel-Major Kouassi Yao Julien</h5>
-                    <small class="titre">
-                        Administrateur en Chef des Affaires Maritimes
-                    </small>
-                </div>
-            </div>
+        <h5 class="mb-0">
+            {{ trim(($motDg->grade_dg ?? '') . ' ' . ($motDg->nom_dg ?? '') . ' ' . ($motDg->prenom_dg ?? '')) ?: 'Colonel-Major Kouassi Yao Julien' }}
+        </h5>
+        <small class="titre">
+            {{ $motDg->titre_dg ?? 'Administrateur en Chef des Affaires Maritimes' }}
+        </small>
+    </div>
+</div>
 
-            <!-- TEXTE -->
-            <div class="col-md-7">
-                <div class="title">
-                    <h1 class="title-blue">Mot du Directeur Général</h1>
-                </div>
+<!-- TEXTE -->
+<div class="col-md-7">
+    <div class="title">
+        <h1 class="title-blue">Mot du Directeur Général</h1>
+    </div>
 
-                <p>
-                    La nécessité pour notre administration de posséder un site internet fonctionnel et régulièrement actualisé,
-                    qui s’est imposée à nous depuis plusieurs années vient de trouver satisfaction avec la création de ce site.
-                    Important outil de communication, ce site permet à la Direction Générale des Affaires Maritimes et Portuaires
-                    (DGAMP) de mieux se faire connaître par ses partenaires et usagers...
-                </p>
-
+    <p>
+         {{ Str::limit(strip_tags(html_entity_decode($motDg->texte_dg ?? '')), 420, '...') ?: "La nécessité pour notre administration de posséder un site internet fonctionnel et régulièrement actualisé..." }}
+    </p>
                 <!-- BOUTON JUSTE EN BAS DU TEXTE -->
                 <a href="{{ route ('motdudg') }}">
                     <button id="btnLire" class="btn-lire-suite" onclick="toggleMot()">
@@ -1018,41 +1016,21 @@
 
             <div class="dg-galerie-box active" id="photos">
                 <div class="dg-flex-container">
-                    
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header4.jpeg', 'Sécurité Maritime', 'Patrouille de surveillance')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image31.jpeg" alt="Sécurité Maritime">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Sécurité Maritime</h4>
-                            <p>Surveillance des eaux</p>
-                        </div>
+            @forelse($albumsApercu as $album)
+                <div class="dg-item animate-box" onclick="window.location.href='{{ route('galerie_img') }}'">
+                    <div class="img-wrapper">
+                        <img src="{{ $album->cover ? asset($album->cover) : asset('assets/images/image31.jpeg') }}" alt="{{ $album->titre }}">
+                        <div class="dg-overlay"><i class="icon-plus"></i></div>
                     </div>
-
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header1.jpeg', 'Événement Officiel', 'Cérémonie officielle')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image69.jpeg" alt="Événement">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Vie Institutionnelle</h4>
-                            <p>Vœux annuels</p>
-                        </div>
+                    <div class="dg-item-info">
+                        <h4>{{ Str::limit($album->titre, 40, '...') }}</h4>
+                        <p>{{ $album->date }}</p>
                     </div>
-
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header2.jpeg', 'Inspection Technique', 'Contrôle technique')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image65.jpeg" alt="Inspection">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Inspection Technique</h4>
-                            <p>Contrôle de conformité</p>
-                        </div>
-                    </div>
-
                 </div>
+            @empty
+                <p class="text-center text-muted">Aucun album disponible pour le moment.</p>
+            @endforelse
+        </div>
                 <div class="dg-btn-wrapper">
                     <button onclick="window.location.href='{{ route('galerie_img') }}'" class="btn-media-action btn-green">Voir toutes les photos</button>
                 </div>
@@ -1060,38 +1038,19 @@
 
             <div class="dg-galerie-box" id="videos">
                 <div class="dg-flex-container">
-                    
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                             <iframe src="https://www.youtube.com/embed/824gwdL2Zd8" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Reportage TV</h4>
-                            <p>Interview DG</p>
-                        </div>
-                    </div>
-
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/TbEBUxR8Fyg" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Sensibilisation</h4>
-                            <p>Sécurité des gens de mer</p>
-                        </div>
-                    </div>
-
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/sq_KzAtxQuc?si=_UNDSC0QNpe-l14m" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Reportage TV</h4>
-                            <p>Interview DG</p>
-                        </div>
-                    </div>
-
-                </div>
+    @forelse($videosApercu as $video)
+        <div class="dg-item animate-box">
+            <div class="video-container">
+                <iframe src="{{ $video->url }}" allowfullscreen></iframe>
+            </div>
+            <div class="dg-item-info">
+                <h4>{{ Str::limit($video->titre, 40, '...') }}</h4>
+            </div>
+        </div>
+    @empty
+        <p class="text-center text-muted">Aucune vidéo disponible pour le moment.</p>
+    @endforelse
+</div>
                 <div class="dg-btn-wrapper">
                     <button onclick="window.location.href='{{ route('galerie_vidéo') }}'" class="btn-media-action btn-blue">Voir toutes les vidéos</button>
                 </div>

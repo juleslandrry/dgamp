@@ -17,13 +17,6 @@
                     <div class="assoc-text-box">
                         <h2 class="section-title text-white">{{ $page->intro_titre ?? 'Synergie et Collaboration' }}</h2>
                         <p class="text-white">{{ $page->intro_texte ?? "Au-delà de nos missions régaliennes, la DGAMP collabore avec diverses associations professionnelles et culturelles." }}</p>
-                        @if($page && !empty($page->checklist))
-                            <ul class="check-list mt-3">
-                                @foreach($page->checklist as $item)
-                                    <li class="text-white">{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
                     </div>
                 </div>
                 <div class="col-md-5 text-center">
@@ -37,19 +30,11 @@
         @if($page && $page->cards->count())
             <section class="assoc-list-section">
                 <div class="intervention-grid">
-                    @foreach($page->cards as $card)
+                    @foreach($page->cards as $item)
                         <div class="i-card-glass text-center">
-                            <div class="i-icon-circle bg-assoc"></div>
-                            <h3 class="text-white">{{ $card->titre }}</h3>
-                            @if($card->description)
-                                <p class="text-white">{{ $card->description }}</p>
-                            @endif
-                            @if(!empty($card->points))
-                                <ul class="key-points text-white">
-                                    @foreach($card->points as $point)
-                                        <li>{{ $point }}</li>
-                                    @endforeach
-                                </ul>
+                            <h3 class="text-white">{{ $item->titre }}</h3>
+                            @if($item->description)
+                                <p class="text-white">{{ $item->description }}</p>
                             @endif
                         </div>
                     @endforeach
@@ -77,20 +62,14 @@
     .img-75-centered { max-width: 75% !important; height: auto; margin: 0 auto; display: block; border: 2px solid rgba(255, 255, 255, 0.2); }
     .badge-assoc { background: #e37419; color: white; padding: 5px 15px; border-radius: 50px; font-weight: 600; margin-bottom: 15px; display: inline-block; }
     .section-title::after { content: ''; display: block; width: 50px; height: 4px; background: #e37419; margin-top: 10px; }
-    .check-list { list-style: none; padding: 0; margin-top: 20px; }
-    .check-list li { margin-bottom: 12px; padding-left: 18px; position: relative; }
-    .check-list li::before { content: "•"; position: absolute; left: 0; color: #e37419; }
-    .key-points { list-style: none; padding: 0; margin-top: 15px; text-align: left; display: inline-block; }
-    .key-points li { position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 0.95rem; opacity: 0.9; }
-    .key-points li::before { content: "•"; color: #e37419; font-weight: bold; position: absolute; left: 0; font-size: 1.2rem; }
     .intervention-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
     .i-card-glass {
         background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.15); padding: 35px 25px; border-radius: 20px; transition: 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.15); padding: 30px 25px; border-radius: 20px; transition: 0.3s;
     }
     .i-card-glass:hover { transform: translateY(-8px); border-color: #e37419; }
-    .i-icon-circle { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 15px; }
-    .bg-assoc { background: #e37419; }
+    .i-card-glass h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .i-card-glass p { font-size: 0.92rem; opacity: 0.85; line-height: 1.6; margin: 0; }
     @media (max-width: 768px) {
         .assoc-header h1 { font-size: 2.2rem; }
         .img-75-centered { max-width: 100% !important; margin-top: 20px; }

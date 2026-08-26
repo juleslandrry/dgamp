@@ -15,6 +15,7 @@ use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PartenaireController;
 
 
+
 use App\Http\Controllers\FonctionPubliqueController;
 use App\Http\Controllers\GalerieController;
 use App\Http\Controllers\VideoController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\ServiceEnLigneController;
 use App\Http\Controllers\PersonnelParamilitaireController;
 use App\Http\Controllers\PersonnelInterministerielController;
 use App\Http\Controllers\VieAssociativeController;
+use App\Http\Controllers\AdministrateurController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -261,5 +263,8 @@ Route::get('/admin/personnel_interministeriel', [PersonnelInterministerielContro
 Route::post('/admin/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
 Route::get('/admin/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
 Route::post('/admin/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
-Route::post('/admin/vie-associative/{type}/cartes', [VieAssociativeController::class, 'updateCards'])->name('admin.vie-associative.cards.update');
-Route::delete('/admin/vie-associative/{type}/cartes/{id}', [VieAssociativeController::class, 'destroyCard'])->where('id', '[0-9]+')->name('admin.vie-associative.cards.destroy');
+Route::delete('/admin/videos/{id}', [VideoController::class, 'destroy'])->where('id', '[0-9]+')->name('videos.destroy');
+Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name('administrateurs.index');
+Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
+Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
+Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');
