@@ -7,6 +7,7 @@ use App\Models\Communique;
 use Illuminate\Http\Request;
 use App\Models\ServiceEnLigne;
 
+use App\Models\Historique;
 class DgampController extends Controller
 {
     public function home() 
@@ -22,7 +23,9 @@ class DgampController extends Controller
                         ->take(3)
                         ->get();
 
-        return view('index', compact('actualites', 'communiques'));
+        $historique = Historique::first();
+
+        return view('index', compact('actualites', 'communiques', 'historique'));
     }
 
     public function mot_du_dg () {

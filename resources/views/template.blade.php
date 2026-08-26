@@ -232,10 +232,20 @@
         <span class="flash-label"><i class="fa fa-bolt"></i> FLASH INFOS</span>
         <div class="flash-marquee">
             <div class="flash-track">
-                <div class="flash-content">| Les concours DGAM/DGAM sont gérés par la Fonction Publique. Aucun concours de Police Maritime en 2024.</div>
-                <div class="flash-content">| La DGAM devient la DGAM (Décret 2024-274 du 08 mai 2024). Visitez notre nouveau portail pour plus d'infos.</div>
-                <div class="flash-content">| Les concours DGAM/DGAM sont gérés par la Fonction Publique. Aucun concours de Police Maritime en 2024.</div>
-                <div class="flash-content">| La DGAMP devient la DGAM (Décret 2024-274 du 08 mai 2024). Visitez notre nouveau portail pour plus d'infos.</div>
+                @forelse($flashInfos as $info)
+                    <div class="flash-content">
+                        | 
+                        @if($info->lien)
+                            <a href="{{ $info->lien }}" target="_blank" style="color: inherit; text-decoration: underline;">
+                                {{ $info->contenu }}
+                            </a>
+                        @else
+                            {{ $info->contenu }}
+                        @endif
+                    </div>
+                @empty
+                    <div class="flash-content">| Aucun message d'information pour le moment.</div>
+                @endforelse
             </div>
         </div>
     </div>

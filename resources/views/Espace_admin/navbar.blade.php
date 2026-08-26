@@ -109,8 +109,20 @@
             </a>
           </li>
           <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13.5V9l3-3 3 2 4-5 2 2v8.5z"/><path d="M2 13.5h12"/></svg>Statistique</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/></svg>Banière</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1L3 9h4l-1 6 6-8H8z"/></svg>Flash info</div></li>
+          <li><a href="{{ route('banniere.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/>
+                </svg>
+                Bannière
+            </a>
+          </li>
+          <li><a href="{{ route('flash_info.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 1L3 9h4l-1 6 6-8H8z"/>
+                </svg>
+                Flash info
+            </a>
+          </li>
           <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Administrateurs</div></li>
         </ul>
       </li>

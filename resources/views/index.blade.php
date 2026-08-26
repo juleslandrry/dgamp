@@ -38,74 +38,66 @@
 
 
 <!-- ======= SECTION SLIDER ======= -->
-    <section class="hero-slider">
-        <div class="slides">
-            <div class="slide active" style="background-image: url('assets/images/image29.jpeg')" alt="Image29">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Surveillance des plans <br>
-                    d'eau fluvio lagunaire 
-                </h2>
-               
+<section class="hero-slider">
+    <div class="slides">
+        @forelse($banniere as $index => $banner)
+            <div class="slide {{ $index === 0 ? 'active' : '' }}" 
+                 style="background-image: url('{{ asset('storage/' . $banner->image) }}')">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>{!! $banner->titre !!}</h2>
+                </div>
             </div>
-            </div>
- 
-            <div class="slide" style="background-image: url('assets/images/image1.jpeg')" alt="Image1">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Prix d'excellence 2024 du colonel  <br>
-                    Nessemon Kida Rose honorée par le chef de l'etat
-                </h2>
-            </div>
-            </div>
- 
-            <div class="slide" style="background-image: url('assets/images/image33.jpeg')" alt="Image33">
-            <div class="overlay"></div>
-            <div class="content">
-
-                <h2>
-                    DGAM/FORMATION 50 élèves-officiers <br>
-                    presentés au drapeau national
-                </h2>
-            </div>
+        @empty
+            <!-- Slider statique par défaut (si aucune bannière en BDD) -->
+            <div class="slide active" style="background-image: url('{{ asset('assets/images/image29.jpeg') }}')" alt="Image29">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Surveillance des plans <br> d'eau fluvio lagunaire</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image32.jpeg')" alt="Image3">
-            <div class="overlay"></div>
-            <div class="content">
-                <h2>
-                    Sortie officielle de la 11ème promotion<br>
-                    de la DGAM baptisé << promotion Gonkano Ouan Philbert>>
-            </div>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image1.jpeg') }}')" alt="Image1">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Prix d'excellence 2024 du colonel <br> Nessemon Kida Rose honorée par le chef de l'etat</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image26.jpeg')" alt="Image26">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                   Securité maritime la Cote d'Ivoire <br>
-                    reçoit << scala >> un bateau bateau de sauvetage maritime
-                </h2>
-            </div>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image33.jpeg') }}')" alt="Image33">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>DGAM/FORMATION 50 élèves-officiers <br> presentés au drapeau national</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image35.jpeg')" alt="Image35">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Operation << chalut >> de la <br>
-                    direction maritime en mer 
-                </h2>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image32.jpeg') }}')" alt="Image3">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Sortie officielle de la 11ème promotion<br> de la DGAM baptisé &lt;&lt; promotion Gonkano Ouan Philbert &gt;&gt;</h2>
+                </div>
             </div>
+
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image26.jpeg') }}')" alt="Image26">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Securité maritime la Cote d'Ivoire <br> reçoit &lt;&lt; scala &gt;&gt; un bateau bateau de sauvetage maritime</h2>
+                </div>
             </div>
-        </div>
- 
-        <!-- Boutons de navigation -->
-        <div class="nav-btn prev">&#10094;</div>
-        <div class="nav-btn next">&#10095;</div>
-    </section>
+
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image35.jpeg') }}')" alt="Image35">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Operation &lt;&lt; chalut &gt;&gt; de la <br> direction maritime en mer</h2>
+                </div>
+            </div>
+        @endforelse
+    </div>
+
+    <!-- Boutons de navigation -->
+    <div class="nav-btn prev">&#10094;</div>
+    <div class="nav-btn next">&#10095;</div>
+</section>
 
     <style>
         .hero-slider {
@@ -269,125 +261,92 @@
 
 
     <!-- Trust Start -->
-<section class="trust" >
+<section class="trust">
     <div class="container">
+        <!-- Retrait de align-items-center pour aligner le contenu en haut -->
         <div class="row">
             <!-- Texte -->
             <div class="offset-xl-1 col-xl-6" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
                 <div class="title">
                     <h3 class="title-primary"><strong>PRESENTATION</strong></h3>
-                      <div class="presentation-bar-long"></div>
-
+                    <div class="presentation-bar-long"></div>
                     <h1>Affaires Maritimes de Côte d’Ivoire</h1>
                 </div>
 
-                <p>
-                    Les <strong>Affaires Maritimes ivoiriennes</strong>, composante essentielle des
-                    <strong>Forces de Sécurité Intérieure de l’État</strong>, assurent la régulation, la sécurité
-                    et le développement des activités maritimes et portuaires nationales.
-                </p>
-
-              <p>
-                    Depuis leur création en <strong>1960</strong>, elles ont connu plusieurs réformes majeures,
-                    traduisant la volonté de l’État d’adapter la gouvernance maritime aux normes internationales
-                    et aux <strong>enjeux économiques du pays</strong>
-                    <span id="points">...</span>
-                </p>
-
-
-                <!-- Texte caché -->
-                <div id="more-text" style="display: none;">
-                            <p>
-                                Cette évolution institutionnelle a permis de renforcer la sécurité maritime,
-                                d’améliorer la gestion des espaces portuaires et de soutenir le développement
-                                durable des activités maritimes et fluvio-lagunaires en Côte d’Ivoire.
-                            </p>
-
-                            <h5>Repères institutionnels clés</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>1960</strong> : Création de la Direction de la Marine Marchande</li>
-                                <li><strong>1976</strong> : Érection en Ministère de la Marine</li>
-                                <li><strong>1991</strong> : Création de la DAMP et de la DTMFLP</li>
-                                <li><strong>2004</strong> : Naissance de la Direction Générale des Affaires Maritimes et Portuaires</li>
-                                <li><strong>2022</strong> : Rattachement au Ministère des Transports</li>
-                            </ul>
+                <!-- Texte d'introduction dynamique -->
+                <div class="presentation-content">
+                    <p>
+                        {!! nl2br(e($historique?->intro ?? "Les Affaires Maritimes ivoiriennes, composante essentielle des Forces de Sécurité Intérieure de l’État, assurent la régulation, la sécurité et le développement des activités maritimes et portuaires nationales.")) !!}
+                    </p>
                 </div>
-                    <div class="btn-wrapper">
-                        <button class="btn-lire-suite" onclick="toggleText()" id="btnLire">
-                            Lire la suite
-                        </button>
-                    </div>
 
+                <!-- Bouton de redirection vers la page Historique -->
+                <div class="btn-wrapper mt-4">
+                    <a href="{{ route('historiquedgam') }}" class="btn btn-lire-suite">
+                        Lire la suite
+                    </a>
+                </div>
             </div>
 
+            <!-- Galerie d'images dynamique -->
             <div class="col-xl-5 gallery-modern">
                 <div class="gallery-grid">
-
                     <div class="gallery-item large">
-                        <img src="assets/images/image9.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image1 ? asset('storage/'.$historique->image1) : asset('assets/images/image9.jpeg') }}" class="img-fixe" alt="Présentation 1">
                     </div>
 
                     <div class="gallery-item">
-                        <img src="assets/images/image37.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image2 ? asset('storage/'.$historique->image2) : asset('assets/images/image37.jpeg') }}" class="img-fixe" alt="Présentation 2">
                     </div>
 
                     <div class="gallery-item">
-                        <img src="assets/images/image34.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image3 ? asset('storage/'.$historique->image3) : asset('assets/images/image34.jpeg') }}" class="img-fixe" alt="Présentation 3">
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
-</section>
-<!-- Trust End -->
-
-
-<script>
-    function toggleText() {
-        const moreText = document.getElementById("more-text");
-        const points = document.getElementById("points");
-        const btn = document.getElementById("btnLire");
-
-        if (moreText.style.display === "none") {
-            moreText.style.display = "block";
-            points.style.display = "none";
-            btn.innerHTML = "Réduire";
-        } else {
-            moreText.style.display = "none";
-            points.style.display = "inline";
-            btn.innerHTML = "Lire la suite";
-        }
-    }
-</script>
-
+</section>   
 
 <style>
-
-   
     .navbar a:hover {
         color: #f39c12;
     }
 
+    /* ALIGNEMENT HAUT : Remplacement de align-items: center par flex-start */
+    .trust .row {
+        display: flex;
+        align-items: flex-start; 
+    }
+
+    .trust {
+        padding: 40px 0;
+    }
+
+    /* Ajustement des titres pour un alignement propre avec l'image */
+    .trust .title h3 {
+        margin-top: 0;
+    }
 
     .btn-lire-suite {
-        padding: 4px 14px;
-        font-size: 13px;
-        background-color: #f7931e; /* orange comme sur ta photo */
+        background-color: #f39c12;
         color: #fff;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
+        padding: 10px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: bold;
+        transition: background 0.3s ease;
     }
 
     .btn-lire-suite:hover {
-        background-color: #e57f0f;
+        background-color: #d35400;
+        color: #fff;
     }
 
     .btn-wrapper {
         display: inline-block;
-        margin-left: 6px;
+        margin-left: 0;
     }
 
     /* LONGUE BARRE */
@@ -400,79 +359,60 @@
             #2ab558,
             #0f771d
         );
-        margin: 30px 0 35px;
+        margin: 20px 0 25px;
         border-radius: 5px;
     }
 
+    /* CONTENEUR GALERIE */
+    .gallery-modern {
+        padding: 0 10px;
+    }
 
-   /* CONTENEUR GALERIE */
-            .gallery-modern {
-                padding: 10px;
-            }
+    /* PRESENTATION IMAGES VERTICALES */
+    .gallery-modern .gallery-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px;
+    }
 
-            /* GRID */
-            .gallery-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 15px;
-            }
+    .gallery-modern .gallery-item.large {
+        grid-row: auto !important;
+    }
 
-            /* GRANDE IMAGE */
-            .gallery-item.large {
-                grid-row: span 2;
-            }
+    /* BLOCS IMAGE */
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
 
-            /* BLOCS IMAGE */
-            .gallery-item {
-                overflow: hidden;
-                border-radius: 12px;
-                box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-            }
+    /* IMAGE */
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
 
-            /* IMAGE */
-            .gallery-item img {
-                max-width: 100%;
-                height: auto;
-                object-fit: cover;
-                transition: transform 0.5s ease;
-            }
+    /* HOVER */
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
 
+    .offset-xl-1.col-xl-6 p {
+        text-align: justify;
+    }
 
-            /* HOVER */
-            .gallery-item:hover img {
-                transform: scale(1.08);
-            }
+    /* MOBILE */
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
 
-            /* MOBILE */
-            @media (max-width: 768px) {
-                .gallery-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .gallery-item.large {
-                    grid-row: auto;
-                }
-            }
-
-
-            /* PRESENTATION IMAGES VERTICALES */
-            .gallery-modern .gallery-grid {
-                display: flex !important;
-                flex-direction: column !important;
-            }
-
-            .gallery-modern .gallery-item.large {
-                grid-row: auto !important;
-            }
-
-            .offset-xl-1.col-xl-6 p {
-    text-align: justify;
-            }
-
-
-
-
-
+        .gallery-item.large {
+            grid-row: auto;
+        }
+    }
 </style>
 
 <!-- Mot du Directeur Général Start -->

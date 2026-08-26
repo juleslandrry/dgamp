@@ -51,6 +51,9 @@ class OrganisationController extends Controller
         $historique = Historique::with('etapes')->first();
 
         $intro = $historique?->intro ?? '';
+        $image1 = $historique?->image1 ?? null;
+        $image2 = $historique?->image2 ?? null;
+        $image3 = $historique?->image3 ?? null;
 
         $timeline = $historique
             ? $historique->etapes->map(function ($etape) {
@@ -63,6 +66,9 @@ class OrganisationController extends Controller
 
         return view('Espace_admin.accueil.directeurgene.organisation.historique', compact(
             'intro',
+            'image1',
+            'image2',
+            'image3',
             'timeline'
         ));
     }
@@ -74,23 +80,23 @@ class OrganisationController extends Controller
                 'required',
                 'string',
             ],
+            'image1' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image2' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image3' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
 
             'date' => [
                 'nullable',
                 'array',
             ],
-
             'date.*' => [
                 'nullable',
                 'string',
                 'max:255',
             ],
-
             'description' => [
                 'nullable',
                 'array',
             ],
-
             'description.*' => [
                 'nullable',
                 'string',
@@ -100,24 +106,31 @@ class OrganisationController extends Controller
         $historique = Historique::first();
 
         if (!$historique) {
-            $historique = Historique::create([
-                'intro' => $request->intro,
-            ]);
-        } else {
-            $historique->update([
-                'intro' => $request->intro,
-            ]);
+            $historique = new Historique();
         }
 
-        // On supprime les anciennes étapes
+        $historique->intro = $request->intro;
+
+        // Gestion du chargement des images
+        foreach (['image1', 'image2', 'image3'] as $imgField) {
+            if ($request->hasFile($imgField)) {
+                // Supprimer la plus ancienne si elle existe
+                if ($historique->$imgField && Storage::disk('public')->exists($historique->$imgField)) {
+                    Storage::disk('public')->delete($historique->$imgField);
+                }
+                $path = $request->file($imgField)->store('historique', 'public');
+                $historique->$imgField = $path;
+            }
+        }
+
+        $historique->save();
+
+        // Suppression et re-création des étapes de la chronologie
         $historique->etapes()->delete();
 
-        // On recrée les étapes dans l'ordre affiché dans la vue
         foreach ($request->date ?? [] as $index => $date) {
-
             $description = $request->description[$index] ?? '';
 
-            // Évite d'enregistrer une étape complètement vide
             if (trim($date) === '' && trim($description) === '') {
                 continue;
             }

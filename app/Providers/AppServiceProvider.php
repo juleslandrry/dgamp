@@ -11,6 +11,8 @@ use App\Models\ServiceEnLigne;
 
 
 use App\Models\Configuration;
+use App\Models\Banniere;
+use App\Models\FlashInfo;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -42,9 +44,25 @@ class AppServiceProvider extends ServiceProvider
             $siteSettings = Configuration::first();
             $view->with('siteSettings', $siteSettings);
         });
+
         View::composer('template', function ($view) {
-        $view->with('servicesEnLigneMenu', ServiceEnLigne::orderBy('ordre')->get());
-    });
+            $view->with('servicesEnLigneMenu', ServiceEnLigne::orderBy('ordre')->get());
+        });
+
+        View::composer('index', function ($view) {
+            $banniere = Banniere::where('is_active', true)
+                                ->orderBy('ordre', 'asc')
+                                ->get();
+            $view->with('banniere', $banniere);
+        });
+
+        View::composer('template', function ($view) {
+            $flashInfos = FlashInfo::where('is_active', true)
+                                   ->orderBy('ordre', 'asc')
+                                   ->get();
+            $view->with('flashInfos', $flashInfos);
+        });
 
     }
+
 }
