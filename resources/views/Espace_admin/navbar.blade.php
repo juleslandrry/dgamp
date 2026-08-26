@@ -97,13 +97,36 @@
           <svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg>
         </div>
         <ul class="sub" id="parametres">
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/><circle cx="6" cy="4.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="8" r="1.1" fill="currentColor" stroke="none"/><circle cx="5.5" cy="11.5" r="1.1" fill="currentColor" stroke="none"/></svg>Paramètre d'apparence</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.2"/><circle cx="5.5" cy="6.5" r="1.1"/><path d="M2.5 11.5l3.5-3.5L9 11l2-2 2.5 2.5"/></svg>Galerie</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="8" rx="1.2"/><path d="M10 6.3l4-1.8v7l-4-1.8z"/></svg>Vidéos</div></li>
+          <li>
+            <a href="{{ route('parametre.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/>
+                    <circle cx="6" cy="4.5" r="1.1" fill="currentColor" stroke="none"/>
+                    <circle cx="10.5" cy="8" r="1.1" fill="currentColor" stroke="none"/>
+                    <circle cx="5.5" cy="11.5" r="1.1" fill="currentColor" stroke="none"/>
+                </svg>
+                Paramètre d'apparence
+            </a>
+          </li>
           <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13.5V9l3-3 3 2 4-5 2 2v8.5z"/><path d="M2 13.5h12"/></svg>Statistique</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/></svg>Banière</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1L3 9h4l-1 6 6-8H8z"/></svg>Flash info</div></li>
+
+          <li><a href="{{ route('banniere.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/>
+                </svg>
+                Bannière
+            </a>
+          </li>
+          <li><a href="{{ route('flash_info.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 1L3 9h4l-1 6 6-8H8z"/>
+                </svg>
+                Flash info
+            </a>
+          </li>
           <li><a href="{{ route('administrateurs.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Administrateurs</a></li>
+
+
         </ul>
       </li>
     </ul>

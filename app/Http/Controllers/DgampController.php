@@ -10,6 +10,7 @@ use App\Models\MotDg;
 use App\Models\GalerieAlbum;
 use App\Models\Video;
 
+use App\Models\Historique;
 class DgampController extends Controller
 {
     public function home() 
@@ -19,6 +20,13 @@ class DgampController extends Controller
                     ->latest()
                     ->take(4)
                     ->get();
+
+    {
+        // Récupère les 4 dernières actualités
+        $actualites = Actualite::orderBy('date_publication', 'desc')
+                        ->take(4)
+                        ->get();
+
 
     // Récupère les 3 derniers communiqués
     $communiques = Communique::orderBy('created_at', 'desc')
@@ -35,6 +43,11 @@ class DgampController extends Controller
 
     return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu'));
 }
+
+        $historique = Historique::first();
+
+        return view('index', compact('actualites', 'communiques', 'historique'));
+    }
 
     public function mot_du_dg () {
         return view('accueil.apropos.direction-general.mot-du-dg');
@@ -240,13 +253,6 @@ public function titres_maritimes() {
     public function partenaire() {
         return view('partenaire');
     }
-
-
-
-
-
-
-
 
        
 }

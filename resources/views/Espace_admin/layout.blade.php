@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>DGAM — Gestionnaire de code source</title>
+<title>DGAM — Gestionnaire du site</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="icon" href="assets/images/logo_Dgamp.jpeg" type="image/jp">
+<link rel="icon" href="{{ asset('storage/' . $siteSettings?->favicon) }}" type="image/jp">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -115,8 +115,8 @@
 
 <div class="topbar">
   <a href="{{ route('accueiladmin') }}" class="brand-link">
-    <img class="seal" src="{{ asset('assets/images/logo_Dgamp.jpeg') }}" alt="Logo DGAMP">
-    <div class="brand">DGAM<small>Gestionnaire de code source</small></div>
+    <img class="seal" src="{{ asset('storage/' . $siteSettings?->logo_principal) }}" alt="Logo DGAMP">
+    <div class="brand">DGAM<small>Gestionnaire du site</small></div>
   </a>
   <div class="right">
     <a href="" download class="btn btn-ghost"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v9M4.5 6.5L8 10l3.5-3.5M2 12v2h12v-2"/></svg>Télécharger le guide</a>

@@ -11,8 +11,12 @@ use App\Http\Controllers\EnaController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\ArrondissementController;
+use App\Http\Controllers\BanniereController;
+use App\Http\Controllers\FlashinfoController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PartenaireController;
+use App\Http\Controllers\ParametreController;
+use App\Http\Controllers\LoginController;
 
 
 
@@ -45,6 +49,12 @@ Route::get('/', function () {
 Route::get('/', [DgampController::class, 'home'])->name('accueildgamp');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
 
+
+
+Route::get('/even_à_venir', [EvenementController::class, 'showAvenir'])->name('evenàvenir');
+Route::get('/even_passé', [EvenementController::class, 'showPasses'])->name('evenpassé');
+Route::get('/ena', [EnaController::class, 'show'])->name('ena');
+
 Route::get('/historique_dgam', [DgampController::class, 'historique_dgam'])->name('historiquedgam');
 Route::get('/mission_et_objectif', [DgampController::class, 'mission_et_objectif'])->name('missionetobjectif');
 Route::get('/organigrame_dgam', [DgampController::class, 'organigrame_dgam'])->name('organigramedgam');
@@ -54,6 +64,7 @@ Route::get('/arrêté_de_decision', [DgampController::class, 'arrêté_de_decisi
 Route::get('/convention_dgam', [DgampController::class, 'convention_dgam'])->name('conventiondgam');
 Route::get('/accord_dgam', [DgampController::class, 'accord_dgam'])->name('accorddgam');
 Route::get('/protocole_dgam', [DgampController::class, 'protocole_dgam'])->name('protocoledgam');
+
 
 Route::get('/fonction_publique', [DgampController::class, 'fonction_publique'])->name('fonctionpublique');
 Route::get('/galerie_img', [DgampController::class, 'galerie_img'])->name('galerie_img');
@@ -178,7 +189,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/actualites/{id}', [CommunicationController::class, 'destroyActualite'])->name('actualites.destroy');
 
     Route::get('/activites', [ActiviteController::class, 'indexActivite'])->name('activites.index');
-    
+
     // CRUD Activités
     Route::post('/activites', [ActiviteController::class, 'storeActivite'])->name('activites.store');
     Route::put('/activites/{activite}', [ActiviteController::class, 'updateActivite'])->name('activites.update');
@@ -200,6 +211,21 @@ Route::prefix('admin')->group(function () {
     Route::post('/partenaires', [PartenaireController::class, 'store'])->name('partenaires.store');
     Route::put('/partenaires/{partenaire}', [PartenaireController::class, 'update'])->name('partenaires.update');
     Route::delete('/partenaires/{partenaire}', [PartenaireController::class, 'destroy'])->name('partenaires.destroy');
+
+    Route::get('/settings', [ParametreController::class, 'index'])->name('parametre.index');
+    Route::put('/settings', [ParametreController::class, 'update'])->name('parametre.update');
+
+    Route::get('/banniere', [BanniereController::class, 'index'])->name('banniere.index');
+    Route::post('/banniere', [BanniereController::class, 'store'])->name('banniere.store');
+    Route::put('/banniere/{banniere}', [BanniereController::class, 'update'])->name('banniere.update');
+    Route::delete('/banniere/{banniere}', [BanniereController::class, 'destroy'])->name('banniere.destroy');
+
+    Route::get('/flash-info', [FlashinfoController::class, 'index'])->name('flash_info.index');
+    Route::post('/flash-info', [FlashInfoController::class, 'store'])->name('flash_info.store');
+    Route::put('/flash-info/{flashInfo}', [FlashInfoController::class, 'update'])->name('flash_info.update');
+    Route::delete('/flash-info/{flashInfo}', [FlashInfoController::class, 'destroy'])->name('flash_info.destroy');
+
+    Route::get('/connexion', [LoginController::class, 'connexion'])->name('connexion');
 
 });
 
