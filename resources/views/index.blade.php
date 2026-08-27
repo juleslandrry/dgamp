@@ -11,15 +11,15 @@
                                 <div class="single-slide">
                                     <h1 data-aos="fade-right" data-aos-delay="200">Bienvenue<br> sur le site de la direction generale des affaires maritimes et portuaires
                                     </h1>
-                                   
-                                    
+
+
                                 </div>
                             </div>
                             <div class="swiper-slide slide-content d-flex align-items-center">
                                 <div class="single-slide">
                                     <h1 data-aos="fade-right" data-aos-delay="200">Bienvenue<br> sur le site de la direction generale des affaires maritimes et portuaires
                                     </h1>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <span class="arr-left"><i class="fa fa-angle-left"></i></span>
             <span class="arr-right"><i class="fa fa-angle-right"></i></span>
         </div>
@@ -41,7 +41,7 @@
 <section class="hero-slider">
     <div class="slides">
         @forelse($banniere as $index => $banner)
-            <div class="slide {{ $index === 0 ? 'active' : '' }}" 
+            <div class="slide {{ $index === 0 ? 'active' : '' }}"
                  style="background-image: url('{{ asset('storage/' . $banner->image) }}')">
                 <div class="overlay"></div>
                 <div class="content">
@@ -106,13 +106,13 @@
         height: 90vh;
         overflow: hidden;
         }
- 
+
         .slides {
         position: relative;
         width: 100%;
         height: 100%;
         }
- 
+
         .slide {
         position: absolute;
         top: 0;
@@ -124,11 +124,11 @@
         opacity: 0;
         transition: opacity 1.2s ease-in-out;
         }
- 
+
         .slide.active {
         opacity: 1;
         }
- 
+
         .overlay {
         position: absolute;
         top: 0;
@@ -137,7 +137,7 @@
         height: 100%;
         background: rgba(0,0,0,0.45);
         }
- 
+
         .content {
         position: absolute;
         top: 50%;
@@ -149,14 +149,14 @@
         padding: 20px;
         animation: fadeUp 1s ease;
         }
- 
+
         .content h2 {
         font-size: 2.8rem;
         margin-bottom: 10px;
         font-weight: 700;
         letter-spacing: 1px;
         }
-        
+
         .btn-hero {
         display: inline-block;
         padding: 12px 25px;
@@ -167,12 +167,12 @@
         font-weight: 500;
         transition: 0.3s;
         }
- 
+
         .btn-hero:hover {
         background-color: #28a745;
         transform: scale(1.05);
         }
- 
+
         /* Navigation boutons */
         .nav-btn {
         position: absolute;
@@ -187,14 +187,14 @@
         transition: background 0.3s ease;
         z-index: 10;
         }
- 
+
         .nav-btn:hover {
         background: rgba(0,0,0,0.6);
         }
- 
+
         .nav-btn.prev { left: 20px; }
         .nav-btn.next { right: 20px; }
- 
+
         /* Animation de texte */
         @keyframes fadeUp {
         from {
@@ -206,22 +206,22 @@
             transform: translate(-50%, -50%);
         }
         }
- 
+
         /* Responsive */
         @media (max-width: 768px) {
         .content h2 {
             font-size: 1.6rem;
         }
- 
+
         .content p {
             font-size: 1rem;
         }
- 
+
         .btn-hero {
             padding: 10px 20px;
             font-size: 0.9rem;
         }
- 
+
         .hero-slider {
             height: 75vh;
         }
@@ -235,22 +235,22 @@
         const next = document.querySelector('.next');
         const prev = document.querySelector('.prev');
         let index = 0;
- 
+
         function showSlide(i) {
         slides.forEach(slide => slide.classList.remove('active'));
         slides[i].classList.add('active');
         }
- 
+
         next.addEventListener('click', () => {
         index = (index + 1) % slides.length;
         showSlide(index);
         });
- 
+
         prev.addEventListener('click', () => {
         index = (index - 1 + slides.length) % slides.length;
         showSlide(index);
         });
- 
+
         // Auto défilement toutes les 6 secondes
         setInterval(() => {
         index = (index + 1) % slides.length;
@@ -306,7 +306,7 @@
             </div>
         </div>
     </div>
-</section>   
+</section>
 
 <style>
     .navbar a:hover {
@@ -316,7 +316,7 @@
     /* ALIGNEMENT HAUT : Remplacement de align-items: center par flex-start */
     .trust .row {
         display: flex;
-        align-items: flex-start; 
+        align-items: flex-start;
     }
 
     .trust {
@@ -451,7 +451,7 @@
                         Lire la suite
                     </button>
                 </a>
-                    
+
 
             </div>
         </div>
@@ -830,7 +830,7 @@
                         <img src="{{ asset('assets/images/service3.png') }}" alt="Icône document">
                         <h5>{{ Str::limit($communique->titre, 50, '...') }}</h5>
                         <p>{{ Str::limit(strip_tags($communique->description ?? $communique->contenu), 80, '...') }}</p>
-                        
+
                         @if(!empty($communique->fichier_path))
                             <a href="{{ asset('storage/' . $communique->fichier_path) }}" class="btn-download" target="_blank" download>
                                 Télécharger
@@ -930,7 +930,7 @@
 
 <section class="mega-gallery-section py-5">
     <div class="container">
-        
+
         <div class="row animate-box">
             <div class="col-md-12 text-center">
                 <div class="actualite-bar">
@@ -1038,7 +1038,7 @@
 
     /* 3. BOUTONS RONDS ET SANS COULEUR NOIRE */
     .dg-btn-wrapper { width: 100%; text-align: center; margin-top: 40px; }
-    
+
     .btn-media-action, .galerie-tab {
         border: none !important; /* Force la suppression des bordures noires */
         outline: none !important;
@@ -1062,11 +1062,11 @@
     .btn-blue:hover { background: #e87f08; transform: scale(1.05); }
 
     /* Styles Onglets */
-    .galerie-tab { 
-        background: #f0f0f0; 
-        color: #555; 
-        padding: 10px 35px; 
-        margin: 5px; 
+    .galerie-tab {
+        background: #f0f0f0;
+        color: #555;
+        padding: 10px 35px;
+        margin: 5px;
     }
     .galerie-tab.active { background: #218c44; color: #fff; }
 
@@ -1093,30 +1093,29 @@
     <!-- Testimonial and Clients Start -->
 <section class="partners">
     <div class="actualite-bar">
-                    <h3 class="actualite-title">PARTENAIRES</h3>     
+        <h3 class="actualite-title">PARTENAIRES</h3>
     </div>
 
     <div class="partners-wrapper">
         <div class="partners-mask">
             <div class="partners-track" id="track">
-                <div class="partner-card"><img src="assets/images/image25.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image23.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image18.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image19.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image20.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image21.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image22.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image23.jpeg" alt="Partenaire"></div>
+                @forelse($partenaires as $partenaire)
+                    <div class="partner-card">
+                        <img src="{{ asset('storage/' . $partenaire->logo) }}" alt="{{ $partenaire->nom }}">
+                    </div>
+                @empty
+                    <!-- Fallback static si aucun partenaire en base -->
+                    <div class="partner-card"><img src="{{ asset('assets/images/image25.jpeg') }}" alt="Partenaire"></div>
+                    <div class="partner-card"><img src="{{ asset('assets/images/image23.jpeg') }}" alt="Partenaire"></div>
+                    <div class="partner-card"><img src="{{ asset('assets/images/image18.jpeg') }}" alt="Partenaire"></div>
+                @endforelse
 
-                <!-- duplication pour défilement infini -->
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image25.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image23.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image18.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image19.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image20.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image21.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image22.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image23.jpeg" alt=""></div>
+                <!-- Duplication pour le défilement infini -->
+                @foreach($partenaires as $partenaire)
+                    <div class="partner-card" aria-hidden="true">
+                        <img src="{{ asset('storage/' . $partenaire->logo) }}" alt="">
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -1124,9 +1123,8 @@
             <span id="partnersToggleIcon">❚❚</span>
         </button>
     </div>
-
 </section>
-  
+
 
 <style>
 
