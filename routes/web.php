@@ -17,7 +17,6 @@ use App\Http\Controllers\FlashinfoController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PartenaireController;
 use App\Http\Controllers\ParametreController;
-use App\Http\Controllers\LoginController;
 
 
 
@@ -152,9 +151,11 @@ Route::get('/partenaires', [PartenaireController::class, 'showPartenaire'])->nam
 
 
 
+Route::get('/admin/connexion', [AdministrateurController::class, 'connexion'])->name('connexion');
+Route::post('/admin/connexion', [AdministrateurController::class, 'login'])->name('admin.login.submit');
+    
 
-
-Route::prefix('admin')->group(function () {
+Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     // Espace admin
     Route::get('/', [AdminController::class, 'home'])->name('accueiladmin');
 
@@ -228,51 +229,59 @@ Route::prefix('admin')->group(function () {
     Route::delete('/banniere/{banniere}', [BanniereController::class, 'destroy'])->name('banniere.destroy');
 
     Route::get('/flash-info', [FlashinfoController::class, 'index'])->name('flash_info.index');
-    Route::post('/flash-info', [FlashInfoController::class, 'store'])->name('flash_info.store');
-    Route::put('/flash-info/{flashInfo}', [FlashInfoController::class, 'update'])->name('flash_info.update');
-    Route::delete('/flash-info/{flashInfo}', [FlashInfoController::class, 'destroy'])->name('flash_info.destroy');
+    Route::post('/flash-info', [FlashinfoController::class, 'store'])->name('flash_info.store');
+    Route::put('/flash-info/{flashInfo}', [FlashinfoController::class, 'update'])->name('flash_info.update');
+    Route::delete('/flash-info/{flashInfo}', [FlashinfoController::class, 'destroy'])->name('flash_info.destroy');
 
-    Route::get('/connexion', [LoginController::class, 'connexion'])->name('connexion');
-// Admin
-Route::get('/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
-Route::post('/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
-Route::post('/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
-Route::get('/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
-Route::post('/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
-Route::get('/messages-dg', [MessageDgController::class, 'index'])->name('messagesdg.index');
-Route::post('/messages-dg/{id}/lu', [MessageDgController::class, 'markAsRead'])->name('messagesdg.read');
-Route::delete('/messages-dg/{id}', [MessageDgController::class, 'destroy'])->name('messagesdg.destroy');
+    // Admin
+    Route::get('/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
+    Route::post('/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
+    Route::post('/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
+    Route::get('/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
+    Route::post('/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
+    Route::get('/messages-dg', [MessageDgController::class, 'index'])->name('messagesdg.index');
+    Route::post('/messages-dg/{id}/lu', [MessageDgController::class, 'markAsRead'])->name('messagesdg.read');
+    Route::delete('/messages-dg/{id}', [MessageDgController::class, 'destroy'])->name('messagesdg.destroy');
 
-Route::get('/evenements', [EvenementController::class, 'edit'])->name('evenements');
-Route::post('/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
-Route::post('/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
-Route::get('/ena', [EnaController::class, 'edit'])->name('admin.ena');
-Route::post('/ena', [EnaController::class, 'update'])->name('ena.update');
-Route::get('/fonction-publique', [FonctionPubliqueController::class, 'edit'])->name('fonction-publique');
-Route::post('/fonction-publique', [FonctionPubliqueController::class, 'update'])->name('fonction-publique.update');
-Route::get('/galerie', [GalerieController::class, 'edit'])->name('galerie');
-Route::post('/galerie', [GalerieController::class, 'update'])->name('galerie.update');
+    Route::get('/evenements', [EvenementController::class, 'edit'])->name('evenements');
+    Route::post('/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
+    Route::post('/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
+    Route::get('/ena', [EnaController::class, 'edit'])->name('admin.ena');
+    Route::post('/ena', [EnaController::class, 'update'])->name('ena.update');
+    Route::get('/fonction-publique', [FonctionPubliqueController::class, 'edit'])->name('fonction-publique');
+    Route::post('/fonction-publique', [FonctionPubliqueController::class, 'update'])->name('fonction-publique.update');
+    Route::get('/galerie', [GalerieController::class, 'edit'])->name('galerie');
+    Route::post('/galerie', [GalerieController::class, 'update'])->name('galerie.update');
 
-Route::get('/videos', [VideoController::class, 'edit'])->name('videos');
-Route::post('/videos', [VideoController::class, 'update'])->name('videos.update');
-Route::get('/services-en-ligne', [ServiceEnLigneController::class, 'edit'])->name('services-en-ligne');
-Route::post('/services-en-ligne', [ServiceEnLigneController::class, 'update'])->name('services-en-ligne.update');
-Route::delete('/services-en-ligne/{id}', [ServiceEnLigneController::class, 'destroy'])->where('id', '[0-9]+')->name('services-en-ligne.destroy');
-Route::delete('/ena/{id}', [EnaController::class, 'destroy'])->where('id', '[0-9]+')->name('ena.destroy');
+    Route::post('/deconnexion', [AdministrateurController::class, 'logout'])->name('admin.logout');
 
-Route::delete('/fonction-publique/{id}', [FonctionPubliqueController::class, 'destroy'])->where('id', '[0-9]+')->name('fonction-publique.destroy');
-Route::get('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'edit'])->name('admin.personnel-paramilitaire');
-Route::post('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'update'])->name('admin.personnel-paramilitaire.update');
-Route::get('/personnel_interministeriel', [PersonnelInterministerielController::class, 'edit'])->name('admin.personnel-interministeriel');
-Route::post('/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
-Route::get('/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
-Route::post('/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
-Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->where('id', '[0-9]+')->name('videos.destroy');
-Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name('administrateurs.index');
-Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
-Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
-Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');
-Route::get('/statistique', [StatistiqueController::class, 'index'])->name('admin.statistique');
+
+    Route::get('/profil', [AdministrateurController::class, 'editerProfil'])->name('admin.profil.edit');
+    Route::put('/profil', [AdministrateurController::class, 'updateProfil'])->name('admin.profil.update');
+
+
+    
+    
+    Route::get('/videos', [VideoController::class, 'edit'])->name('videos');
+    Route::post('/videos', [VideoController::class, 'update'])->name('videos.update');
+    Route::get('/services-en-ligne', [ServiceEnLigneController::class, 'edit'])->name('services-en-ligne');
+    Route::post('/services-en-ligne', [ServiceEnLigneController::class, 'update'])->name('services-en-ligne.update');
+    Route::delete('/services-en-ligne/{id}', [ServiceEnLigneController::class, 'destroy'])->where('id', '[0-9]+')->name('services-en-ligne.destroy');
+    Route::delete('/ena/{id}', [EnaController::class, 'destroy'])->where('id', '[0-9]+')->name('ena.destroy');
+
+    Route::delete('/fonction-publique/{id}', [FonctionPubliqueController::class, 'destroy'])->where('id', '[0-9]+')->name('fonction-publique.destroy');
+    Route::get('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'edit'])->name('admin.personnel-paramilitaire');
+    Route::post('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'update'])->name('admin.personnel-paramilitaire.update');
+    Route::get('/personnel_interministeriel', [PersonnelInterministerielController::class, 'edit'])->name('admin.personnel-interministeriel');
+    Route::post('/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
+    Route::get('/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
+    Route::post('/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
+    Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->where('id', '[0-9]+')->name('videos.destroy');
+    Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name('administrateurs.index');
+    Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
+    Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
+    Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');
+    Route::get('/statistique', [StatistiqueController::class, 'index'])->name('admin.statistique');
 
 });
 

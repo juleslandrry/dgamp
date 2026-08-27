@@ -12,6 +12,11 @@ use App\Models\Video;
 
 use App\Models\Historique;
 use App\Models\Partenaire;
+use App\Models\Activite;
+use App\Models\Arrondissement;
+use App\Models\Configuration;
+use App\Models\Banniere;
+use App\Models\FlashInfo;
 class DgampController extends Controller
 {
     public function home()

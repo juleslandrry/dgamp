@@ -14,10 +14,12 @@ class Administrateur extends Authenticatable
     protected $fillable = [
         'nom',
         'email',
+        'photo',
+        'contact',
         'titre',
         'password',
         'statut',
-        'derniere_connexion',
+        'derniere_connexion'
     ];
 
     protected $hidden = [
