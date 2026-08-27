@@ -17,7 +17,6 @@ use App\Http\Controllers\FlashinfoController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PartenaireController;
 use App\Http\Controllers\ParametreController;
-use App\Http\Controllers\LoginController;
 
 
 
