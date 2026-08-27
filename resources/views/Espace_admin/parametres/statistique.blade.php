@@ -80,10 +80,10 @@
         </div>
 
         <div class="stat-card card-dark">
-            <div class="label">Nombre d'administrateurs</div>
+            <div class="label">Nombre de communiqués</div>
             <div class="value-row">
-                <span class="value">{{ $totalAdmins }}</span>
-                <a href="{{ route('administrateurs.index') ?? '#' }}" class="more">Voir plus</a>
+                <span class="value">{{ $totalCommuniques }}</span>
+                <a href="{{ route('communiques.index') }}" class="more">Voir plus</a>
             </div>
         </div>
     </div>
@@ -92,6 +92,33 @@
     <div class="panel">
         <h2 class="panel-title">Évolution des visites (12 derniers mois)</h2>
         <canvas id="chartVisites" height="90"></canvas>
+    </div>
+
+    {{-- ===== DERNIERS ADMINISTRATEURS CONNECTÉS ===== --}}
+    <div class="panel">
+        <h2 class="panel-title">Derniers administrateurs connectés</h2>
+        @if($derniersAdmins->isEmpty())
+            <p style="color:var(--ink-soft);font-size:13.5px;">Aucune connexion enregistrée pour l'instant.</p>
+        @else
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:1.5px solid var(--line);">
+                        <th style="text-align:left;padding:10px 12px;font-size:12px;color:var(--ink-soft);text-transform:uppercase;">Nom</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:12px;color:var(--ink-soft);text-transform:uppercase;">Email</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:12px;color:var(--ink-soft);text-transform:uppercase;">Dernière connexion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($derniersAdmins as $admin)
+                        <tr style="border-bottom:1px solid var(--line);">
+                            <td style="padding:10px 12px;font-size:13.5px;font-weight:600;color:var(--navy);">{{ $admin->nom }}</td>
+                            <td style="padding:10px 12px;font-size:13.5px;color:var(--ink-soft);">{{ $admin->email }}</td>
+                            <td style="padding:10px 12px;font-size:13.5px;">{{ $admin->derniere_connexion->diffForHumans() }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 
     {{-- ===== RECHERCHE PAR DATE ===== --}}

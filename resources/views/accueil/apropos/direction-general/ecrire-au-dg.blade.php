@@ -12,31 +12,46 @@
                 </p>
             </div>
 
-            <form id="contactForm">
+            @if(session('success'))
+                <div class="alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form id="contactForm" action="{{ route('ecrireaudg.store') }}" method="POST">
+                @csrf
+
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="text" id="name" placeholder="Nom complet" required>
-                        
+                        <input type="text" name="name" id="name" placeholder="Nom complet" value="{{ old('name') }}" required>
+                        @error('name')
+                            <p class="error-msg">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" placeholder="Email" required>
-                        
+                        <input type="email" name="email" id="email" placeholder="Email" value="{{ old('email') }}" required>
+                        @error('email')
+                            <p class="error-msg">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" id="subject" placeholder="Objet">
-                    
+                    <input type="text" name="subject" id="subject" placeholder="Objet" value="{{ old('subject') }}">
+                    @error('subject')
+                        <p class="error-msg">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="form-group">
-                    <textarea id="message" placeholder="Message" rows="4" required></textarea>
-                    
+                    <textarea name="message" id="message" placeholder="Message" rows="4" required>{{ old('message') }}</textarea>
+                    @error('message')
+                        <p class="error-msg">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn-send">
                     <span>Envoyer le message</span>
-                   
                 </button>
             </form>
         </div>
@@ -95,6 +110,24 @@
     line-height: 1.4;
 }
 
+.alert-success {
+    background: #22c55e;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: left;
+}
+
 .form-group {
     margin-bottom: 15px;
     width: 100%;
@@ -138,10 +171,9 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const card = document.querySelector(".contact-card");
-    const form = document.getElementById("contactForm");
     const inputs = document.querySelectorAll(".form-group input, .form-group textarea");
 
-    // 1. Animation d'entrée élégante
+    // Animation d'entrée élégante
     card.style.opacity = "0";
     card.style.transform = "scale(0.9) translateY(30px)";
 
@@ -151,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style.transform = "scale(1) translateY(0)";
     }, 200);
 
-    // 2. Animation interactive sur les inputs
+    // Animation interactive sur les inputs
     inputs.forEach(input => {
         input.addEventListener("focus", () => {
             input.parentElement.style.transform = "translateX(5px)";
@@ -161,31 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
             input.parentElement.style.transform = "translateX(0)";
         });
     });
-
-    // 3. Simulation d'envoi
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const btn = document.querySelector(".btn-send");
-        
-        btn.innerHTML = "<span>Envoi en cours...</span>";
-        btn.style.opacity = "0.7";
-        btn.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            btn.style.background = "#22c55e"; // Vert succès
-            btn.innerHTML = "<span>Message envoyé ! ✓</span>";
-            form.reset();
-            
-            setTimeout(() => {
-                btn.style.background = "#0b1c39";
-                btn.innerHTML = "<span>Envoyer le message</span> 🚀";
-                btn.style.opacity = "1";
-                btn.style.pointerEvents = "all";
-            }, 3000);
-        }, 1500);
-    });
 });
 </script>
-
 
 @endsection

@@ -648,30 +648,40 @@
                 <div class="col-12">
                     <h3 class="text-center mb-4">CONTACTEZ-NOUS</h3>
 
-                    <form class="contact-form">
+                    @if(session('success'))
+    <div class="alert alert-success text-center" style="border-radius:8px;margin-bottom:20px;">
+        {{ session('success') }}
+    </div>
+@endif
 
-                        <!-- INPUTS HORIZONTAUX -->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input type="text" placeholder="Votre nom">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="email" placeholder="Votre email">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" placeholder="Objet">
-                            </div>
-                        </div>
+<form class="contact-form" action="{{ route('contact.store') }}" method="POST">
+    @csrf
 
-                        <!-- MESSAGE -->
-                        <textarea placeholder="Votre message..."></textarea>
+    <!-- INPUTS HORIZONTAUX -->
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="name" placeholder="Votre nom" value="{{ old('name') }}" required>
+            @error('name') <div style="color:#ff8080;font-size:12px;margin-top:-10px;margin-bottom:10px;">{{ $message }}</div> @enderror
+        </div>
+        <div class="col-md-4">
+            <input type="email" name="email" placeholder="Votre email" value="{{ old('email') }}" required>
+            @error('email') <div style="color:#ff8080;font-size:12px;margin-top:-10px;margin-bottom:10px;">{{ $message }}</div> @enderror
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="subject" placeholder="Objet" value="{{ old('subject') }}">
+        </div>
+    </div>
 
-                        <!-- BOUTON -->
-                        <div class="text-center">
-                            <button type="submit" class="btn-send">Envoyer</button>
-                        </div>
+    <!-- MESSAGE -->
+    <textarea name="message" placeholder="Votre message..." required>{{ old('message') }}</textarea>
+    @error('message') <div style="color:#ff8080;font-size:12px;margin-top:-10px;margin-bottom:10px;">{{ $message }}</div> @enderror
 
-                    </form>
+    <!-- BOUTON -->
+    <div class="text-center">
+        <button type="submit" class="btn-send">Envoyer</button>
+    </div>
+
+</form>
                 </div>
             </div>
          </div>

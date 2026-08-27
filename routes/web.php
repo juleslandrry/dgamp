@@ -30,6 +30,7 @@ use App\Http\Controllers\PersonnelInterministerielController;
 use App\Http\Controllers\VieAssociativeController;
 use App\Http\Controllers\AdministrateurController;
 use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\MessageDgController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,8 @@ Route::get('/', function () {
 
 Route::get('/', [DgampController::class, 'home'])->name('accueildgamp');
 Route::get('/ecrire_au_dg', [DgampController::class, 'ecrire_au_dg'])->name('ecrireaudg');
+Route::post('/ecrire_au_dg', [MessageDgController::class, 'store'])->name('ecrireaudg.store');
+Route::post('/contact', [MessageDgController::class, 'storeContact'])->name('contact.store');
 
 
 
@@ -236,6 +239,10 @@ Route::post('/mot_dg', [MotDgController::class, 'update'])->name('motdg.update')
 Route::post('/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
 Route::get('/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
 Route::post('/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
+Route::get('/messages-dg', [MessageDgController::class, 'index'])->name('messagesdg.index');
+Route::post('/messages-dg/{id}/lu', [MessageDgController::class, 'markAsRead'])->name('messagesdg.read');
+Route::delete('/messages-dg/{id}', [MessageDgController::class, 'destroy'])->name('messagesdg.destroy');
+
 Route::get('/evenements', [EvenementController::class, 'edit'])->name('evenements');
 Route::post('/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
 Route::post('/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');

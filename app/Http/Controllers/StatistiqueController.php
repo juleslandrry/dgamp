@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SiteVisite;
 use App\Models\Actualite;
+use App\Models\Communique;
 use App\Models\Administrateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -18,9 +19,15 @@ class StatistiqueController extends Controller
             fn($t) => $t > now()->subMinutes(5)->timestamp
         ));
 
-        $totalVisiteurs = SiteVisite::sum('vues');
-        $totalArticles  = Actualite::count();
-        $totalAdmins    = Administrateur::count();
+        $totalVisiteurs  = SiteVisite::sum('vues');
+        $totalArticles   = Actualite::count();
+        $totalCommuniques = Communique::count();
+
+        // ===== Derniers administrateurs connectés =====
+        $derniersAdmins = Administrateur::whereNotNull('derniere_connexion')
+            ->orderByDesc('derniere_connexion')
+            ->take(5)
+            ->get();
 
         // ===== Filtre par date (optionnel) =====
         $query = SiteVisite::query();
@@ -51,15 +58,16 @@ class StatistiqueController extends Controller
         }
 
         return view('Espace_admin.parametres.statistique', [
-            'visiteursEnLigne' => $visiteursEnLigne,
-            'totalVisiteurs'   => $totalVisiteurs,
-            'totalArticles'    => $totalArticles,
-            'totalAdmins'      => $totalAdmins,
-            'visites'          => $visites,
-            'labelsGraphique'  => $labelsGraphique,
-            'valeursGraphique' => $valeursGraphique,
-            'debut'            => $request->debut,
-            'fin'              => $request->fin,
+            'visiteursEnLigne'  => $visiteursEnLigne,
+            'totalVisiteurs'    => $totalVisiteurs,
+            'totalArticles'     => $totalArticles,
+            'totalCommuniques'  => $totalCommuniques,
+            'derniersAdmins'    => $derniersAdmins,
+            'visites'           => $visites,
+            'labelsGraphique'   => $labelsGraphique,
+            'valeursGraphique'  => $valeursGraphique,
+            'debut'             => $request->debut,
+            'fin'               => $request->fin,
         ]);
     }
 }

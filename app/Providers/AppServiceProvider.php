@@ -8,12 +8,16 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use App\Models\ServiceEnLigne;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login;
 
 
 use App\Models\Configuration;
 use App\Models\Banniere;
 use App\Models\FlashInfo;
 use App\Models\Partenaire;
+use App\Models\Administrateur;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Event::listen(Login::class, function (Login $event) {
+        if ($event->user instanceof Administrateur) {
+            $event->user->update(['derniere_connexion' => now()]);
+        }
+    });
         Schema::defaultStringLength(191);
 
 
