@@ -123,44 +123,48 @@
         <p>DGAM · Gestionnaire de contenu</p>
       </div>
 
-      <div class="card-body">
+        <div class="card-body">
 
-        {{-- @if ($errors->any()) --}}
-        {{-- <div class="error">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.3"/><path d="M8 5v4M8 11h.01"/></svg>
-          <span>Identifiant ou mot de passe incorrect.</span>
-        </div> --}}
-        {{-- @endif --}}
+            {{-- Message d'erreur dynamique --}}
+            @if ($errors->any())
+                <div class="error">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <circle cx="8" cy="8" r="6.3"/>
+                    <path d="M8 5v4M8 11h.01"/>
+                </svg>
+                <span>{{ $errors->first() }}</span>
+                </div>
+            @endif
 
-        <form method="POST" action="#">
-          @csrf
+            <form method="POST" action="{{ route('admin.login.submit') }}">
+                @csrf
 
-          <div class="field">
-            <label for="email">Adresse e-mail</label>
-            <div class="input-wrap">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
-              <input type="email" id="email" name="email" placeholder="admin@dgamp.ci" required autofocus>
-            </div>
-          </div>
+                <div class="field">
+                <label for="email">Adresse e-mail</label>
+                <div class="input-wrap">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="admin@dgamp.ci" required autofocus>
+                </div>
+                </div>
 
-          <div class="field">
-            <label for="password">Mot de passe</label>
-            <div class="input-wrap">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1.2"/><path d="M5 7V4.5a3 3 0 016 0V7"/></svg>
-              <input type="password" id="password" name="password" placeholder="••••••••" required>
-              <button type="button" class="toggle-pw" id="togglePw" title="Afficher le mot de passe">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg>
-              </button>
-            </div>
-          </div>
+                <div class="field">
+                <label for="password">Mot de passe</label>
+                <div class="input-wrap">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1.2"/><path d="M5 7V4.5a3 3 0 016 0V7"/></svg>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <button type="button" class="toggle-pw" id="togglePw" title="Afficher le mot de passe">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg>
+                    </button>
+                </div>
+                </div>
 
-          <button type="submit" class="submit">
-            Se connecter
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </button>
-        </form>
+                <button type="submit" class="submit">
+                Se connecter
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </button>
+            </form>
 
-      </div>
+        </div>
     </div>
 
   </div>

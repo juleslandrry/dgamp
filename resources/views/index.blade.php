@@ -586,9 +586,9 @@
                                     {{ Str::limit($actu->titre, 60, '...') }}
                                 </a>
                             </h4>
-                            <div class="views">
+                            {{-- <div class="views">
                                 👁 <span class="static-view">{{ $actu->vues ?? 0 }}</span> vues
-                            </div>
+                            </div> --}}
                             <a class="post-btn" href="{{ route('actualitesdgam') }}">→</a>
                         </div>
                     </div>

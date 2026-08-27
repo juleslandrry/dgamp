@@ -13,7 +13,7 @@ use App\Models\ServiceEnLigne;
 use App\Models\Configuration;
 use App\Models\Banniere;
 use App\Models\FlashInfo;
-use App\Models\Partenaire;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
