@@ -39,12 +39,13 @@ class AdministrateurController extends Controller
             'email'    => ['required', 'email', 'max:150', 'unique:administrateurs,email'],
             'titre'    => ['required', 'string', 'max:100'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'statut'   => ['required', Rule::in(['actif', 'inactif'])],
+            'statut'   => ['nullable', Rule::in(['actif', 'inactif'])],
         ], [
             'email.unique' => 'Cette adresse email est déjà utilisée par un autre administrateur.',
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
         ]);
 
+        $donnees['statut'] = $donnees['statut'] ?? 'actif';
         $donnees['password'] = Hash::make($donnees['password']);
 
         Administrateur::create($donnees);

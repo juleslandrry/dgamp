@@ -28,6 +28,8 @@ use App\Http\Controllers\PersonnelParamilitaireController;
 use App\Http\Controllers\PersonnelInterministerielController;
 use App\Http\Controllers\VieAssociativeController;
 use App\Http\Controllers\AdministrateurController;
+use App\Http\Controllers\StatistiqueController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -294,3 +296,4 @@ Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name
 Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
 Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
 Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');
+Route::get('/admin/statistique', [StatistiqueController::class, 'index'])->name('admin.statistique');
