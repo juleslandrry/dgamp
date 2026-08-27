@@ -1,5 +1,4 @@
-use Illuminate\Support\Facades\Route;
-use App\Models\Arrondissement;
+
 @extends('template')
 
 @section('layout')
@@ -118,3 +117,4 @@ use App\Models\Arrondissement;
 </style>
 
 @endsection
+

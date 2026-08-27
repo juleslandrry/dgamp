@@ -5,24 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\Actualite;
 use App\Models\Communique;
 use Illuminate\Http\Request;
+use App\Models\ServiceEnLigne;
+use App\Models\MotDg;
+use App\Models\GalerieAlbum;
+use App\Models\Video;
 
+use App\Models\Historique;
+use App\Models\Partenaire;
 class DgampController extends Controller
 {
-    public function home() 
-    {
+    public function home()
+{
+
         // Récupère les 4 dernières actualités
         $actualites = Actualite::orderBy('date_publication', 'desc')
-                        ->latest()
                         ->take(4)
                         ->get();
 
-        // Récupère les 3 derniers communiqués
-        $communiques = Communique::orderBy('created_at', 'desc')
-                        ->latest()
-                        ->take(3)
-                        ->get();
 
-        return view('index', compact('actualites', 'communiques'));
+    // Récupère les 3 derniers communiqués
+    $communiques = Communique::orderBy('created_at', 'desc')
+                    ->latest()
+                    ->take(3)
+                    ->get();
+
+    // Mot du DG (une seule ligne en base)
+    $motDg = MotDg::first();
+
+    // Aperçu galerie : 3 albums et 3 vidéos les plus récents
+    $albumsApercu = GalerieAlbum::orderBy('ordre')->take(3)->get();
+    $videosApercu = Video::orderBy('ordre')->take(3)->get();
+
+
+        $historique = Historique::first();
+
+        $partenaires = Partenaire::all();
+
+    return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu', 'historique', 'partenaires'));
     }
 
     public function mot_du_dg () {
@@ -48,7 +67,7 @@ class DgampController extends Controller
     public function organigrame_dgam() {
         return view('accueil.apropos.organisation.organigrame-dgam');
     }
-    
+
     public function lois_dgam() {
         return view('accueil.apropos.documentation.textes-nationaux.lois-dgam');
     }
@@ -80,7 +99,7 @@ class DgampController extends Controller
     public function even_passé() {
         return view('accueil.agenda.even-passé');
     }
-  
+
     public function ena() {
         return view('accueil.recrutement.ena');
     }
@@ -139,25 +158,29 @@ class DgampController extends Controller
     }
 
      public function agrément_visa () {
-        return view('service-en-ligne.agrément-visa');
-    }
+    $service = ServiceEnLigne::where('cle', 'Agréments et visas')->first();
+    return view('service-en-ligne.agrement-visa', ['service' => $service]);
+}
 
-    public function immatriculation_navire() {
-        return view('service-en-ligne.immatriculation-navire');
-    }
+public function immatriculation_navire() {
+    $service = ServiceEnLigne::where('cle', 'Immatriculations des navires')->first();
+    return view('service-en-ligne.immatriculation-navire', ['service' => $service]);
+}
 
-     public function visite_technique() {
-        return view('service-en-ligne.visite-technique');
-    }
+public function visite_technique() {
+    $service = ServiceEnLigne::where('cle', 'Visite technique des navires')->first();
+    return view('service-en-ligne.visite-technique', ['service' => $service]);
+}
 
-     public function permis_conduire() {
-        return view('service-en-ligne.permis-conduire');
-    }
+public function permis_conduire() {
+    $service = ServiceEnLigne::where('cle', 'Permis de conduire des navires')->first();
+    return view('service-en-ligne.permis-conduire', ['service' => $service]);
+}
 
-    public function titres_maritimes() {
-        return view('service-en-ligne.titres-maritimes');
-    }
-
+public function titres_maritimes() {
+    $service = ServiceEnLigne::where('cle', 'Livrets et titres maritimes')->first();
+    return view('service-en-ligne.titres-maritimes', ['service' => $service]);
+}
     public function arrondissement_adiaké() {
         return view('arrondissement.arrondissement-adiaké');
     }
@@ -227,11 +250,4 @@ class DgampController extends Controller
     }
 
 
-
-
-
-
-
-
-       
 }

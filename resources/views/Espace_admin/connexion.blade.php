@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>DGAMP — Espace de connexion</title>
+<title>DGAM — Espace de connexion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -118,7 +118,7 @@
   <div>
     <div class="card">
       <div class="card-head">
-        <img class="seal" src="{{ ('assets/images/logo_dgamp.jpeg')}}" alt="Logo DGAMP">
+        <img class="seal" src="{{ asset ('assets/images/logo_Dgamp.jpeg')}}" alt="Logo DGAMP">
         <h1>Espace Administrateur</h1>
         <p>DGAM · Gestionnaire de contenu</p>
       </div>
@@ -126,14 +126,14 @@
       <div class="card-body">
 
         {{-- @if ($errors->any()) --}}
-        <div class="error">
+        {{-- <div class="error">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.3"/><path d="M8 5v4M8 11h.01"/></svg>
           <span>Identifiant ou mot de passe incorrect.</span>
-        </div>
+        </div> --}}
         {{-- @endif --}}
 
-        <form method="POST" action="@{{ route('login') }}">
-          @@csrf
+        <form method="POST" action="#">
+          @csrf
 
           <div class="field">
             <label for="email">Adresse e-mail</label>
@@ -154,14 +154,6 @@
             </div>
           </div>
 
-          <div class="row-between">
-            <label class="remember">
-              <input type="checkbox" name="remember">
-              Se souvenir de moi
-            </label>
-            <a href="@{{ route('password.request') }}" class="forgot">Mot de passe oublié ?</a>
-          </div>
-
           <button type="submit" class="submit">
             Se connecter
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -171,12 +163,6 @@
       </div>
     </div>
 
-    <div class="back">
-      <a href="@{{ url('/') }}">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
-        Retour au site
-      </a>
-    </div>
   </div>
 </div>
 

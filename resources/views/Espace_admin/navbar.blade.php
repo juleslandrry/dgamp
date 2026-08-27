@@ -11,7 +11,7 @@
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Directeur Général</div></li>
           <li><a href="{{ route('motdg') }}" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v7H6l-3 3v-3H2z"/></svg>Mot du DG</a></li>
-          <li><a href="#"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>Biographie</a></li>
+          <li><a href="{{ route('biodg') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>Biographie</a></li>
 
           <li><div class="group-label">Connaître la DGAM <span class="sep">›</span> Organisation</div></li>
           <li><a href="{{ route('admin.historique') }}"  class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2.2 1.3"/></svg>Historique</a></li>
@@ -69,8 +69,8 @@
           <svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg>
         </div>
         <ul class="sub" id="perso">
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5 2v4c0 3.6-2.2 5.9-5 6.7-2.8-.8-5-3.1-5-6.7v-4z"/></svg>Personnels millitaires</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Personnels interministériels</div></li>
+          <li><a href="{{ route('admin.personnel-paramilitaire') }}" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5 2v4c0 3.6-2.2 5.9-5 6.7-2.8-.8-5-3.1-5-6.7v-4z"/></svg>Personnel Paramilitaire</a></li>
+          <li><a href="{{ route('admin.personnel-interministeriel') }}" class="node"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Personnel Interministériel</a></li>
         </ul>
       </li>
 
@@ -81,11 +81,11 @@
           <svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg>
         </div>
         <ul class="sub" id="vie">
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a4 4 0 014-4h2a3 3 0 013 3v.5l1.2.9-1.2.9v.7a1 1 0 01-1 1h-1v1H7v-1H6a3 3 0 01-3-3z"/><circle cx="10.3" cy="7.3" r=".5" fill="currentColor"/></svg>Fond de prévoyance</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13.5S2.5 10 2.5 6.3A2.8 2.8 0 018 4.6a2.8 2.8 0 015.5 1.7c0 3.7-5.5 7.2-5.5 7.2z"/></svg>Vie sociales</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Autres associations</div></li>
-        </ul>
-      </li>
+        <li><a href="{{ route('admin.vie-associative.edit', 'prevoyance') }}" class="node">Fond de prévoyance</a></li>
+        <li><a href="{{ route('admin.vie-associative.edit', 'vie-sociale') }}" class="node">Vie sociale</a></li>
+        <li><a href="{{ route('admin.vie-associative.edit', 'autres-associations') }}" class="node">Autres associations</a></li>
+    </ul>
+          </li>
 
       <li><a href="{{ route('operateurs.index') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.3" r="2.6"/><path d="M2.7 14a5.3 5.3 0 0110.6 0"/></svg></span>Opérateurs</a></li>
       <li><a href="{{ route('partenaires.index') }}" class="node" data-target="hero"><span class="icon-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h5l1 2h6v8H2z"/></svg></span>Partenaires</a></li>
@@ -97,13 +97,36 @@
           <svg class="caret" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2l8 6-8 6z"/></svg>
         </div>
         <ul class="sub" id="parametres">
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/><circle cx="6" cy="4.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="8" r="1.1" fill="currentColor" stroke="none"/><circle cx="5.5" cy="11.5" r="1.1" fill="currentColor" stroke="none"/></svg>Paramètre d'apparence</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.2"/><circle cx="5.5" cy="6.5" r="1.1"/><path d="M2.5 11.5l3.5-3.5L9 11l2-2 2.5 2.5"/></svg>Galerie</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="8" rx="1.2"/><path d="M10 6.3l4-1.8v7l-4-1.8z"/></svg>Vidéos</div></li>
+          <li>
+            <a href="{{ route('parametre.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/>
+                    <circle cx="6" cy="4.5" r="1.1" fill="currentColor" stroke="none"/>
+                    <circle cx="10.5" cy="8" r="1.1" fill="currentColor" stroke="none"/>
+                    <circle cx="5.5" cy="11.5" r="1.1" fill="currentColor" stroke="none"/>
+                </svg>
+                Paramètre d'apparence
+            </a>
+          </li>
           <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13.5V9l3-3 3 2 4-5 2 2v8.5z"/><path d="M2 13.5h12"/></svg>Statistique</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/></svg>Banière</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1L3 9h4l-1 6 6-8H8z"/></svg>Flash info</div></li>
-          <li><div class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Administrateurs</div></li>
+
+          <li><a href="{{ route('banniere.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 2.5h12v8H9l-1.5 3-1.5-3H2z"/>
+                </svg>
+                Bannière
+            </a>
+          </li>
+          <li><a href="{{ route('flash_info.index') }}" class="node" data-target="hero">
+                <svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 1L3 9h4l-1 6 6-8H8z"/>
+                </svg>
+                Flash info
+            </a>
+          </li>
+          <li><a href="{{ route('administrateurs.index') }}" class="node" data-target="hero"><svg class="gi" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.7" cy="6" r="2"/><circle cx="10.6" cy="6" r="2"/><path d="M2.3 13.7c0-2.3 1.6-4 3.6-4M10.1 9.7c2 0 3.6 1.7 3.6 4"/></svg>Administrateurs</a></li>
+
+
         </ul>
       </li>
     </ul>

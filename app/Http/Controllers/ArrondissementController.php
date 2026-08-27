@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
+use App\Models\Banniere;
 class ArrondissementController extends Controller
 {
     public function showArrondissement($slug)

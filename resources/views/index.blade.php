@@ -11,15 +11,15 @@
                                 <div class="single-slide">
                                     <h1 data-aos="fade-right" data-aos-delay="200">Bienvenue<br> sur le site de la direction generale des affaires maritimes et portuaires
                                     </h1>
-                                   
-                                    
+
+
                                 </div>
                             </div>
                             <div class="swiper-slide slide-content d-flex align-items-center">
                                 <div class="single-slide">
                                     <h1 data-aos="fade-right" data-aos-delay="200">Bienvenue<br> sur le site de la direction generale des affaires maritimes et portuaires
                                     </h1>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <span class="arr-left"><i class="fa fa-angle-left"></i></span>
             <span class="arr-right"><i class="fa fa-angle-right"></i></span>
         </div>
@@ -38,74 +38,66 @@
 
 
 <!-- ======= SECTION SLIDER ======= -->
-    <section class="hero-slider">
-        <div class="slides">
-            <div class="slide active" style="background-image: url('assets/images/image29.jpeg')" alt="Image29">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Surveillance des plans <br>
-                    d'eau fluvio lagunaire 
-                </h2>
-               
+<section class="hero-slider">
+    <div class="slides">
+        @forelse($banniere as $index => $banner)
+            <div class="slide {{ $index === 0 ? 'active' : '' }}"
+                 style="background-image: url('{{ asset('storage/' . $banner->image) }}')">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>{!! $banner->titre !!}</h2>
+                </div>
             </div>
-            </div>
- 
-            <div class="slide" style="background-image: url('assets/images/image1.jpeg')" alt="Image1">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Prix d'excellence 2024 du colonel  <br>
-                    Nessemon Kida Rose honorée par le chef de l'etat
-                </h2>
-            </div>
-            </div>
- 
-            <div class="slide" style="background-image: url('assets/images/image33.jpeg')" alt="Image33">
-            <div class="overlay"></div>
-            <div class="content">
-
-                <h2>
-                    DGAM/FORMATION 50 élèves-officiers <br>
-                    presentés au drapeau national
-                </h2>
-            </div>
+        @empty
+            <!-- Slider statique par défaut (si aucune bannière en BDD) -->
+            <div class="slide active" style="background-image: url('{{ asset('assets/images/image29.jpeg') }}')" alt="Image29">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Surveillance des plans <br> d'eau fluvio lagunaire</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image32.jpeg')" alt="Image3">
-            <div class="overlay"></div>
-            <div class="content">
-                <h2>
-                    Sortie officielle de la 11ème promotion<br>
-                    de la DGAM baptisé << promotion Gonkano Ouan Philbert>>
-            </div>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image1.jpeg') }}')" alt="Image1">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Prix d'excellence 2024 du colonel <br> Nessemon Kida Rose honorée par le chef de l'etat</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image26.jpeg')" alt="Image26">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                   Securité maritime la Cote d'Ivoire <br>
-                    reçoit << scala >> un bateau bateau de sauvetage maritime
-                </h2>
-            </div>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image33.jpeg') }}')" alt="Image33">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>DGAM/FORMATION 50 élèves-officiers <br> presentés au drapeau national</h2>
+                </div>
             </div>
 
-             <div class="slide" style="background-image: url('assets/images/image35.jpeg')" alt="Image35">
-            <div class="overlay"></div>
-            <div class="content">
-                 <h2>
-                    Operation << chalut >> de la <br>
-                    direction maritime en mer 
-                </h2>
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image32.jpeg') }}')" alt="Image3">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Sortie officielle de la 11ème promotion<br> de la DGAM baptisé &lt;&lt; promotion Gonkano Ouan Philbert &gt;&gt;</h2>
+                </div>
             </div>
+
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image26.jpeg') }}')" alt="Image26">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Securité maritime la Cote d'Ivoire <br> reçoit &lt;&lt; scala &gt;&gt; un bateau bateau de sauvetage maritime</h2>
+                </div>
             </div>
-        </div>
- 
-        <!-- Boutons de navigation -->
-        <div class="nav-btn prev">&#10094;</div>
-        <div class="nav-btn next">&#10095;</div>
-    </section>
+
+            <div class="slide" style="background-image: url('{{ asset('assets/images/image35.jpeg') }}')" alt="Image35">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Operation &lt;&lt; chalut &gt;&gt; de la <br> direction maritime en mer</h2>
+                </div>
+            </div>
+        @endforelse
+    </div>
+
+    <!-- Boutons de navigation -->
+    <div class="nav-btn prev">&#10094;</div>
+    <div class="nav-btn next">&#10095;</div>
+</section>
 
     <style>
         .hero-slider {
@@ -114,13 +106,13 @@
         height: 90vh;
         overflow: hidden;
         }
- 
+
         .slides {
         position: relative;
         width: 100%;
         height: 100%;
         }
- 
+
         .slide {
         position: absolute;
         top: 0;
@@ -132,11 +124,11 @@
         opacity: 0;
         transition: opacity 1.2s ease-in-out;
         }
- 
+
         .slide.active {
         opacity: 1;
         }
- 
+
         .overlay {
         position: absolute;
         top: 0;
@@ -145,7 +137,7 @@
         height: 100%;
         background: rgba(0,0,0,0.45);
         }
- 
+
         .content {
         position: absolute;
         top: 50%;
@@ -157,14 +149,14 @@
         padding: 20px;
         animation: fadeUp 1s ease;
         }
- 
+
         .content h2 {
         font-size: 2.8rem;
         margin-bottom: 10px;
         font-weight: 700;
         letter-spacing: 1px;
         }
-        
+
         .btn-hero {
         display: inline-block;
         padding: 12px 25px;
@@ -175,12 +167,12 @@
         font-weight: 500;
         transition: 0.3s;
         }
- 
+
         .btn-hero:hover {
         background-color: #28a745;
         transform: scale(1.05);
         }
- 
+
         /* Navigation boutons */
         .nav-btn {
         position: absolute;
@@ -195,14 +187,14 @@
         transition: background 0.3s ease;
         z-index: 10;
         }
- 
+
         .nav-btn:hover {
         background: rgba(0,0,0,0.6);
         }
- 
+
         .nav-btn.prev { left: 20px; }
         .nav-btn.next { right: 20px; }
- 
+
         /* Animation de texte */
         @keyframes fadeUp {
         from {
@@ -214,22 +206,22 @@
             transform: translate(-50%, -50%);
         }
         }
- 
+
         /* Responsive */
         @media (max-width: 768px) {
         .content h2 {
             font-size: 1.6rem;
         }
- 
+
         .content p {
             font-size: 1rem;
         }
- 
+
         .btn-hero {
             padding: 10px 20px;
             font-size: 0.9rem;
         }
- 
+
         .hero-slider {
             height: 75vh;
         }
@@ -243,22 +235,22 @@
         const next = document.querySelector('.next');
         const prev = document.querySelector('.prev');
         let index = 0;
- 
+
         function showSlide(i) {
         slides.forEach(slide => slide.classList.remove('active'));
         slides[i].classList.add('active');
         }
- 
+
         next.addEventListener('click', () => {
         index = (index + 1) % slides.length;
         showSlide(index);
         });
- 
+
         prev.addEventListener('click', () => {
         index = (index - 1 + slides.length) % slides.length;
         showSlide(index);
         });
- 
+
         // Auto défilement toutes les 6 secondes
         setInterval(() => {
         index = (index + 1) % slides.length;
@@ -269,125 +261,92 @@
 
 
     <!-- Trust Start -->
-<section class="trust" >
+<section class="trust">
     <div class="container">
+        <!-- Retrait de align-items-center pour aligner le contenu en haut -->
         <div class="row">
             <!-- Texte -->
             <div class="offset-xl-1 col-xl-6" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
                 <div class="title">
                     <h3 class="title-primary"><strong>PRESENTATION</strong></h3>
-                      <div class="presentation-bar-long"></div>
-
+                    <div class="presentation-bar-long"></div>
                     <h1>Affaires Maritimes de Côte d’Ivoire</h1>
                 </div>
 
-                <p>
-                    Les <strong>Affaires Maritimes ivoiriennes</strong>, composante essentielle des
-                    <strong>Forces de Sécurité Intérieure de l’État</strong>, assurent la régulation, la sécurité
-                    et le développement des activités maritimes et portuaires nationales.
-                </p>
-
-              <p>
-                    Depuis leur création en <strong>1960</strong>, elles ont connu plusieurs réformes majeures,
-                    traduisant la volonté de l’État d’adapter la gouvernance maritime aux normes internationales
-                    et aux <strong>enjeux économiques du pays</strong>
-                    <span id="points">...</span>
-                </p>
-
-
-                <!-- Texte caché -->
-                <div id="more-text" style="display: none;">
-                            <p>
-                                Cette évolution institutionnelle a permis de renforcer la sécurité maritime,
-                                d’améliorer la gestion des espaces portuaires et de soutenir le développement
-                                durable des activités maritimes et fluvio-lagunaires en Côte d’Ivoire.
-                            </p>
-
-                            <h5>Repères institutionnels clés</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>1960</strong> : Création de la Direction de la Marine Marchande</li>
-                                <li><strong>1976</strong> : Érection en Ministère de la Marine</li>
-                                <li><strong>1991</strong> : Création de la DAMP et de la DTMFLP</li>
-                                <li><strong>2004</strong> : Naissance de la Direction Générale des Affaires Maritimes et Portuaires</li>
-                                <li><strong>2022</strong> : Rattachement au Ministère des Transports</li>
-                            </ul>
+                <!-- Texte d'introduction dynamique -->
+                <div class="presentation-content">
+                    <p>
+                        {!! nl2br(e($historique?->intro ?? "Les Affaires Maritimes ivoiriennes, composante essentielle des Forces de Sécurité Intérieure de l’État, assurent la régulation, la sécurité et le développement des activités maritimes et portuaires nationales.")) !!}
+                    </p>
                 </div>
-                    <div class="btn-wrapper">
-                        <button class="btn-lire-suite" onclick="toggleText()" id="btnLire">
-                            Lire la suite
-                        </button>
-                    </div>
 
+                <!-- Bouton de redirection vers la page Historique -->
+                <div class="btn-wrapper mt-4">
+                    <a href="{{ route('historiquedgam') }}" class="btn btn-lire-suite">
+                        Lire la suite
+                    </a>
+                </div>
             </div>
 
+            <!-- Galerie d'images dynamique -->
             <div class="col-xl-5 gallery-modern">
                 <div class="gallery-grid">
-
                     <div class="gallery-item large">
-                        <img src="assets/images/image9.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image1 ? asset('storage/'.$historique->image1) : asset('assets/images/image9.jpeg') }}" class="img-fixe" alt="Présentation 1">
                     </div>
 
                     <div class="gallery-item">
-                        <img src="assets/images/image37.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image2 ? asset('storage/'.$historique->image2) : asset('assets/images/image37.jpeg') }}" class="img-fixe" alt="Présentation 2">
                     </div>
 
                     <div class="gallery-item">
-                        <img src="assets/images/image34.jpeg" class="img-fixe">
+                        <img src="{{ $historique?->image3 ? asset('storage/'.$historique->image3) : asset('assets/images/image34.jpeg') }}" class="img-fixe" alt="Présentation 3">
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-<!-- Trust End -->
-
-
-<script>
-    function toggleText() {
-        const moreText = document.getElementById("more-text");
-        const points = document.getElementById("points");
-        const btn = document.getElementById("btnLire");
-
-        if (moreText.style.display === "none") {
-            moreText.style.display = "block";
-            points.style.display = "none";
-            btn.innerHTML = "Réduire";
-        } else {
-            moreText.style.display = "none";
-            points.style.display = "inline";
-            btn.innerHTML = "Lire la suite";
-        }
-    }
-</script>
-
 
 <style>
-
-   
     .navbar a:hover {
         color: #f39c12;
     }
 
+    /* ALIGNEMENT HAUT : Remplacement de align-items: center par flex-start */
+    .trust .row {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .trust {
+        padding: 40px 0;
+    }
+
+    /* Ajustement des titres pour un alignement propre avec l'image */
+    .trust .title h3 {
+        margin-top: 0;
+    }
 
     .btn-lire-suite {
-        padding: 4px 14px;
-        font-size: 13px;
-        background-color: #f7931e; /* orange comme sur ta photo */
+        background-color: #f39c12;
         color: #fff;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
+        padding: 10px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: bold;
+        transition: background 0.3s ease;
     }
 
     .btn-lire-suite:hover {
-        background-color: #e57f0f;
+        background-color: #d35400;
+        color: #fff;
     }
 
     .btn-wrapper {
         display: inline-block;
-        margin-left: 6px;
+        margin-left: 0;
     }
 
     /* LONGUE BARRE */
@@ -400,79 +359,60 @@
             #2ab558,
             #0f771d
         );
-        margin: 30px 0 35px;
+        margin: 20px 0 25px;
         border-radius: 5px;
     }
 
+    /* CONTENEUR GALERIE */
+    .gallery-modern {
+        padding: 0 10px;
+    }
 
-   /* CONTENEUR GALERIE */
-            .gallery-modern {
-                padding: 10px;
-            }
+    /* PRESENTATION IMAGES VERTICALES */
+    .gallery-modern .gallery-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px;
+    }
 
-            /* GRID */
-            .gallery-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 15px;
-            }
+    .gallery-modern .gallery-item.large {
+        grid-row: auto !important;
+    }
 
-            /* GRANDE IMAGE */
-            .gallery-item.large {
-                grid-row: span 2;
-            }
+    /* BLOCS IMAGE */
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
 
-            /* BLOCS IMAGE */
-            .gallery-item {
-                overflow: hidden;
-                border-radius: 12px;
-                box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-            }
+    /* IMAGE */
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
 
-            /* IMAGE */
-            .gallery-item img {
-                max-width: 100%;
-                height: auto;
-                object-fit: cover;
-                transition: transform 0.5s ease;
-            }
+    /* HOVER */
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
 
+    .offset-xl-1.col-xl-6 p {
+        text-align: justify;
+    }
 
-            /* HOVER */
-            .gallery-item:hover img {
-                transform: scale(1.08);
-            }
+    /* MOBILE */
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
 
-            /* MOBILE */
-            @media (max-width: 768px) {
-                .gallery-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .gallery-item.large {
-                    grid-row: auto;
-                }
-            }
-
-
-            /* PRESENTATION IMAGES VERTICALES */
-            .gallery-modern .gallery-grid {
-                display: flex !important;
-                flex-direction: column !important;
-            }
-
-            .gallery-modern .gallery-item.large {
-                grid-row: auto !important;
-            }
-
-            .offset-xl-1.col-xl-6 p {
-    text-align: justify;
-            }
-
-
-
-
-
+        .gallery-item.large {
+            grid-row: auto;
+        }
+    }
 </style>
 
 <!-- Mot du Directeur Général Start -->
@@ -482,38 +422,36 @@
 
             <!-- IMAGE -->
             <div class="col-md-5">
-                <div class="featured-img">
-                    <img class="img-fluid"
-                         src="assets/images/image37.jpeg"
-                         alt="Colonel Kouassi Yao Julien">
+    <div class="featured-img">
+        <img class="img-fluid"
+             src="{{ $motDg && $motDg->photo ? asset($motDg->photo) : asset('assets/images/image37.jpeg') }}"
+             alt="{{ trim(($motDg->nom_dg ?? '') . ' ' . ($motDg->prenom_dg ?? '')) ?: 'Directeur Général' }}">
 
-                    <h5 class="mb-0">Colonel-Major Kouassi Yao Julien</h5>
-                    <small class="titre">
-                        Administrateur en Chef des Affaires Maritimes
-                    </small>
-                </div>
-            </div>
+        <h5 class="mb-0">
+            {{ trim(($motDg->grade_dg ?? '') . ' ' . ($motDg->nom_dg ?? '') . ' ' . ($motDg->prenom_dg ?? '')) ?: 'Colonel-Major Kouassi Yao Julien' }}
+        </h5>
+        <small class="titre">
+            {{ $motDg->titre_dg ?? 'Administrateur en Chef des Affaires Maritimes' }}
+        </small>
+    </div>
+</div>
 
-            <!-- TEXTE -->
-            <div class="col-md-7">
-                <div class="title">
-                    <h1 class="title-blue">Mot du Directeur Général</h1>
-                </div>
+<!-- TEXTE -->
+<div class="col-md-7">
+    <div class="title">
+        <h1 class="title-blue">Mot du Directeur Général</h1>
+    </div>
 
-                <p>
-                    La nécessité pour notre administration de posséder un site internet fonctionnel et régulièrement actualisé,
-                    qui s’est imposée à nous depuis plusieurs années vient de trouver satisfaction avec la création de ce site.
-                    Important outil de communication, ce site permet à la Direction Générale des Affaires Maritimes et Portuaires
-                    (DGAMP) de mieux se faire connaître par ses partenaires et usagers...
-                </p>
-
+    <p>
+         {{ Str::limit(strip_tags(html_entity_decode($motDg->texte_dg ?? '')), 420, '...') ?: "La nécessité pour notre administration de posséder un site internet fonctionnel et régulièrement actualisé..." }}
+    </p>
                 <!-- BOUTON JUSTE EN BAS DU TEXTE -->
                 <a href="{{ route ('motdudg') }}">
                     <button id="btnLire" class="btn-lire-suite" onclick="toggleMot()">
                         Lire la suite
                     </button>
                 </a>
-                    
+
 
             </div>
         </div>
@@ -892,7 +830,7 @@
                         <img src="{{ asset('assets/images/service3.png') }}" alt="Icône document">
                         <h5>{{ Str::limit($communique->titre, 50, '...') }}</h5>
                         <p>{{ Str::limit(strip_tags($communique->description ?? $communique->contenu), 80, '...') }}</p>
-                        
+
                         @if(!empty($communique->fichier_path))
                             <a href="{{ asset('storage/' . $communique->fichier_path) }}" class="btn-download" target="_blank" download>
                                 Télécharger
@@ -992,7 +930,7 @@
 
 <section class="mega-gallery-section py-5">
     <div class="container">
-        
+
         <div class="row animate-box">
             <div class="col-md-12 text-center">
                 <div class="actualite-bar">
@@ -1018,41 +956,21 @@
 
             <div class="dg-galerie-box active" id="photos">
                 <div class="dg-flex-container">
-                    
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header4.jpeg', 'Sécurité Maritime', 'Patrouille de surveillance')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image31.jpeg" alt="Sécurité Maritime">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Sécurité Maritime</h4>
-                            <p>Surveillance des eaux</p>
-                        </div>
+            @forelse($albumsApercu as $album)
+                <div class="dg-item animate-box" onclick="window.location.href='{{ route('galerie_img') }}'">
+                    <div class="img-wrapper">
+                        <img src="{{ $album->cover ? asset($album->cover) : asset('assets/images/image31.jpeg') }}" alt="{{ $album->titre }}">
+                        <div class="dg-overlay"><i class="icon-plus"></i></div>
                     </div>
-
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header1.jpeg', 'Événement Officiel', 'Cérémonie officielle')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image69.jpeg" alt="Événement">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Vie Institutionnelle</h4>
-                            <p>Vœux annuels</p>
-                        </div>
+                    <div class="dg-item-info">
+                        <h4>{{ Str::limit($album->titre, 40, '...') }}</h4>
+                        <p>{{ $album->date }}</p>
                     </div>
-
-                    <div class="dg-item animate-box" onclick="openLightbox('images/header2.jpeg', 'Inspection Technique', 'Contrôle technique')">
-                        <div class="img-wrapper">
-                            <img src="assets/images/image65.jpeg" alt="Inspection">
-                            <div class="dg-overlay"><i class="icon-plus"></i></div>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Inspection Technique</h4>
-                            <p>Contrôle de conformité</p>
-                        </div>
-                    </div>
-
                 </div>
+            @empty
+                <p class="text-center text-muted">Aucun album disponible pour le moment.</p>
+            @endforelse
+        </div>
                 <div class="dg-btn-wrapper">
                     <button onclick="window.location.href='{{ route('galerie_img') }}'" class="btn-media-action btn-green">Voir toutes les photos</button>
                 </div>
@@ -1060,38 +978,19 @@
 
             <div class="dg-galerie-box" id="videos">
                 <div class="dg-flex-container">
-                    
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                             <iframe src="https://www.youtube.com/embed/824gwdL2Zd8" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Reportage TV</h4>
-                            <p>Interview DG</p>
-                        </div>
-                    </div>
-
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/TbEBUxR8Fyg" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Sensibilisation</h4>
-                            <p>Sécurité des gens de mer</p>
-                        </div>
-                    </div>
-
-                    <div class="dg-item animate-box">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/sq_KzAtxQuc?si=_UNDSC0QNpe-l14m" allowfullscreen></iframe>
-                        </div>
-                        <div class="dg-item-info">
-                            <h4>Reportage TV</h4>
-                            <p>Interview DG</p>
-                        </div>
-                    </div>
-
-                </div>
+    @forelse($videosApercu as $video)
+        <div class="dg-item animate-box">
+            <div class="video-container">
+                <iframe src="{{ $video->url }}" allowfullscreen></iframe>
+            </div>
+            <div class="dg-item-info">
+                <h4>{{ Str::limit($video->titre, 40, '...') }}</h4>
+            </div>
+        </div>
+    @empty
+        <p class="text-center text-muted">Aucune vidéo disponible pour le moment.</p>
+    @endforelse
+</div>
                 <div class="dg-btn-wrapper">
                     <button onclick="window.location.href='{{ route('galerie_vidéo') }}'" class="btn-media-action btn-blue">Voir toutes les vidéos</button>
                 </div>
@@ -1139,7 +1038,7 @@
 
     /* 3. BOUTONS RONDS ET SANS COULEUR NOIRE */
     .dg-btn-wrapper { width: 100%; text-align: center; margin-top: 40px; }
-    
+
     .btn-media-action, .galerie-tab {
         border: none !important; /* Force la suppression des bordures noires */
         outline: none !important;
@@ -1163,11 +1062,11 @@
     .btn-blue:hover { background: #e87f08; transform: scale(1.05); }
 
     /* Styles Onglets */
-    .galerie-tab { 
-        background: #f0f0f0; 
-        color: #555; 
-        padding: 10px 35px; 
-        margin: 5px; 
+    .galerie-tab {
+        background: #f0f0f0;
+        color: #555;
+        padding: 10px 35px;
+        margin: 5px;
     }
     .galerie-tab.active { background: #218c44; color: #fff; }
 
@@ -1194,30 +1093,29 @@
     <!-- Testimonial and Clients Start -->
 <section class="partners">
     <div class="actualite-bar">
-                    <h3 class="actualite-title">PARTENAIRES</h3>     
+        <h3 class="actualite-title">PARTENAIRES</h3>
     </div>
 
     <div class="partners-wrapper">
         <div class="partners-mask">
             <div class="partners-track" id="track">
-                <div class="partner-card"><img src="assets/images/image25.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image23.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image18.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image19.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image20.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image21.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image22.jpeg" alt="Partenaire"></div>
-                <div class="partner-card"><img src="assets/images/image23.jpeg" alt="Partenaire"></div>
+                @forelse($partenaires as $partenaire)
+                    <div class="partner-card">
+                        <img src="{{ asset('storage/' . $partenaire->logo) }}" alt="{{ $partenaire->nom }}">
+                    </div>
+                @empty
+                    <!-- Fallback static si aucun partenaire en base -->
+                    <div class="partner-card"><img src="{{ asset('assets/images/image25.jpeg') }}" alt="Partenaire"></div>
+                    <div class="partner-card"><img src="{{ asset('assets/images/image23.jpeg') }}" alt="Partenaire"></div>
+                    <div class="partner-card"><img src="{{ asset('assets/images/image18.jpeg') }}" alt="Partenaire"></div>
+                @endforelse
 
-                <!-- duplication pour défilement infini -->
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image25.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image23.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image18.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image19.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image20.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image21.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image22.jpeg" alt=""></div>
-                <div class="partner-card" aria-hidden="true"><img src="assets/images/image23.jpeg" alt=""></div>
+                <!-- Duplication pour le défilement infini -->
+                @foreach($partenaires as $partenaire)
+                    <div class="partner-card" aria-hidden="true">
+                        <img src="{{ asset('storage/' . $partenaire->logo) }}" alt="">
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -1225,9 +1123,8 @@
             <span id="partnersToggleIcon">❚❚</span>
         </button>
     </div>
-
 </section>
-  
+
 
 <style>
 

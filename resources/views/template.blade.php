@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Document title -->
     <title>Affaires Maritimes Ivoiriennes</title>
-    <link rel="icon" href="assets/images/logo_Dgamp.jpeg" type="image/jp">
+    <link rel="icon" href="{{ asset('storage/' . $siteSettings?->favicon) }}" type="image/jp">
 
     <!-- Stylesheets & Fonts -->
     <!-- Google Fonts -->
@@ -31,13 +31,13 @@
     <!-- Responsive Stylesheet -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
-    <!-- Loader Start 
+    <!-- Loader Start
     <div class="css-loader">
         <div class="loader-inner line-scale d-flex align-items-center justify-content-center"></div>
     </div>
      Loader End -->
     <!-- Header Start -->
-  
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DGAMP - Direction Générale des Affaires Maritimes</title>
@@ -52,19 +52,21 @@
 
                     <div class="contact-links">
                         <a href="tel:+2252722408035">
-                            <i class="fa fa-phone"></i> (+225) 27 22 40 80 35
+                            <i class="fa fa-phone"></i> 
+                            {{ $siteSettings->telephone }}
                         </a>
 
                         <a href="mailto:info@dgamp.ci">
-                            <i class="fa fa-envelope"></i> info@dgamp.ci
+                            <i class="fa fa-envelope"></i> 
+                            {{ $siteSettings->email }}
                         </a>
                     </div>
 
                     <div class="social-links">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-youtube"></i></a>
+                        <a href="{{ $siteSettings->facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ $siteSettings->twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ $siteSettings->linkedin }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="{{ $siteSettings->youtube }}" target="_blank"><i class="fa fa-youtube"></i></a>
                     </div>
 
                 </div>
@@ -75,16 +77,16 @@
         <div class="container-fluid px-lg-5">
             <nav class="navbar navbar-expand-lg">
                 <a class="navbar-brand" href="{{ route ('accueildgamp') }}">
-                    <img src="{{ asset('assets/images/logo_Dgamp.jpeg') }}" alt="Logo DGAMP">
+                    <img src="{{ asset('storage/' . $siteSettings?->logo_principal) }}" alt="Logo DGAMP">
                 </a>
-                
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavMenu">
                     <span class="navbar-toggler-icon"><i class="fa fa-bars" style="color:#19173a; font-size:24px;"></i></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNavMenu">
                     <ul class="navbar-nav ml-auto">
-                        
+
                         <li class="nav-item">
                             <a href="" class="nav-link">Accueil</a>
                             <ul class="dropdown-menu-custom">
@@ -103,7 +105,7 @@
                                             <a href="#" class="has-arrow">Organisation</a>
                                             <ul class="submenu-custom">
                                                 <li><a href="{{ route('historiquedgam') }}">Historique</a></li>
-                                                <li><a href="{{ route('missionetobjectif') }}">Missions et Objectifs</a></li>
+                                                <li><a href="{{ route('missions.objectifs') }}">Missions et Objectifs</a></li>
                                                 <li><a href="{{ route('organigramedgam') }}">Organigramme</a></li>
                                             </ul>
                                         </li>
@@ -169,14 +171,12 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
+                              <li class="nav-item">
                             <a href="#" class="nav-link">Services en ligne</a>
                             <ul class="dropdown-menu-custom">
-                                <li><a href="{{ route('agrémentvisa') }}">Agrément et Visa</a></li>
-                                <li><a href="{{ route('immatriculationnavire') }}">Immatriculation des navires</a></li>
-                                <li><a href="{{ route('visitetechnique') }}">Visite technique</a></li>
-                                <li><a href="{{ route('permisconduire') }}">Permis de conduire</a></li>
-                                <li><a href="{{ route('titresmaritimes') }}">Titres Maritimes</a></li>
+                                @foreach($servicesEnLigneMenu ?? [] as $s)
+                                    <li><a href="{{ route('service.show', $s->slug) }}">{{ $s->titre }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
 
@@ -195,7 +195,7 @@
                                     @endforelse
                                 @endisset
 
-                                
+
                             </ul>
                         </li>
 
@@ -232,10 +232,20 @@
         <span class="flash-label"><i class="fa fa-bolt"></i> FLASH INFOS</span>
         <div class="flash-marquee">
             <div class="flash-track">
-                <div class="flash-content">| Les concours DGAM/DGAM sont gérés par la Fonction Publique. Aucun concours de Police Maritime en 2024.</div>
-                <div class="flash-content">| La DGAM devient la DGAM (Décret 2024-274 du 08 mai 2024). Visitez notre nouveau portail pour plus d'infos.</div>
-                <div class="flash-content">| Les concours DGAM/DGAM sont gérés par la Fonction Publique. Aucun concours de Police Maritime en 2024.</div>
-                <div class="flash-content">| La DGAMP devient la DGAM (Décret 2024-274 du 08 mai 2024). Visitez notre nouveau portail pour plus d'infos.</div>
+                @forelse($flashInfos as $info)
+                    <div class="flash-content">
+                        | 
+                        @if($info->lien)
+                            <a href="{{ $info->lien }}" target="_blank" style="color: inherit; text-decoration: underline;">
+                                {{ $info->contenu }}
+                            </a>
+                        @else
+                            {{ $info->contenu }}
+                        @endif
+                    </div>
+                @empty
+                    <div class="flash-content">| Aucun message d'information pour le moment.</div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -342,7 +352,7 @@
                     text-transform: uppercase;
                     padding: 25px 15px !important;
                     transition: 0.3s;
-                    
+
                 }
                 .nav-link:hover { color: #64b1da !important; background: #f8f9fa; }
 
@@ -380,9 +390,9 @@
                     padding: 10px 0;
                     border-left: 2px solid #156916;
                     flex-wrap: wrap
-                    
+
                 }
-        
+
 
                 /* Hover Logic */
                 .nav-item:hover > .dropdown-menu-custom,
@@ -529,7 +539,7 @@
 
             }
         });
-        
+
 </script>
 
 
@@ -552,16 +562,25 @@
                                 <i class="fa fa-map-marker"></i>
                                 <h4>LOCALISATION</h4>
                             </div>
+                            @if($siteSettings?->adresse)
+                                <p class="text-white-50 mb-2">
+                                    <i class="fa fa-map-marker"></i> {{ $siteSettings->adresse }}
+                                </p>
+                            @endif
                             <p> Vous pouvez nous retrouver ici:
-                            <div class="map-footer">
-                                    <iframe 
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.227642840733!2d-4.000955126503041!3d5.38222743537576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1954b63b533a7%3A0x4df51f6b1a72359e!2sDgamp!5e0!3m2!1sen!2sci!4v1772038225999!5m2!1sen!2sci" 
-                                        width="100%" 
-                                        height="200" 
-                                        style="border:0;"
+                            <div class="map-footer mt-3">
+                                @if($siteSettings?->lien_maps)
+                                    <iframe
+                                        src="{{ $siteSettings->lien_maps }}"
+                                        width="100%"
+                                        height="180"
+                                        style="border:0; border-radius: 12px;"
                                         allowfullscreen=""
                                         loading="lazy">
                                     </iframe>
+                                @else
+                                    <p class="text-white-50">Carte non disponible.</p>
+                                @endif
                             </div>
 
                         </div>
@@ -574,15 +593,26 @@
                                 <h4>CONTACT</h4>
                             </div>
 
-                            <p class="contact-line">
-                                <i class="fa fa-phone"></i>
-                                (+225) 27 22 40 80 35
-                            </p>
+                            @if($siteSettings?->telephone)
+                                <p class="contact-line">
+                                    <i class="fa fa-phone"></i>
+                                    {{ $siteSettings->telephone }}
+                                </p>
+                            @endif
 
-                            <p class="contact-line">
-                                <i class="fa fa-envelope"></i>
-                                info@dgamp.ci
-                            </p>
+                            @if($siteSettings?->email)
+                                <p class="contact-line">
+                                    <i class="fa fa-envelope"></i>
+                                    {{ $siteSettings->email }}
+                                </p>
+                            @endif
+
+                            @if($siteSettings?->boite_postale)
+                                <p class="contact-line">
+                                    <i class="fa fa-archive"></i>
+                                    {{ $siteSettings->boite_postale }}
+                                </p>
+                            @endif
 
                             <p class="contact-line">
                                 <i class="fa fa-globe"></i>
@@ -601,15 +631,15 @@
                             </div>
 
                             <ul class="social-nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                <li><a href="{{ $siteSettings?->facebook }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="{{ $siteSettings?->twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="{{ $siteSettings?->linkedin }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="{{ $siteSettings?->youtube }}" target="_blank"><i class="fa fa-youtube"></i></a></li>
                             </ul>
                         </div>
                     </div>
             </div>
-       
+
 
            <hr>
 
@@ -651,21 +681,22 @@
 
 <style>
 
-    body {
-    overflow-x: hidden; /* Empêche le scroll horizontal dû au 100vw */
-}
+    body 
+    {
+        overflow-x: hidden; /* Empêche le scroll horizontal dû au 100vw */
+    }
 
-.footer-widgets .container {
-    max-width: 1140px !important; /* Redonne une largeur propre au contenu */
-    margin: 0 auto;
-}
+    .footer-widgets .container {
+        max-width: 1140px !important; /* Redonne une largeur propre au contenu */
+        margin: 0 auto;
+    }
 
         .footer-widgets {
             background: #19173a;
             color: #fff;
             padding: 60px 0;
         }
-        
+
 
         .map-footer iframe {
             border-radius: 8px;
@@ -689,7 +720,7 @@
         .icon-title h3 {
             font-size: 18px;
             margin: 0;
-            
+
         }
 
         /* Social icons */
@@ -844,7 +875,7 @@
 
 <div class="container">
     <div class="copyright-bar">
-        © 2026 Copyright DGAMP | Tous droits réservés. 
+        © 2026 Copyright DGAMP | Tous droits réservés.
         <span>Designed by <strong>GROUPE KOMPTECH CIMAT</strong></span>
     </div>
 </div>
@@ -869,7 +900,7 @@
             color: #222236;
         }
 
-        
+
 </style>
 
     <script src="assets/js/jquery-3.3.1.js"></script>

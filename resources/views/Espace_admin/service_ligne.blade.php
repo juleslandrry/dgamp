@@ -5,33 +5,49 @@
     :root{
         --navy:#0B2340; --blue:#1E7FB8; --orange:#E8720C; --green:#1F7A4D;
         --gold:#C9A227; --gold-soft:#FBF3DD; --ink:#1C2733; --ink-soft:#66707B; --line:#E7E2D6;
+        --purple:#6C4AB6;
     }
-    .mdg-wrap{max-width:900px;margin:0 auto;padding:36px 24px 60px;}
+    .mdg-wrap{max-width:960px;margin:0 auto;padding:36px 24px 60px;}
     .mdg-crumb{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);
         font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
     .mdg-crumb::before{content:"";width:14px;height:2px;background:var(--orange);border-radius:2px;}
-    .mdg-title{font-size:25px;font-weight:700;color:var(--navy);margin:0 0 8px;letter-spacing:-.01em;}
+    .mdg-title{font-size:25px;font-weight:700;color:var(--navy);margin:0 0 8px;}
     .mdg-sub{font-size:13px;color:var(--ink-soft);margin:0 0 22px;}
     .mdg-alert{background:#E5F5EC;border-left:4px solid #1F7A4D;color:#1F7A4D;padding:12px 18px;
         border-radius:6px;margin-bottom:22px;font-size:13.5px;}
     .mdg-alert.warn{background:#FBF3DD;border-left-color:var(--gold);color:#8A6D14;}
 
-    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;background:#fff;padding:16px;
-        border-radius:10px;border:1.5px solid var(--line);}
-    .tab-btn{background:#fff;border:1.5px solid var(--line);color:var(--ink-soft);
-        padding:9px 16px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.15s ease;}
-    .tab-btn:hover{border-color:var(--navy);color:var(--navy);}
-    .tab-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
-    .tab-panel{display:none;}
-    .tab-panel.active{display:block;}
+    /* Grille de cartes de sélection */
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:28px;}
+    .svc-card{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:18px 14px;
+        cursor:pointer;text-align:center;transition:.15s ease;}
+    .svc-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 6px 16px rgba(11,35,64,.08);}
+    .svc-card.active{border-color:var(--navy);background:#F4F1E9;box-shadow:0 4px 14px rgba(11,35,64,.12);}
+    .svc-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+        margin:0 auto 10px;color:#fff;font-weight:700;font-size:13px;letter-spacing:.02em;}
+    .svc-card-name{font-size:12.5px;font-weight:700;color:var(--navy);line-height:1.3;}
+    .svc-card-add{border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    .svc-card-add .svc-card-icon{background:transparent;color:var(--navy);border:1.5px dashed var(--navy);font-size:20px;}
+    .svc-card-add .svc-card-name{color:var(--ink-soft);}
 
-    .card-block{background:#FAF9F5;border:1.5px solid var(--line);border-radius:12px;
-        padding:22px 24px;margin-bottom:18px;}
-    .card-block-label{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-    .card-num{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;
-        display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
-    .card-block-label span.txt{font-size:12.5px;font-weight:700;color:var(--navy);
-        text-transform:uppercase;letter-spacing:.05em;}
+    .accent-navy .svc-card-icon{background:var(--navy);}
+    .accent-blue .svc-card-icon{background:var(--blue);}
+    .accent-orange .svc-card-icon{background:var(--orange);}
+    .accent-green .svc-card-icon{background:var(--green);}
+    .accent-gold .svc-card-icon{background:var(--gold);}
+
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;animation:fadeIn .2s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+    .section-block{background:#fff;border:1.5px solid var(--line);border-radius:14px;margin-bottom:18px;overflow:hidden;}
+    .section-head{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1.5px solid var(--line);}
+    .section-head .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+    .section-head .txt{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);}
+    .section-head .hint{font-size:11.5px;color:var(--ink-soft);font-weight:400;text-transform:none;letter-spacing:0;margin-left:auto;}
+    .section-body{padding:20px;}
+    .dot.blue{background:var(--blue);} .dot.gold{background:var(--gold);}
+    .dot.green{background:var(--green);} .dot.purple{background:var(--purple);}
 
     .mdg-field{margin-bottom:16px;}
     .mdg-field:last-child{margin-bottom:0;}
@@ -41,112 +57,236 @@
         width:100%;border:1.5px solid var(--line);border-radius:9px;background:#fff;
         padding:11px 13px;font-size:14px;font-family:inherit;color:var(--ink);box-sizing:border-box;
     }
-    .mdg-field textarea{min-height:80px;resize:vertical;line-height:1.6;}
+    .mdg-field textarea{min-height:70px;resize:vertical;line-height:1.6;}
     .mdg-field input:focus,.mdg-field select:focus,.mdg-field textarea:focus{
         outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,35,64,.08);
     }
     .mdg-row2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .mdg-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
 
-    .mdg-actions{display:flex;justify-content:flex-end;margin-top:30px;}
+    .tab-top-bar{display:flex;justify-content:flex-end;margin-bottom:14px;}
+    .btn-delete-service{background:#FBEAEA;color:#C0392B;border:1.5px solid #F2C9C9;
+        border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:.15s ease;}
+    .btn-delete-service:hover{background:#F5D5D5;}
+
+    .mdg-actions{position:sticky;bottom:0;background:linear-gradient(transparent,#fff 30%);
+        display:flex;justify-content:flex-end;padding-top:24px;margin-top:10px;}
     .mdg-btn-save{background:linear-gradient(135deg,var(--gold),#DFAF3C);color:#fff;border:none;
-        border-radius:6px;padding:11px 24px;font-weight:700;cursor:pointer;font-size:13px;
+        border-radius:8px;padding:13px 28px;font-weight:700;cursor:pointer;font-size:13.5px;
         box-shadow:0 4px 12px rgba(201,162,39,.35);}
     .mdg-btn-save:hover{box-shadow:0 5px 16px rgba(201,162,39,.5);}
 
-    @media (max-width:640px){ .mdg-row2{grid-template-columns:1fr;} }
+    @media (max-width:640px){ .mdg-row2,.mdg-row3{grid-template-columns:1fr;} }
 </style>
 
 <div class="mdg-wrap">
     <div class="mdg-crumb">Connaître la DGAM</div>
     <h1 class="mdg-title">Services en Ligne</h1>
-    <p class="mdg-sub">Choisis un service ci-dessous, puis modifie sa description, son icône ou son lien.</p>
+    <p class="mdg-sub">Clique sur un service pour le modifier, ou ajoute-en un nouveau — il apparaîtra automatiquement sur le site.</p>
 
     @if(session('success'))
         <div class="mdg-alert">{{ session('success') }}</div>
     @endif
 
-    <div class="tabs">
-        @foreach($services as $s)
-            <button type="button" class="tab-btn @if($loop->first) active @endif" onclick="switchTab('{{ $loop->index }}', event)">{{ $s['key'] }}</button>
-        @endforeach
-    </div>
+    @if($errors->any())
+        <div class="mdg-alert warn">
+            <strong>Des erreurs empêchent l'enregistrement :</strong>
+            <ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+        </div>
+    @endif
 
-    <form method="POST" action="{{ route('services-en-ligne.update') }}" enctype="multipart/form-data">
-        @csrf
-
+    <div class="svc-grid" id="svc-grid">
         @foreach($services as $i => $s)
-            <div id="tab-{{ $i }}" class="tab-panel @if($loop->first) active @endif">
-
-                @if(!$s['ok'])
-                    <div class="mdg-alert warn">⚠️ Ce service n'a pas pu être détecté automatiquement dans le fichier.</div>
-                @endif
-
-                <div class="card-block">
-                    <div class="card-block-label">
-                        <span class="card-num">{{ $i + 1 }}</span>
-                        <span class="txt">{{ $s['key'] }}</span>
-                    </div>
-
-                    <div class="mdg-field">
-                        <label class="mdg-label">Description</label>
-                        <textarea name="desc[]">{{ $s['desc'] }}</textarea>
-                    </div>
-
-                    <div class="mdg-row2">
-                        <div class="mdg-field">
-                            <label class="mdg-label">Couleur d'accent</label>
-                            <select name="accent[]">
-                                @foreach(['navy'=>'Navy','blue'=>'Bleu','orange'=>'Orange','green'=>'Vert','gold'=>'Doré'] as $val => $label)
-                                    <option value="{{ $val }}" @selected($s['accent'] === $val)>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mdg-field">
-                            <label class="mdg-label">Icône</label>
-                            <select name="icon[]">
-                                @foreach(['stamp'=>'Tampon','shield'=>'Bouclier','anchor'=>'Ancre','booklet'=>'Livret','wheel'=>'Barre à roue','gear-ship'=>'Navire/Engrenage','folder'=>'Dossier'] as $val => $label)
-                                    <option value="{{ $val }}" @selected($s['icon'] === $val)>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mdg-field">
-                        <label class="mdg-label">Lien du guichet</label>
-                        <input type="text" name="lien[]" value="{{ $s['lien'] }}" placeholder="#">
-                    </div>
-
-                    <div class="mdg-field">
-                        <label class="mdg-label">Fichier PDF</label>
-                        @if(!empty($s['lien']) && str_ends_with(strtolower($s['lien']), '.pdf'))
-                            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 8px;">
-                                Fichier actuel :
-                                <a href="{{ asset($s['lien']) }}" target="_blank">{{ basename($s['lien']) }}</a>
-                            </p>
-                            <label style="font-size:12.5px;color:var(--ink);display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-                                <input type="checkbox" name="retirer_fichier[{{ $i }}]" value="1">
-                                Retirer ce fichier
-                            </label>
-                        @endif
-                        <input type="file" name="fichier[{{ $i }}]" accept="application/pdf">
-                    </div>
-                </div>
+            <div class="svc-card accent-{{ $s['accent'] }} @if($loop->first) active @endif" data-index="{{ $i }}" onclick="switchTab({{ $i }}, this)">
+                <div class="svc-card-icon">{{ strtoupper(substr($s['icon'], 0, 2)) }}</div>
+                <div class="svc-card-name">{{ $s['titre'] ?: 'Nouveau service' }}</div>
             </div>
         @endforeach
+        <div class="svc-card svc-card-add" id="svc-add-card" onclick="addService()">
+            <div class="svc-card-icon">+</div>
+            <div class="svc-card-name">Ajouter un service</div>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ route('services-en-ligne.update') }}" id="svc-form">
+        @csrf
+
+        <div id="panels-container">
+            @foreach($services as $i => $s)
+                <div id="tab-{{ $i }}" class="tab-panel @if($loop->first) active @endif">
+                    <input type="hidden" name="id[]" value="{{ $s['id'] }}">
+                    <input type="hidden" name="accent[]" value="{{ $s['accent'] }}">
+                    <input type="hidden" name="icon[]" value="{{ $s['icon'] }}">
+                    <input type="hidden" name="lien[]" value="{{ $s['lien'] }}">
+
+                    <div class="tab-top-bar">
+                        @if($s['id'])
+                            <button type="submit" form="delete-form-{{ $s['id'] }}" class="btn-delete-service">Supprimer ce service</button>
+                        @endif
+                    </div>
+
+                    <div class="section-block">
+                        <div class="section-head">
+                            <span class="dot blue"></span>
+                            <span class="txt">Contenu affiché sur la page publique</span>
+                            <span class="hint">badge + titre + texte + bouton</span>
+                        </div>
+                        <div class="section-body">
+                            <div class="mdg-row2">
+                                <div class="mdg-field">
+                                    <label class="mdg-label">Badge (petit texte au-dessus du titre)</label>
+                                    <input type="text" name="badge[]" value="{{ $s['badge'] }}" placeholder="Ex: Autorité Maritime">
+                                </div>
+                                <div class="mdg-field">
+                                    <label class="mdg-label">Titre principal</label>
+                                    <input type="text" name="titre[]" value="{{ $s['titre'] }}" placeholder="Ex: Immatriculation des Navires">
+                                </div>
+                            </div>
+                            <div class="mdg-field">
+                                <label class="mdg-label">Texte de description</label>
+                                <textarea name="description[]" id="description-{{ $i }}" class="rich-editor" rows="3">{{ $s['description'] }}</textarea>
+                            </div>
+                            <div class="mdg-field">
+                                <label class="mdg-label">Texte du bouton</label>
+                                <input type="text" name="bouton_texte[]" value="{{ $s['bouton_texte'] }}" placeholder="Ex: Consulter le registre">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <div class="section-head">
+                            <span class="dot purple"></span>
+                            <span class="txt">Popup "En savoir plus"</span>
+                            <span class="hint">s'affiche au clic sur le bouton</span>
+                        </div>
+                        <div class="section-body">
+                            <div class="mdg-field">
+                                <label class="mdg-label">Texte détaillé</label>
+                                <textarea name="detail_texte[]" id="detail_texte-{{ $i }}" class="rich-editor" rows="4" placeholder="Explique en détail ce service, les démarches à suivre...">{{ $s['detail_texte'] }}</textarea>
+                            </div>
+                            <div class="mdg-field">
+                                <label class="mdg-label">Liste de points (optionnel — un point par ligne)</label>
+                                <textarea name="detail_points[]" rows="4" placeholder="Ex:&#10;Copie de la carte d'identité&#10;Justificatif de domicile&#10;Formulaire rempli">{{ $s['detail_points'] }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
         <div class="mdg-actions">
             <button type="submit" class="mdg-btn-save">Enregistrer les modifications</button>
         </div>
     </form>
+
+    @foreach($services as $s)
+        @if($s['id'])
+            <form id="delete-form-{{ $s['id'] }}" method="POST" action="{{ route('services-en-ligne.destroy', $s['id']) }}"
+                  onsubmit="return confirm('Supprimer définitivement ce service ? Il disparaîtra aussi du site public.');" style="display:none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        @endif
+    @endforeach
 </div>
 
+<script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+
 <script>
-function switchTab(index, event) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + index).classList.add('active');
-    event.target.classList.add('active');
+let panelCount = {{ count($services) }};
+
+function initEditorsForTab(index) {
+    tinymce.init({
+        selector: '#tab-' + index + ' .rich-editor',
+        license_key: 'gpl',
+        height: 220,
+        menubar: false,
+        plugins: 'lists link',
+        toolbar: 'bold italic underline | bullist numlist | link | removeformat',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; line-height: 1.6; }',
+        branding: false,
+        statusbar: false,
+    });
 }
+
+function switchTab(index, cardEl) {
+    document.querySelectorAll('.tab-panel.active .rich-editor').forEach(function (ta) {
+        const ed = tinymce.get(ta.id);
+        if (ed) { ed.save(); ed.remove(); }
+    });
+
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + index).classList.add('active');
+    cardEl.classList.add('active');
+
+    initEditorsForTab(index);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function addService() {
+    const index = panelCount;
+    panelCount++;
+
+    // Nouvelle carte
+    const card = document.createElement('div');
+    card.className = 'svc-card accent-navy';
+    card.dataset.index = index;
+    card.onclick = function() { switchTab(index, card); };
+    card.innerHTML = `<div class="svc-card-icon">NW</div><div class="svc-card-name">Nouveau service</div>`;
+    document.getElementById('svc-add-card').insertAdjacentElement('beforebegin', card);
+
+    // Nouveau panneau
+    const panel = document.createElement('div');
+    panel.id = 'tab-' + index;
+    panel.className = 'tab-panel';
+    panel.innerHTML = `
+        <input type="hidden" name="id[]" value="">
+        <input type="hidden" name="accent[]" value="navy">
+        <input type="hidden" name="icon[]" value="folder">
+        <input type="hidden" name="lien[]" value="#">
+        <div class="tab-top-bar">
+            <button type="button" class="btn-delete-service" onclick="removeNewService(${index}, this)">Retirer ce nouveau service</button>
+        </div>
+        <div class="section-block">
+            <div class="section-head"><span class="dot blue"></span><span class="txt">Contenu affiché sur la page publique</span></div>
+            <div class="section-body">
+                <div class="mdg-row2">
+                    <div class="mdg-field"><label class="mdg-label">Badge</label><input type="text" name="badge[]" placeholder="Ex: Services Officiels"></div>
+                    <div class="mdg-field"><label class="mdg-label">Titre principal</label><input type="text" name="titre[]" placeholder="Ex: Nouveau Service"></div>
+                </div>
+                <div class="mdg-field"><label class="mdg-label">Texte de description</label><textarea name="description[]" id="description-${index}" class="rich-editor" rows="3"></textarea></div>
+                <div class="mdg-field"><label class="mdg-label">Texte du bouton</label><input type="text" name="bouton_texte[]" placeholder="Ex: En savoir plus"></div>
+            </div>
+        </div>
+        <div class="section-block">
+            <div class="section-head"><span class="dot purple"></span><span class="txt">Popup "En savoir plus"</span></div>
+            <div class="section-body">
+                <div class="mdg-field"><label class="mdg-label">Texte détaillé</label><textarea name="detail_texte[]" id="detail_texte-${index}" class="rich-editor" rows="4"></textarea></div>
+                <div class="mdg-field"><label class="mdg-label">Liste de points (un point par ligne)</label><textarea name="detail_points[]" rows="4"></textarea></div>
+            </div>
+        </div>
+    `;
+    document.getElementById('panels-container').appendChild(panel);
+
+    switchTab(index, card);
+}
+
+function removeNewService(index, btn) {
+    document.getElementById('tab-' + index).remove();
+    document.querySelector('.svc-card[data-index="' + index + '"]').remove();
+    // Réactive le premier onglet
+    const firstCard = document.querySelector('.svc-card:not(.svc-card-add)');
+    if (firstCard) switchTab(firstCard.dataset.index, firstCard);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    initEditorsForTab(0);
+});
+
+document.getElementById('svc-form').addEventListener('submit', function () {
+    if (window.tinymce) tinymce.triggerSave();
+});
 </script>
 
 @endsection
