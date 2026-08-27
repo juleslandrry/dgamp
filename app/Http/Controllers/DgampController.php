@@ -11,17 +11,12 @@ use App\Models\GalerieAlbum;
 use App\Models\Video;
 
 use App\Models\Historique;
+use App\Models\Partenaire;
 class DgampController extends Controller
 {
-    public function home() 
+    public function home()
 {
-    // Récupère les 4 dernières actualités
-    $actualites = Actualite::orderBy('date_publication', 'desc')
-                    ->latest()
-                    ->take(4)
-                    ->get();
 
-    {
         // Récupère les 4 dernières actualités
         $actualites = Actualite::orderBy('date_publication', 'desc')
                         ->take(4)
@@ -41,12 +36,12 @@ class DgampController extends Controller
     $albumsApercu = GalerieAlbum::orderBy('ordre')->take(3)->get();
     $videosApercu = Video::orderBy('ordre')->take(3)->get();
 
-    return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu'));
-}
 
         $historique = Historique::first();
 
-        return view('index', compact('actualites', 'communiques', 'historique'));
+        $partenaires = Partenaire::all();
+
+    return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu', 'historique', 'partenaires'));
     }
 
     public function mot_du_dg () {
@@ -72,7 +67,7 @@ class DgampController extends Controller
     public function organigrame_dgam() {
         return view('accueil.apropos.organisation.organigrame-dgam');
     }
-    
+
     public function lois_dgam() {
         return view('accueil.apropos.documentation.textes-nationaux.lois-dgam');
     }
@@ -104,7 +99,7 @@ class DgampController extends Controller
     public function even_passé() {
         return view('accueil.agenda.even-passé');
     }
-  
+
     public function ena() {
         return view('accueil.recrutement.ena');
     }
@@ -254,5 +249,5 @@ public function titres_maritimes() {
         return view('partenaire');
     }
 
-       
+
 }
