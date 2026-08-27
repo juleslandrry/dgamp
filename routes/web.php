@@ -29,6 +29,8 @@ use App\Http\Controllers\PersonnelParamilitaireController;
 use App\Http\Controllers\PersonnelInterministerielController;
 use App\Http\Controllers\VieAssociativeController;
 use App\Http\Controllers\AdministrateurController;
+use App\Http\Controllers\StatistiqueController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -146,21 +148,22 @@ Route::get('/operateurs', [OperateurController::class, 'showOperateur'])->name('
 Route::get('/partenaires', [PartenaireController::class, 'showPartenaire'])->name('parteaniresdgam');
 
 
-// Espace admin
-Route::get('/admin', [AdminController::class, 'home'])->name('accueiladmin');
 
-
-Route::get('/admin/historique',[OrganisationController::class, 'historique'])->name('admin.historique');
-Route::post('/admin/historique',[OrganisationController::class, 'updateHistorique'])->name('admin.historique.update');
-
-Route::get('/admin/missions',[OrganisationController::class, 'missions'])->name('admin.missions');
-Route::post('/admin/missions',[OrganisationController::class, 'updateMissions'])->name('admin.missions.update');
-
-Route::get('/admin/organigramme',[OrganisationController::class, 'organigramme'])->name('admin.organigramme');
-Route::post('/admin/organigramme',[OrganisationController::class, 'updateOrganigramme'])->name('admin.organigramme.update');
 
 
 Route::prefix('admin')->group(function () {
+    // Espace admin
+    Route::get('/', [AdminController::class, 'home'])->name('accueiladmin');
+
+    Route::get('/historique',[OrganisationController::class, 'historique'])->name('admin.historique');
+    Route::post('/historique',[OrganisationController::class, 'updateHistorique'])->name('admin.historique.update');
+
+    Route::get('/missions',[OrganisationController::class, 'missions'])->name('admin.missions');
+    Route::post('/missions',[OrganisationController::class, 'updateMissions'])->name('admin.missions.update');
+
+    Route::get('/organigramme',[OrganisationController::class, 'organigramme'])->name('admin.organigramme');
+    Route::post('/organigramme',[OrganisationController::class, 'updateOrganigramme'])->name('admin.organigramme.update');
+
     Route::get('/lois-et-reglements',[DocumentationController::class, 'indexLois'])->name('lois.index');
     Route::post('/lois-et-reglements',[DocumentationController::class, 'updateLois'])->name('lois.update');
 
@@ -227,16 +230,45 @@ Route::prefix('admin')->group(function () {
     Route::delete('/flash-info/{flashInfo}', [FlashInfoController::class, 'destroy'])->name('flash_info.destroy');
 
     Route::get('/connexion', [LoginController::class, 'connexion'])->name('connexion');
+// Admin
+Route::get('/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
+Route::post('/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
+Route::post('/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
+Route::get('/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
+Route::post('/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
+Route::get('/evenements', [EvenementController::class, 'edit'])->name('evenements');
+Route::post('/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
+Route::post('/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
+Route::get('/ena', [EnaController::class, 'edit'])->name('admin.ena');
+Route::post('/ena', [EnaController::class, 'update'])->name('ena.update');
+Route::get('/fonction-publique', [FonctionPubliqueController::class, 'edit'])->name('fonction-publique');
+Route::post('/fonction-publique', [FonctionPubliqueController::class, 'update'])->name('fonction-publique.update');
+Route::get('/galerie', [GalerieController::class, 'edit'])->name('galerie');
+Route::post('/galerie', [GalerieController::class, 'update'])->name('galerie.update');
+
+Route::get('/videos', [VideoController::class, 'edit'])->name('videos');
+Route::post('/videos', [VideoController::class, 'update'])->name('videos.update');
+Route::get('/services-en-ligne', [ServiceEnLigneController::class, 'edit'])->name('services-en-ligne');
+Route::post('/services-en-ligne', [ServiceEnLigneController::class, 'update'])->name('services-en-ligne.update');
+Route::delete('/services-en-ligne/{id}', [ServiceEnLigneController::class, 'destroy'])->where('id', '[0-9]+')->name('services-en-ligne.destroy');
+Route::delete('/ena/{id}', [EnaController::class, 'destroy'])->where('id', '[0-9]+')->name('ena.destroy');
+
+Route::delete('/fonction-publique/{id}', [FonctionPubliqueController::class, 'destroy'])->where('id', '[0-9]+')->name('fonction-publique.destroy');
+Route::get('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'edit'])->name('admin.personnel-paramilitaire');
+Route::post('/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'update'])->name('admin.personnel-paramilitaire.update');
+Route::get('/personnel_interministeriel', [PersonnelInterministerielController::class, 'edit'])->name('admin.personnel-interministeriel');
+Route::post('/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
+Route::get('/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
+Route::post('/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
+Route::delete('/videos/{id}', [VideoController::class, 'destroy'])->where('id', '[0-9]+')->name('videos.destroy');
+Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name('administrateurs.index');
+Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
+Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
+Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');
+Route::get('/statistique', [StatistiqueController::class, 'index'])->name('admin.statistique');
 
 });
 
-
-
-
-
-
-Route::get('/admin/visa', [AdminController::class, 'visa'])->name('visa');
-Route::post('/admin/visa', [AdminController::class, 'visa_update'])->name('visa.update');
 
 
 
@@ -260,38 +292,3 @@ Route::get('/autre_association', [VieAssociativeController::class, 'showAutresAs
 
 
 
-// Admin
-Route::get('/admin/mot_dg', [MotDgController::class, 'edit'])->name('motdg');
-Route::post('/admin/mot_dg', [MotDgController::class, 'update'])->name('motdg.update');
-Route::post('/admin/mot_dg/upload-image', [MotDgController::class, 'uploadImage'])->name('motdg.upload-image');
-Route::get('/admin/biographie_dg', [BiographieDgController::class, 'edit'])->name('biodg');
-Route::post('/admin/biographie_dg', [BiographieDgController::class, 'update'])->name('biodg.update');
-Route::get('/admin/evenements', [EvenementController::class, 'edit'])->name('evenements');
-Route::post('/admin/evenements/passes', [EvenementController::class, 'updatePasses'])->name('evenements.passes.update');
-Route::post('/admin/evenements/avenir', [EvenementController::class, 'updateAvenir'])->name('evenements.avenir.update');
-Route::get('/admin/ena', [EnaController::class, 'edit'])->name('admin.ena');
-Route::post('/admin/ena', [EnaController::class, 'update'])->name('ena.update');
-Route::get('/admin/fonction-publique', [FonctionPubliqueController::class, 'edit'])->name('fonction-publique');
-Route::post('/admin/fonction-publique', [FonctionPubliqueController::class, 'update'])->name('fonction-publique.update');
-Route::get('/admin/galerie', [GalerieController::class, 'edit'])->name('galerie');
-Route::post('/admin/galerie', [GalerieController::class, 'update'])->name('galerie.update');
-
-Route::get('/admin/videos', [VideoController::class, 'edit'])->name('videos');
-Route::post('/admin/videos', [VideoController::class, 'update'])->name('videos.update');
-Route::get('/admin/services-en-ligne', [ServiceEnLigneController::class, 'edit'])->name('services-en-ligne');
-Route::post('/admin/services-en-ligne', [ServiceEnLigneController::class, 'update'])->name('services-en-ligne.update');
-Route::delete('/admin/services-en-ligne/{id}', [ServiceEnLigneController::class, 'destroy'])->where('id', '[0-9]+')->name('services-en-ligne.destroy');
-Route::delete('/admin/ena/{id}', [EnaController::class, 'destroy'])->where('id', '[0-9]+')->name('ena.destroy');
-
-Route::delete('/admin/fonction-publique/{id}', [FonctionPubliqueController::class, 'destroy'])->where('id', '[0-9]+')->name('fonction-publique.destroy');
-Route::get('/admin/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'edit'])->name('admin.personnel-paramilitaire');
-Route::post('/admin/personnel_paramilitaire', [PersonnelParamilitaireController::class, 'update'])->name('admin.personnel-paramilitaire.update');
-Route::get('/admin/personnel_interministeriel', [PersonnelInterministerielController::class, 'edit'])->name('admin.personnel-interministeriel');
-Route::post('/admin/personnel_interministeriel', [PersonnelInterministerielController::class, 'update'])->name('admin.personnel-interministeriel.update');
-Route::get('/admin/vie-associative/{type}', [VieAssociativeController::class, 'edit'])->name('admin.vie-associative.edit');
-Route::post('/admin/vie-associative/{type}', [VieAssociativeController::class, 'update'])->name('admin.vie-associative.update');
-Route::delete('/admin/videos/{id}', [VideoController::class, 'destroy'])->where('id', '[0-9]+')->name('videos.destroy');
-Route::get('/administrateurs', [AdministrateurController::class, 'index'])->name('administrateurs.index');
-Route::post('/administrateurs', [AdministrateurController::class, 'store'])->name('administrateurs.store');
-Route::put('/administrateurs/{administrateur}', [AdministrateurController::class, 'update'])->name('administrateurs.update');
-Route::delete('/administrateurs/{administrateur}', [AdministrateurController::class, 'destroy'])->name('administrateurs.destroy');

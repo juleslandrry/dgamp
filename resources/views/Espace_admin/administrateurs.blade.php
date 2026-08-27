@@ -1,129 +1,350 @@
 @extends('Espace_admin.layout')
+
 @section('title', 'Administrateurs')
 
 @section('content')
-<!-- Bootstrap Icons au cas où il ne soit pas chargé dans le layout -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <style>
-    .admins-page { padding: 1.75rem; background-color: #f8fafc; min-height: 100vh; }
+    /* ============================================================
+       IDENTITÉ VISUELLE — modern admin
+       ============================================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
-    .admins-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
-    .admins-header h1 { font-size:1.6rem; font-weight:700; color:#1e2a3a; margin:0 0 .25rem; }
-    .admins-header p { color:#7c8798; margin:0; font-size:.92rem; }
+    .reg-page {
+        --ink:#0F172A; --deep:#1E293B; --teal:#0EA5E9; --teal-dark:#0284C7;
+        --brass:#D97706; --fog:#F8FAFC; --slate:#64748B; --line:#E2E8F0;
+        --danger:#EF4444; --surface:#FFFFFF;
+        padding: 2rem;
+        font-family:'Plus Jakarta Sans', sans-serif;
+        color:var(--ink);
+        box-sizing:border-box;
+    }
+    .reg-page *, .reg-modal-overlay *, .reg-modal-overlay *::before, .reg-modal-overlay *::after { box-sizing:border-box; }
 
-    .btn-primary-lg { display:inline-flex; align-items:center; gap:.5rem; background:#2563eb; color:#fff; border:none; padding:.7rem 1.25rem; border-radius:10px; font-weight:600; font-size:.92rem; cursor:pointer; transition:.15s; box-shadow:0 4px 10px rgba(37,99,235,.25); text-decoration:none; }
-    .btn-primary-lg:hover { background:#1d4ed8; color:#fff; transform:translateY(-1px); }
-    .btn-danger-lg { display:inline-flex; align-items:center; gap:.5rem; background:#e11d48; color:#fff; border:none; padding:.65rem 1.15rem; border-radius:10px; font-weight:600; font-size:.9rem; cursor:pointer; }
-    .btn-danger-lg:hover { background:#be123c; }
-    .btn-ghost { background:#f1f3f7; color:#4b5563; border:none; padding:.65rem 1.15rem; border-radius:10px; font-weight:600; font-size:.9rem; cursor:pointer; }
-    .btn-ghost:hover { background:#e5e7eb; }
+    .reg-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .reg-eyebrow { display:block; font-family:'JetBrains Mono',monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:.3rem; font-weight:600; }
+    .reg-header h1 { font-weight:700; font-size:1.85rem; margin:0 0 .3rem; color:var(--ink); letter-spacing:-0.02em; }
+    .reg-header p { margin:0; color:var(--slate); font-size:.92rem; }
 
-    .admins-alert { display:flex; align-items:center; gap:.65rem; padding:.9rem 1.1rem; border-radius:10px; margin-bottom:1.25rem; font-size:.92rem; }
-    .admins-alert--success { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
-    .admins-alert--danger { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
-    .admins-alert__close { margin-left:auto; background:none; border:none; font-size:1.1rem; cursor:pointer; color:inherit; }
+    /* BANDEAU MÉTRIQUES */
+    .reg-stats-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+    }
+    .reg-stat-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .reg-stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--fog);
+        color: var(--slate);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .reg-stat-icon--active { background: #F0F9FF; color: var(--teal-dark); }
+    .reg-stat-info { display: flex; flex-direction: column; }
+    .reg-stat-val { font-weight: 700; font-size: 1.1rem; color: var(--ink); line-height: 1.2; }
+    .reg-stat-lbl { font-size: .78rem; color: var(--slate); font-weight: 500; }
 
-    .admins-card { background:#fff; border-radius:14px; box-shadow:0 2px 12px rgba(18,38,63,.06); border:1px solid #eef0f4; overflow:hidden; }
-    .admins-card__toolbar { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.1rem 1.25rem; border-bottom:1px solid #eef0f4; flex-wrap:wrap; }
+    /* Boutons généraux */
+    .reg-btn { display:inline-flex; align-items:center; justify-content:center; gap:.55rem; border:none; padding:.65rem 1.25rem; border-radius:10px; font-weight:600; font-size:.88rem; cursor:pointer; transition:all .2s cubic-bezier(0.4, 0, 0.2, 1); font-family:inherit; }
+    .reg-btn--primary { background:var(--ink); color:#fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); }
+    .reg-btn--primary:hover { background:var(--deep); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25); }
+    .reg-btn--ghost { background:#fff; color:var(--slate); border:1px solid var(--line); }
+    .reg-btn--ghost:hover { border-color:#CBD5E1; color:var(--ink); background:var(--fog); }
+    .reg-btn--danger { background:var(--danger); color:#fff; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+    .reg-btn--danger:hover { background:#DC2626; transform: translateY(-1px); }
 
-    .admins-search { position:relative; display:flex; align-items:center; background:#f6f7fb; border-radius:10px; padding:.55rem .9rem; min-width:280px; border:1px solid #e5e7eb; }
-    .admins-search i { color:#9aa4b2; margin-right:.5rem; }
-    .admins-search input { border:none; background:transparent; outline:none; font-size:.9rem; width:100%; }
-    .admins-search__clear { color:#9aa4b2; text-decoration:none; font-size:1.1rem; padding-left:.4rem; }
+    /* Alertes */
+    .reg-alert { display:flex; align-items:flex-start; gap:.75rem; padding:1rem 1.1rem; border-radius:12px; font-size:.88rem; margin-bottom:1.2rem; border:1px solid; }
+    .reg-alert--ok { background:#F0FDF4; color:#166534; border-color:#BBF7D0; }
+    .reg-alert--danger { background:#FEF2F2; color:#991B1B; border-color:#FECACA; }
+    .reg-alert ul { margin:.25rem 0 0; padding-left:1.1rem; }
+    .reg-alert__close { margin-left:auto; background:none; border:none; font-size:1.1rem; cursor:pointer; color:inherit; opacity:.6; }
 
-    .admins-count { color:#7c8798; font-size:.85rem; font-weight:500; white-space:nowrap; }
+    /* Toolbar & Recherche */
+    .reg-toolbar { margin-bottom:1.2rem; }
+    .reg-search { position:relative; display:flex; align-items:center; gap:.6rem; background:#fff; border:1px solid var(--line); border-radius:10px; padding:.55rem .9rem; max-width:380px; color:var(--slate); transition: border-color .15s; }
+    .reg-search:focus-within { border-color:var(--teal-dark); box-shadow:0 0 0 3px rgba(14, 165, 233, 0.12); }
+    .reg-search input { border:none; outline:none; background:transparent; font-size:.88rem; width:100%; color:var(--ink); font-family:inherit; }
+    .reg-search__clear { color:var(--slate); text-decoration:none; font-size:1.1rem; }
 
-    .admins-table-wrap { overflow-x:auto; }
-    .admins-table { width:100%; border-collapse:collapse; }
-    .admins-table thead th { text-align:left; font-size:.75rem; text-transform:uppercase; letter-spacing:.04em; color:#9aa4b2; font-weight:700; padding:.85rem 1.25rem; background:#fafbfc; border-bottom:1px solid #eef0f4; }
-    .admins-table tbody td { padding:.95rem 1.25rem; border-bottom:1px solid #f2f3f6; font-size:.9rem; color:#374151; vertical-align:middle; }
-    .admins-table tbody tr:last-child td { border-bottom:none; }
-    .admins-table tbody tr:hover { background:#fafbff; }
+    /* Tableau / Registre */
+    .reg-ledger { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .reg-ledger__head, .reg-row { display:grid; grid-template-columns:56px 2.4fr 1.2fr 1fr 96px; align-items:center; }
+    .reg-ledger__head { padding:.85rem 1.4rem; background:var(--fog); border-bottom:1px solid var(--line); }
+    .reg-ledger__head .reg-col { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); font-weight:600; }
 
-    .admins-identity { display:flex; align-items:center; gap:.65rem; }
-    .admins-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#1e40af); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; flex-shrink:0; }
-    .admins-name { font-weight:600; color:#1e2a3a; }
+    .reg-row { padding:1rem 1.4rem; border-bottom:1px solid var(--line); transition:.15s; }
+    .reg-row:last-child { border-bottom:none; }
+    .reg-row:hover { background:#F8FAFC; }
 
-    .admins-badge--role { display:inline-block; background:#eef2ff; color:#4338ca; padding:.3rem .65rem; border-radius:20px; font-size:.78rem; font-weight:600; }
+    .reg-num { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--slate); }
 
-    .admins-status { display:inline-flex; align-items:center; gap:.4rem; font-size:.83rem; font-weight:600; padding:.3rem .65rem .3rem .5rem; border-radius:20px; }
-    .admins-status__dot { width:7px; height:7px; border-radius:50%; }
-    .admins-status--actif { background:#ecfdf5; color:#047857; }
-    .admins-status--actif .admins-status__dot { background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,.18); }
-    .admins-status--inactif { background:#f3f4f6; color:#6b7280; }
-    .admins-status--inactif .admins-status__dot { background:#9ca3af; }
+    .reg-col--name { display:flex; align-items:center; gap:.85rem; }
+    .reg-avatar { width:40px; height:40px; border-radius:10px; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; flex-shrink:0; letter-spacing:-0.03em; }
+    .reg-identity { display:flex; flex-direction:column; min-width:0; }
+    .reg-identity__name { font-weight:600; font-size:.92rem; color:var(--ink); }
+    .reg-identity__email { font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--slate); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-    .admins-icon-btn { width:34px; height:34px; border-radius:8px; border:1px solid #e5e7eb; background:#fff; color:#6b7280; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; margin-left:.4rem; transition:.15s; }
-    .admins-icon-btn--edit:hover { background:#eff6ff; border-color:#bfdbfe; color:#2563eb; }
-    .admins-icon-btn--delete:hover { background:#fef2f2; border-color:#fecaca; color:#e11d48; }
+    .reg-tag { display:inline-block; font-size:.75rem; font-weight:600; color:#B45309; background:#FEF3C7; border:1px solid #FDE68A; padding:.2rem .65rem; border-radius:6px; }
 
-    .admins-empty { text-align:center; padding:2.75rem 1rem; color:#9aa4b2; }
-    .admins-empty i { font-size:2.2rem; display:block; margin-bottom:.6rem; }
+    .reg-status { display:inline-flex; align-items:center; gap:.45rem; font-size:.82rem; font-weight:600; color:var(--slate); }
+    .reg-status__dot { width:8px; height:8px; border-radius:50%; background:#CBD5E1; }
+    .reg-row--actif .reg-status, .reg-row--enligne .reg-status { color:#0369A1; }
+    .reg-row--actif .reg-status__dot, .reg-row--enligne .reg-status__dot { background:var(--teal-dark); box-shadow:0 0 0 3px rgba(14, 165, 233, 0.2); }
 
-    .admins-pagination { padding:1rem 1.25rem; display:flex; justify-content:flex-end; }
+    .reg-col--action { display:flex; justify-content:flex-end; gap:.4rem; }
+    .reg-iconbtn { width:34px; height:34px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--slate); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s ease; padding:0; }
+    .reg-iconbtn:hover { border-color:var(--teal-dark); color:var(--teal-dark); background:#F0F9FF; }
+    .reg-iconbtn--danger:hover { border-color:var(--danger); color:var(--danger); background:#FEF2F2; }
 
-    .admins-modal { border-radius:16px; border:none; overflow:hidden; }
-    .admins-modal .modal-header { border-bottom:1px solid #f0f1f4; padding:1.15rem 1.4rem; }
-    .admins-modal .modal-title { font-weight:700; font-size:1.05rem; color:#1e2a3a; display:flex; align-items:center; }
-    .admins-modal .modal-body { padding:1.4rem; }
-    .admins-modal .modal-footer { border-top:1px solid #f0f1f4; padding:1.1rem 1.4rem; }
+    .reg-empty { text-align:center; padding:3.5rem 1rem; color:var(--slate); }
+    .reg-empty svg { margin-bottom:.8rem; color:#CBD5E1; }
+    .reg-empty p { margin:0 0 1rem; font-weight:500; }
 
-    .admins-field { margin-bottom:1rem; }
-    .admins-field label { display:block; font-size:.83rem; font-weight:600; color:#374151; margin-bottom:.35rem; }
-    .admins-field input, .admins-field select { width:100%; padding:.65rem .85rem; border:1px solid #e2e5eb; border-radius:9px; font-size:.9rem; outline:none; transition:.15s; }
-    .admins-field input:focus, .admins-field select:focus { border-color:#93c5fd; box-shadow:0 0 0 3px rgba(37,99,235,.12); }
-    .admins-field-row { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; }
+    .reg-pagination { display:flex; justify-content:flex-end; margin-top:1.2rem; }
 
-    .admins-modal--danger .modal-body.admins-modal__confirm { text-align:center; padding:2rem 1.5rem 1rem; }
-    .admins-modal__icon { width:56px; height:56px; border-radius:50%; background:#fef2f2; color:#e11d48; font-size:1.5rem; display:flex; align-items:center; justify-content:center; margin:0 auto .9rem; }
-    .admins-modal__confirm h5 { font-weight:700; color:#1e2a3a; margin-bottom:.4rem; }
-    .admins-modal__confirm p { color:#7c8798; font-size:.9rem; }
-    .admins-modal__confirm-footer { justify-content:center; }
+    /* ============================================================
+       MODALES ET FORMULAIRES
+       ============================================================ */
+    .reg-modal-overlay {
+        position:fixed; inset:0; background:rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        display:none; align-items:center; justify-content:center;
+        z-index:1000; padding:1.25rem; font-family:'Plus Jakarta Sans',sans-serif;
+    }
+    .reg-modal-overlay.is-open { display:flex; }
 
-    @media (max-width: 576px) {
-        .admins-field-row { grid-template-columns:1fr; }
-        .admins-card__toolbar { flex-direction:column; align-items:stretch; }
-        .admins-search { min-width:0; }
+    .reg-modal { 
+        background:#fff; 
+        border-radius:18px; 
+        overflow:hidden; 
+        width:100%; 
+        max-width:500px; 
+        max-height:92vh; 
+        overflow-y:auto; 
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+        border: 1px solid var(--line);
+        animation: modalAppear .2s ease-out;
+    }
+
+    @keyframes modalAppear {
+        from { opacity: 0; transform: scale(0.96) translateY(8px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .reg-modal__head { 
+        position:relative; 
+        padding:1.5rem 1.75rem 1.25rem; 
+        border-bottom:1px solid var(--line); 
+        display:flex;
+        align-items:center;
+        gap:1rem;
+    }
+
+    .reg-modal__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #F0F9FF;
+        color: var(--teal-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .reg-modal__icon--danger {
+        background: #FEF2F2;
+        color: var(--danger);
+    }
+
+    .reg-modal__title-group h5 { 
+        font-weight:700; 
+        font-size:1.15rem; 
+        margin:0; 
+        color:var(--ink); 
+        letter-spacing:-0.01em;
+    }
+
+    .reg-modal__close { 
+        position:absolute; 
+        top:1.25rem; 
+        right:1.25rem; 
+        background:var(--fog); 
+        border:1px solid var(--line); 
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:1.1rem; 
+        line-height:1; 
+        color:var(--slate); 
+        cursor:pointer; 
+        transition: all .15s;
+    }
+    .reg-modal__close:hover { background:var(--line); color:var(--ink); }
+
+    .reg-modal__body { padding:1.5rem 1.75rem; }
+    .reg-modal__body--center { text-align:center; padding:2.2rem 1.8rem 1rem; }
+    .reg-modal__body--center h5 { font-weight:700; font-size:1.2rem; color:var(--ink); margin-bottom:.5rem; }
+    .reg-modal__body--center p { color:var(--slate); font-size:.9rem; margin:0; line-height:1.5; }
+
+    .reg-modal__foot { 
+        display:flex; 
+        justify-content:flex-end; 
+        gap:.75rem; 
+        padding:1.25rem 1.75rem; 
+        background:var(--fog);
+        border-top:1px solid var(--line); 
+    }
+    .reg-modal__foot--center { justify-content:center; background:#fff; border-top:none; padding-top:.5rem; }
+
+    /* Champs de formulaires */
+    .reg-field { margin-bottom:1.2rem; }
+    .reg-field label { 
+        display:flex; 
+        justify-content:space-between;
+        align-items:center;
+        font-size:.82rem; 
+        font-weight:600; 
+        color:var(--ink); 
+        margin-bottom:.45rem; 
+    }
+    .reg-field label .opt { font-weight:400; color:var(--slate); font-size:.75rem; }
+
+    .reg-field input, .reg-field select { 
+        width:100%; 
+        padding:.7rem .9rem; 
+        border:1px solid var(--line); 
+        border-radius:10px; 
+        font-size:.9rem; 
+        font-family:inherit; 
+        outline:none; 
+        transition: all .15s ease; 
+        color:var(--ink); 
+        background: #FAFBFD;
+    }
+    .reg-field input::placeholder { color:#94A3B8; }
+
+    .reg-field input:focus, .reg-field select:focus { 
+        border-color:var(--teal-dark); 
+        background:#fff;
+        box-shadow:0 0 0 4px rgba(14, 165, 233, 0.12); 
+    }
+
+    .reg-field-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+    /* Champ Mot de Passe avec Icône Œil */
+    .reg-password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .reg-password-wrapper input {
+        padding-right: 2.5rem;
+    }
+    .reg-toggle-password {
+        position: absolute;
+        right: .75rem;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        color: var(--slate);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color .15s;
+    }
+    .reg-toggle-password:hover {
+        color: var(--ink);
+    }
+
+    @media (max-width: 720px) {
+        .reg-ledger__head { display:none; }
+        .reg-row { grid-template-columns:1fr; gap:.6rem; padding:1rem 1.1rem; }
+        .reg-col--action { justify-content:flex-start; }
+        .reg-field-row { grid-template-columns:1fr; gap:0; }
     }
 </style>
 
-<div class="admins-page">
+<div class="reg-page">
 
-    {{-- ===================== EN-TÊTE ===================== --}}
-    <div class="admins-header">
-        <div>
-            <h1>Administrateurs</h1>
-            <p>Gérez les comptes ayant accès à l'espace d'administration.</p>
+    {{-- EN-TÊTE --}}
+    <div class="reg-header">
+        <div class="reg-header__title">
+            <span class="reg-eyebrow">Espace admin · Paramètres</span>
+            <h1>Registre des administrateurs</h1>
+            <p>Gestion centrale des accès et autorisations utilisateur.</p>
         </div>
-        <button type="button" class="btn-primary-lg" data-bs-toggle="modal" data-bs-target="#modalAjouter">
-            <i class="bi bi-plus-lg"></i> Ajouter un administrateur
+        <button type="button" class="reg-btn reg-btn--primary" onclick="regOpenModal('modalAjouter')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Nouvel administrateur
         </button>
     </div>
 
-    {{-- ===================== ALERTES ===================== --}}
+    {{-- BANDEAU MÉTRIQUES --}}
+    <div class="reg-stats-bar">
+        <div class="reg-stat-card">
+            <div class="reg-stat-icon reg-stat-icon--active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="reg-stat-info">
+                <span class="reg-stat-val">{{ $administrateurs->total() }}</span>
+                <span class="reg-stat-lbl">Total administrateurs</span>
+            </div>
+        </div>
+        <div class="reg-stat-card">
+    <div class="reg-stat-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </div>
+    <div class="reg-stat-info">
+        <span class="reg-stat-val">{{ $administrateurs->first()?->created_at?->format('d/m/Y') ?? '--' }}</span>
+        <span class="reg-stat-lbl">Dernier ajout enregistré</span>
+    </div>
+</div>
+    </div>
+
+    {{-- ALERTES --}}
     @if (session('succes'))
-        <div class="admins-alert admins-alert--success">
-            <i class="bi bi-check-circle-fill"></i>
+        <div class="reg-alert reg-alert--ok">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>{{ session('succes') }}</span>
-            <button type="button" class="admins-alert__close" onclick="this.parentElement.remove()">&times;</button>
+            <button type="button" class="reg-alert__close" onclick="this.parentElement.remove()">&times;</button>
         </div>
     @endif
 
     @if (session('erreur'))
-        <div class="admins-alert admins-alert--danger">
-            <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="reg-alert reg-alert--danger">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 5v4.5M8 12h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/></svg>
             <span>{{ session('erreur') }}</span>
-            <button type="button" class="admins-alert__close" onclick="this.parentElement.remove()">&times;</button>
+            <button type="button" class="reg-alert__close" onclick="this.parentElement.remove()">&times;</button>
         </div>
     @endif
 
     @if ($errors->any())
-        <div class="admins-alert admins-alert--danger">
-            <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="reg-alert reg-alert--danger">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 5v4.5M8 12h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/></svg>
             <div>
                 <strong>Impossible d'enregistrer :</strong>
-                <ul class="mb-0 ps-3">
+                <ul>
                     @foreach ($errors->all() as $erreur)
                         <li>{{ $erreur }}</li>
                     @endforeach
@@ -132,241 +353,276 @@
         </div>
     @endif
 
-    {{-- ===================== CARTE / TABLEAU ===================== --}}
-    <div class="admins-card">
+    {{-- TOOLBAR --}}
+    <div class="reg-toolbar">
+        <form method="GET" action="{{ route('administrateurs.index') }}" class="reg-search">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input type="text" name="q" value="{{ request('q', $recherche ?? '') }}" placeholder="Rechercher par nom, email ou titre…">
+            @if(request()->filled('q'))
+                <a href="{{ route('administrateurs.index') }}" class="reg-search__clear" title="Effacer">&times;</a>
+            @endif
+        </form>
+    </div>
 
-        <div class="admins-card__toolbar">
-            <form method="GET" class="admins-search">
-                <i class="bi bi-search"></i>
-                <input type="text" name="q" value="{{ $recherche ?? '' }}" placeholder="Rechercher un nom, un email, un titre...">
-                @if(!empty($recherche))
-                    <a href="{{ route('administrateurs.index') }}" class="admins-search__clear" title="Effacer">&times;</a>
-                @endif
-            </form>
-            <span class="admins-count">{{ $administrateurs->total() }} administrateur(s)</span>
+    {{-- REGISTRE --}}
+    <div class="reg-ledger">
+        <div class="reg-ledger__head">
+            <span class="reg-col reg-col--num">N°</span>
+            <span class="reg-col reg-col--name">Administrateur</span>
+            <span class="reg-col reg-col--title">Titre</span>
+            <span class="reg-col reg-col--status">Statut</span>
+            <span class="reg-col reg-col--action">Action</span>
         </div>
 
-        <div class="admins-table-wrap">
-            <table class="admins-table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Titre</th>
-                        <th>Statut</th>
-                        <th class="text-end">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($administrateurs as $admin)
-                        <tr>
-                            <td>
-                                <div class="admins-identity">
-                                    <span class="admins-avatar">{{ $admin->initiales }}</span>
-                                    <span class="admins-name">{{ $admin->nom }}</span>
-                                </div>
-                            </td>
-                            <td class="text-muted">{{ $admin->email }}</td>
-                            <td><span class="admins-badge admins-badge--role">{{ $admin->titre }}</span></td>
-                            <td>
-                                <span class="admins-status admins-status--{{ $admin->statut }}">
-                                    <span class="admins-status__dot"></span>
-                                    {{ $admin->statut_label }}
-                                </span>
-                            </td>
-                            <td class="text-end">
-                                <button type="button"
-                                        class="admins-icon-btn admins-icon-btn--edit"
-                                        title="Modifier"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalModifier"
-                                        data-id="{{ $admin->id }}"
-                                        data-nom="{{ $admin->nom }}"
-                                        data-email="{{ $admin->email }}"
-                                        data-titre="{{ $admin->titre }}"
-                                        data-statut="{{ $admin->statut }}"
-                                        data-action="{{ route('administrateurs.update', $admin) }}">
-                                    <i class="bi bi-pencil-fill"></i>
-                                </button>
-                                <button type="button"
-                                        class="admins-icon-btn admins-icon-btn--delete"
-                                        title="Supprimer"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalSupprimer"
-                                        data-nom="{{ $admin->nom }}"
-                                        data-action="{{ route('administrateurs.destroy', $admin) }}">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5">
-                                <div class="admins-empty">
-                                    <i class="bi bi-people"></i>
-                                    <p>Aucun administrateur trouvé.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        @forelse ($administrateurs as $admin)
+            <div class="reg-row reg-row--{{ $admin->statut }}">
+                <span class="reg-col reg-col--num"><span class="reg-num">{{ str_pad($loop->iteration + ($administrateurs->currentPage()-1)*$administrateurs->perPage(), 2, '0', STR_PAD_LEFT) }}</span></span>
 
-        @if ($administrateurs->hasPages())
-            <div class="admins-pagination">
-                {{ $administrateurs->links() }}
+                <span class="reg-col reg-col--name">
+                    <span class="reg-avatar">{{ $admin->initiales }}</span>
+                    <span class="reg-identity">
+                        <span class="reg-identity__name">{{ $admin->nom }}</span>
+                        <span class="reg-identity__email">{{ $admin->email }}</span>
+                    </span>
+                </span>
+
+                <span class="reg-col reg-col--title"><span class="reg-tag">{{ $admin->titre }}</span></span>
+
+                <span class="reg-col reg-col--status">
+                    <span class="reg-status">
+                        <span class="reg-status__dot"></span>{{ $admin->statut_label ?? ucfirst($admin->statut) }}
+                    </span>
+                </span>
+
+                <span class="reg-col reg-col--action">
+                    <button type="button"
+                            class="reg-iconbtn"
+                            title="Modifier"
+                            onclick="regOpenEdit({
+                                action: '{{ route('administrateurs.update', $admin) }}',
+                                nom: {{ Js::from($admin->nom) }},
+                                email: {{ Js::from($admin->email) }},
+                                titre: {{ Js::from($admin->titre) }}
+                            })">
+                        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.3 2.3a1.6 1.6 0 0 1 2.3 2.3L5 13.2l-3 .8.8-3 8.5-8.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button type="button"
+                            class="reg-iconbtn reg-iconbtn--danger"
+                            title="Supprimer"
+                            onclick="regOpenDelete({
+                                action: '{{ route('administrateurs.destroy', $admin) }}',
+                                nom: {{ Js::from($admin->nom) }}
+                            })">
+                        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 4.5h10M6.5 4.5V3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1.5M4.5 4.5V13a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </span>
             </div>
-        @endif
+        @empty
+            <div class="reg-empty">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 11v6c0 1.2 2.7 3 6 3s6-1.8 6-3v-6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                <p>Le registre est vide pour l'instant.</p>
+                <button type="button" class="reg-btn reg-btn--ghost" onclick="regOpenModal('modalAjouter')">Ajouter le premier administrateur</button>
+            </div>
+        @endforelse
+    </div>
+
+    @if ($administrateurs->hasPages())
+        <div class="reg-pagination">{{ $administrateurs->withQueryString()->links() }}</div>
+    @endif
+</div>
+
+{{-- MODALE : AJOUTER --}}
+<div class="reg-modal-overlay @if($errors->any() && old('_method') !== 'PUT') is-open @endif" id="modalAjouter" onclick="if(event.target===this) regCloseModal('modalAjouter')">
+    <div class="reg-modal">
+        <form method="POST" action="{{ route('administrateurs.store') }}">
+            @csrf
+            <div class="reg-modal__head">
+                <div class="reg-modal__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                </div>
+                <div class="reg-modal__title-group">
+                    <span class="reg-eyebrow">Nouvelle fiche</span>
+                    <h5>Créer un administrateur</h5>
+                </div>
+                <button type="button" class="reg-modal__close" onclick="regCloseModal('modalAjouter')">&times;</button>
+            </div>
+            <div class="reg-modal__body">
+                <div class="reg-field">
+                    <label for="add_nom">Nom complet</label>
+                    <input type="text" id="add_nom" name="nom" value="{{ old('nom') }}" placeholder="Ex : Kouamé Hurbain" required>
+                </div>
+                <div class="reg-field">
+                    <label for="add_email">Adresse email</label>
+                    <input type="email" id="add_email" name="email" value="{{ old('email') }}" placeholder="nom@dgamp.ci" required>
+                </div>
+                <div class="reg-field">
+                    <label for="add_titre">Titre / Rôle</label>
+                    <input type="text" id="add_titre" name="titre" value="{{ old('titre', 'Administrateur') }}" required>
+                </div>
+                <div class="reg-field-row" style="margin-bottom:0;">
+                    <div class="reg-field" style="margin-bottom:0;">
+                        <label for="add_password">Mot de passe</label>
+                        <div class="reg-password-wrapper">
+                            <input type="password" id="add_password" name="password" placeholder="8 caract. min." required>
+                            <button type="button" class="reg-toggle-password" onclick="togglePasswordVisibility('add_password', this)" title="Afficher/Masquer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="reg-field" style="margin-bottom:0;">
+                        <label for="add_password_confirmation">Confirmation</label>
+                        <div class="reg-password-wrapper">
+                            <input type="password" id="add_password_confirmation" name="password_confirmation" placeholder="Répéter..." required>
+                            <button type="button" class="reg-toggle-password" onclick="togglePasswordVisibility('add_password_confirmation', this)" title="Afficher/Masquer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reg-modal__foot">
+                <button type="button" class="reg-btn reg-btn--ghost" onclick="regCloseModal('modalAjouter')">Annuler</button>
+                <button type="submit" class="reg-btn reg-btn--primary">Enregistrer la fiche</button>
+            </div>
+        </form>
     </div>
 </div>
 
-{{-- ===================== MODALES (INCHANGÉES) ===================== --}}
-<div class="modal fade" id="modalAjouter" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content admins-modal">
-            <form method="POST" action="{{ route('administrateurs.store') }}">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i>Ajouter un administrateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+{{-- MODALE : MODIFIER --}}
+<div class="reg-modal-overlay @if($errors->any() && old('_method') === 'PUT') is-open @endif" id="modalModifier" onclick="if(event.target===this) regCloseModal('modalModifier')">
+    <div class="reg-modal">
+        <form method="POST" id="formModifier" action="{{ old('_form_action', '') }}">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="_form_action" id="edit_form_action" value="{{ old('_form_action', '') }}">
+            <div class="reg-modal__head">
+                <div class="reg-modal__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </div>
-                <div class="modal-body">
-                    <div class="admins-field">
-                        <label for="add_nom">Nom complet</label>
-                        <input type="text" id="add_nom" name="nom" value="{{ old('nom') }}" placeholder="Ex : Kouamé Hurbain" required>
-                    </div>
-                    <div class="admins-field">
-                        <label for="add_email">Adresse email</label>
-                        <input type="email" id="add_email" name="email" value="{{ old('email') }}" placeholder="nom@dgamp.ci" required>
-                    </div>
-                    <div class="admins-field">
-                        <label for="add_titre">Titre / rôle</label>
-                        <input type="text" id="add_titre" name="titre" value="{{ old('titre', 'Administrateur') }}" placeholder="Administrateur" required>
-                    </div>
-                    <div class="admins-field-row">
-                        <div class="admins-field">
-                            <label for="add_password">Mot de passe</label>
-                            <input type="password" id="add_password" name="password" placeholder="8 caractères minimum" required>
+                <div class="reg-modal__title-group">
+                    <span class="reg-eyebrow">Mise à jour</span>
+                    <h5>Modifier le profil</h5>
+                </div>
+                <button type="button" class="reg-modal__close" onclick="regCloseModal('modalModifier')">&times;</button>
+            </div>
+            <div class="reg-modal__body">
+                <div class="reg-field">
+                    <label for="edit_nom">Nom complet</label>
+                    <input type="text" id="edit_nom" name="nom" value="{{ old('nom') }}" required>
+                </div>
+                <div class="reg-field">
+                    <label for="edit_email">Adresse email</label>
+                    <input type="email" id="edit_email" name="email" value="{{ old('email') }}" required>
+                </div>
+                <div class="reg-field">
+                    <label for="edit_titre">Titre / Rôle</label>
+                    <input type="text" id="edit_titre" name="titre" value="{{ old('titre') }}" required>
+                </div>
+                <div class="reg-field-row" style="margin-bottom:0;">
+                    <div class="reg-field" style="margin-bottom:0;">
+                        <label for="edit_password">Mot de passe <span class="opt">(Optionnel)</span></label>
+                        <div class="reg-password-wrapper">
+                            <input type="password" id="edit_password" name="password" placeholder="Inchangé si vide">
+                            <button type="button" class="reg-toggle-password" onclick="togglePasswordVisibility('edit_password', this)" title="Afficher/Masquer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
-                        <div class="admins-field">
-                            <label for="add_password_confirmation">Confirmation</label>
-                            <input type="password" id="add_password_confirmation" name="password_confirmation" placeholder="Retapez le mot de passe" required>
+                    </div>
+                    <div class="reg-field" style="margin-bottom:0;">
+                        <label for="edit_password_confirmation">Confirmation</label>
+                        <div class="reg-password-wrapper">
+                            <input type="password" id="edit_password_confirmation" name="password_confirmation" placeholder="Confirmer...">
+                            <button type="button" class="reg-toggle-password" onclick="togglePasswordVisibility('edit_password_confirmation', this)" title="Afficher/Masquer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="admins-field">
-                        <label for="add_statut">Statut</label>
-                        <select id="add_statut" name="statut" required>
-                            <option value="actif" @selected(old('statut') === 'actif')>En ligne</option>
-                            <option value="inactif" @selected(old('statut', 'inactif') === 'inactif')>Hors ligne</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-ghost" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn-primary-lg"><i class="bi bi-check-lg"></i> Enregistrer</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="reg-modal__foot">
+                <button type="button" class="reg-btn reg-btn--ghost" onclick="regCloseModal('modalModifier')">Annuler</button>
+                <button type="submit" class="reg-btn reg-btn--primary">Mettre à jour</button>
+            </div>
+        </form>
     </div>
 </div>
 
-<div class="modal fade" id="modalModifier" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content admins-modal">
-            <form method="POST" id="formModifier" action="">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Modifier l'administrateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+{{-- MODALE : SUPPRIMER --}}
+<div class="reg-modal-overlay" id="modalSupprimer" onclick="if(event.target===this) regCloseModal('modalSupprimer')">
+    <div class="reg-modal">
+        <form method="POST" id="formSupprimer" action="">
+            @csrf
+            @method('DELETE')
+            <div class="reg-modal__head">
+                <div class="reg-modal__icon reg-modal__icon--danger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                 </div>
-                <div class="modal-body">
-                    <div class="admins-field">
-                        <label for="edit_nom">Nom complet</label>
-                        <input type="text" id="edit_nom" name="nom" required>
-                    </div>
-                    <div class="admins-field">
-                        <label for="edit_email">Adresse email</label>
-                        <input type="email" id="edit_email" name="email" required>
-                    </div>
-                    <div class="admins-field">
-                        <label for="edit_titre">Titre / rôle</label>
-                        <input type="text" id="edit_titre" name="titre" required>
-                    </div>
-                    <div class="admins-field-row">
-                        <div class="admins-field">
-                            <label for="edit_password">Nouveau mot de passe</label>
-                            <input type="password" id="edit_password" name="password" placeholder="Laisser vide pour ne pas changer">
-                        </div>
-                        <div class="admins-field">
-                            <label for="edit_password_confirmation">Confirmation</label>
-                            <input type="password" id="edit_password_confirmation" name="password_confirmation" placeholder="Retapez si modifié">
-                        </div>
-                    </div>
-                    <div class="admins-field">
-                        <label for="edit_statut">Statut</label>
-                        <select id="edit_statut" name="statut" required>
-                            <option value="actif">En ligne</option>
-                            <option value="inactif">Hors ligne</option>
-                        </select>
-                    </div>
+                <div class="reg-modal__title-group">
+                    <span class="reg-eyebrow" style="color:var(--danger);">Action irréversible</span>
+                    <h5>Supprimer l'administrateur</h5>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-ghost" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn-primary-lg"><i class="bi bi-check-lg"></i> Mettre à jour</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalSupprimer" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content admins-modal admins-modal--danger">
-            <form method="POST" id="formSupprimer" action="">
-                @csrf
-                @method('DELETE')
-                <div class="modal-body admins-modal__confirm">
-                    <div class="admins-modal__icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                    <h5>Supprimer cet administrateur ?</h5>
-                    <p>Vous êtes sur le point de supprimer <strong id="delete_nom"></strong>. Cette action est irréversible.</p>
-                </div>
-                <div class="modal-footer admins-modal__confirm-footer">
-                    <button type="button" class="btn-ghost" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn-danger-lg"><i class="bi bi-trash-fill"></i> Supprimer</button>
-                </div>
-            </form>
-        </div>
+                <button type="button" class="reg-modal__close" onclick="regCloseModal('modalSupprimer')">&times;</button>
+            </div>
+            <div class="reg-modal__body reg-modal__body--center">
+                <h5>Êtes-vous sûr ?</h5>
+                <p>Le compte de <strong id="delete_nom" style="color:var(--ink);"></strong> sera définitivement retiré du système.</p>
+            </div>
+            <div class="reg-modal__foot reg-modal__foot--center">
+                <button type="button" class="reg-btn reg-btn--ghost" onclick="regCloseModal('modalSupprimer')">Annuler</button>
+                <button type="submit" class="reg-btn reg-btn--danger">Supprimer définitivement</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalModifier = document.getElementById('modalModifier');
-        if(modalModifier) {
-            modalModifier.addEventListener('show.bs.modal', function (event) {
-                const bouton = event.relatedTarget;
-                const form = document.getElementById('formModifier');
+    function regOpenModal(id) {
+        document.getElementById(id).classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+    function regCloseModal(id) {
+        document.getElementById(id).classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+    function regOpenEdit(data) {
+        document.getElementById('formModifier').action = data.action;
+        document.getElementById('edit_form_action').value = data.action;
+        document.getElementById('edit_nom').value = data.nom;
+        document.getElementById('edit_email').value = data.email;
+        document.getElementById('edit_titre').value = data.titre;
+        document.getElementById('edit_password').value = '';
+        document.getElementById('edit_password_confirmation').value = '';
+        regOpenModal('modalModifier');
+    }
+    function regOpenDelete(data) {
+        document.getElementById('formSupprimer').action = data.action;
+        document.getElementById('delete_nom').textContent = data.nom;
+        regOpenModal('modalSupprimer');
+    }
 
-                form.action = bouton.getAttribute('data-action');
-                document.getElementById('edit_nom').value = bouton.getAttribute('data-nom');
-                document.getElementById('edit_email').value = bouton.getAttribute('data-email');
-                document.getElementById('edit_titre').value = bouton.getAttribute('data-titre');
-                document.getElementById('edit_statut').value = bouton.getAttribute('data-statut');
-                document.getElementById('edit_password').value = '';
-                document.getElementById('edit_password_confirmation').value = '';
-            });
+    /* Fonction d'affichage/masquage du mot de passe avec changement d'icône */
+    function togglePasswordVisibility(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const iconEye = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+        const iconEyeOff = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+
+        if (input.type === "password") {
+            input.type = "text";
+            btn.innerHTML = iconEyeOff;
+        } else {
+            input.type = "password";
+            btn.innerHTML = iconEye;
         }
+    }
 
-        const modalSupprimer = document.getElementById('modalSupprimer');
-        if(modalSupprimer) {
-            modalSupprimer.addEventListener('show.bs.modal', function (event) {
-                const bouton = event.relatedTarget;
-                document.getElementById('formSupprimer').action = bouton.getAttribute('data-action');
-                document.getElementById('delete_nom').textContent = bouton.getAttribute('data-nom');
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.reg-modal-overlay.is-open').forEach(function (overlay) {
+                overlay.classList.remove('is-open');
             });
+            document.body.style.overflow = '';
         }
     });
 </script>
+
 @endsection

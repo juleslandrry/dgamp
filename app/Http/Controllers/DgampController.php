@@ -42,11 +42,13 @@ class DgampController extends Controller
     $videosApercu = Video::orderBy('ordre')->take(3)->get();
 
 
+
         $historique = Historique::first();
 
         $partenaires = Partenaire::all();
 
     return view('index', compact('actualites', 'communiques', 'motDg', 'albumsApercu', 'videosApercu', 'historique', 'partenaires'));
+
     }
 
     public function mot_du_dg () {
